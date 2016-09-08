@@ -1,0 +1,79 @@
+{
+  "project_info": {
+    "project_number": "911145640767",
+    "project_id": "firebase-betfriend"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911145640767:android:49ea3a60cc6c8b68",
+        "android_client_info": {
+          "package_name": "com.betfriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911145640767-f87ggecn77ulnfh3n9piioseal46eh5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT6HCaY_lQmyF_rTcar2A8I2zuI6xkHh0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911145640767:android:d995956d8c40f8d6",
+        "android_client_info": {
+          "package_name": "br.com.betfriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911145640767-nbc24g99u8lk6uvgn75l02h0uhes2c0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.betfriend",
+            "certificate_hash": "6C1F223C42D1695ADE46DDAC43739E21F7552F3D"
+          }
+        },
+        {
+          "client_id": "911145640767-f87ggecn77ulnfh3n9piioseal46eh5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT6HCaY_lQmyF_rTcar2A8I2zuI6xkHh0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
