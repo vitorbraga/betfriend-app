@@ -51,7 +51,7 @@ public class HistoryFragment extends Fragment {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://10.10.202.62").build();
 
-//        ServerApi api = restAdapter.create(ServerApi.class);
+//        SoccerApi api = restAdapter.create(SoccerApi.class);
 //
 //        api.getHistory("application/json", new Callback<ArrayList<Checkin>>() {
 //

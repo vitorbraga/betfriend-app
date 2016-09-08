@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 import br.com.betfriend.model.SoccerMatch;
 import retrofit.Callback;
+import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.Header;
+import retrofit.http.POST;
 import retrofit.http.Path;
 
 public interface ServerApi {
 
-    @GET("/leagues/{leagueId}")
-    void getMatches(@Header("Content-Type") String contentType, @Header("X-Mashape-Key") String apiKey,
-                    @Path("leagueId") String leagueId, Callback<ArrayList<SoccerMatch>> response);
+    @POST("/signup/")
+    void signup(@Field("email") String email, @Field("personName") String personName, @Field("personPhoto") String personPhoto);
 
 
 }
