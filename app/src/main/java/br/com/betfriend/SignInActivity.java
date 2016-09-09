@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -28,6 +29,14 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.model.JsonResponse;
+import br.com.betfriend.utils.Constants;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
  * profile.
@@ -39,7 +48,7 @@ public class SignInActivity extends AppCompatActivity implements
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    private String email = "", personName = "", personPhoto = "";
+    private String email = "", personName = "", personPhoto = "", idToken = "";
 
     private GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
@@ -56,8 +65,7 @@ public class SignInActivity extends AppCompatActivity implements
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail().requestProfile()
-                .build();
+                .requestEmail().requestProfile().requestIdToken(getString(R.string.server_client_id)).build();
 
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
@@ -115,11 +123,14 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
+
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             mStatusTextView.setText(getString(R.string.app_name, acct.getDisplayName()));
+
+            idToken = acct.getIdToken();
 
             // TODO request server
             if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
@@ -132,7 +143,6 @@ public class SignInActivity extends AppCompatActivity implements
                     email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
                     callSignUp();
-                    updateUI(true);
 
                 } else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, 101);
@@ -177,6 +187,32 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private void callSignUp() {
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+
+        ServerApi api = restAdapter.create(ServerApi.class);
+
+        api.signup(email, personName, personPhoto, idToken, new Callback<JsonResponse>() {
+
+            @Override
+            public void success(JsonResponse json, Response response) {
+
+                Toast.makeText(getApplication(), "Sucess", Toast.LENGTH_SHORT).show();
+                if (json.getCode() == 0) {
+                    // New user registered
+                    updateUI(true);
+                } else if (json.getCode() == 1) {
+                    // User was already registered
+                    updateUI(true);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplication(), "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
