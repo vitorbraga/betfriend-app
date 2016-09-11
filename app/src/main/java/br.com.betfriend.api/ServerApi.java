@@ -17,7 +17,7 @@ public interface ServerApi {
 
     @POST("/signup/")
     @FormUrlEncoded
-    void signup(@Field("email") String email, @Field("personName") String personName,
+    void signup(@Field("personId") String personId, @Field("email") String email, @Field("personName") String personName,
                 @Field("personPhoto") String personPhoto, @Field("idToken") String idToken,
                 Callback<UserDataDTO> response);
 
@@ -25,8 +25,8 @@ public interface ServerApi {
     void searchFriend(@Header("Content-Type") String contentType, @Field("personName") String personName,
                 Callback<JsonResponse> response);
 
-    @GET("/getUserData/{email}")
-    void getUserData(@Header("Content-Type") String contentType, @Field("email") String email,
+    @GET("/getUserData/{personId}")
+    void getUserData(@Header("Content-Type") String contentType, @Field("personId") String personId,
                       Callback<UserDataDTO> response);
 
 

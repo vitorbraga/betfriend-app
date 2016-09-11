@@ -52,8 +52,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("USER_DATA_EXTRA", userData);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = new HomeFragment();
+        fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         getSupportActionBar().setTitle(getString(R.string.drawer_home));
     }

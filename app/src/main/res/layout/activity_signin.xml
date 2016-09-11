@@ -3,7 +3,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/blue_grey_700"
     android:orientation="vertical"
     android:weightSum="4"
     tools:context=".SignInActivity">
@@ -20,16 +20,16 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="default"
-            android:src="@drawable/common_ic_googleplayservices" />
+            android:layout_marginTop="@dimen/g_top_margin"
+            android:contentDescription="@string/desc_google_icon"
+            android:src="@drawable/googleg_color" />
 
         <TextView
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Titulo"
+            android:text="@string/title_text"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="36sp" />
@@ -38,7 +38,7 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Signed out"
+            android:text="@string/signed_out"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -70,11 +70,11 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#0000ff">
+        android:background="@color/blue_grey_900">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:visibility="visible"
@@ -96,7 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sign out"
+                android:text="@string/sign_out"
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
 
             <Button
@@ -104,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Disconnect"
+                android:text="@string/disconnect"
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
         </LinearLayout>
 

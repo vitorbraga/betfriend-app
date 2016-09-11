@@ -8,6 +8,8 @@ import br.com.betfriend.BR;
 
 public class UserDataDTO extends JsonResponse implements Serializable {
 
+    private String personId;
+
     private String email;
 
     private String personName;
@@ -17,6 +19,14 @@ public class UserDataDTO extends JsonResponse implements Serializable {
     private String idToken;
 
     private Integer points;
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(String personId) {
+        this.personId = personId;
+    }
 
     public String getEmail() {
         return email;

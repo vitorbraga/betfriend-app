@@ -1,6 +1,5 @@
 package br.com.betfriend;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,10 +24,8 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
 
 import br.com.betfriend.api.ServerApi;
-import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
@@ -49,7 +44,8 @@ public class SignInActivity extends AppCompatActivity implements
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    private String email = "", personName = "", personPhoto = "", idToken = "";
+    private String email = "", personName = "", personPhoto = "",
+            personId = "", idToken = "";
 
     private UserDataDTO userData;
 
@@ -126,34 +122,18 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-
-
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        Log.d(TAG, "status:" +  result.getStatus());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText("BetFriend");
-
+            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             idToken = acct.getIdToken();
+            personName = acct.getDisplayName();
+            email = acct.getEmail();
+            personId = acct.getId();
+            personPhoto = acct.getPhotoUrl().toString();
 
-            // TODO request server
-            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-                Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-                personName = currentPerson.getDisplayName();
-                personPhoto = currentPerson.getImage().getUrl();
-
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
-                    callSignUp();
-
-                } else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, 101);
-                }
-            }
-
+            callSignUp();
         } else {
             // Signed out, show unauthenticated UI.
             updateUI(false);
@@ -161,34 +141,8 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 101) {
-            if (permissions.length == 1 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
-                callSignUp();
-
-            } else {
-                // Permission was denied. Display an error message.
-                Snackbar.make(findViewById(android.R.id.content), "Enable Permissions from settings",
-                        Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent();
-                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                intent.setData(Uri.parse("package:" + getPackageName()));
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                                startActivity(intent);
-                            }
-                        }).show();
-            }
-        }
+    protected void onStop() {
+        super.onStop();
     }
 
     private void callSignUp() {
@@ -198,12 +152,11 @@ public class SignInActivity extends AppCompatActivity implements
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.signup(email, personName, personPhoto, idToken, new Callback<UserDataDTO>() {
+        api.signup(personId, email, personName, personPhoto, idToken, new Callback<UserDataDTO>() {
 
             @Override
             public void success(UserDataDTO userDataDTO, Response response) {
 
-                Toast.makeText(getApplication(), "Sucess", Toast.LENGTH_SHORT).show();
                 if (userDataDTO.getCode() == 0) {
                     // New user registered
                     userData = userDataDTO;

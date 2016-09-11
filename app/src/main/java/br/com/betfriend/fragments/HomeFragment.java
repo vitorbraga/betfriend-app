@@ -1,14 +1,27 @@
 package br.com.betfriend.fragments;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 
@@ -17,6 +30,8 @@ import br.com.betfriend.adapters.AnimatedExpandableListView;
 import br.com.betfriend.adapters.ExpandableListAdapter;
 import br.com.betfriend.api.SoccerApi;
 import br.com.betfriend.model.SoccerMatch;
+import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -29,20 +44,40 @@ public class HomeFragment extends Fragment {
 
     private ProgressBar spinner;
 
+    private UserDataDTO userData;
+
     public HomeFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
+
+        TextView nameTextView = (TextView) view.findViewById(R.id.summary_user_name);
+        nameTextView.setText(userData.getPersonName());
+
+        TextView pointsTextView = (TextView) view.findViewById(R.id.summary_points);
+        pointsTextView.setText(userData.getPoints().toString());
+
+        ImageView personPhotoImageView = (ImageView) view.findViewById(R.id.person_photo);
+        Picasso.with(getContext())
+                .load(userData.getPersonPhoto())
+                .transform(new CircleTransformation())
+                .into(personPhotoImageView);
+
+        return view;
     }
 
     @Override
@@ -85,7 +120,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void success(ArrayList<SoccerMatch> matches, Response response) {
-                Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
 
                 matchesListView.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.GONE);
@@ -96,6 +130,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+
+                Toast.makeText(getActivity(), "retorfit error getMatches", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -104,51 +140,5 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-//    class MatchesArrayAdapter extends ArrayAdapter<SoccerMatch> {
-//
-//        private final Activity context;
-//
-//        private ArrayList<SoccerMatch> matches;
-//
-//        public MatchesArrayAdapter(Activity context, ArrayList<SoccerMatch> matches) {
-//            super(context, R.layout.history_list_item, matches);
-//            this.context = context;
-//            this.matches = matches;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//
-//            View rowView = convertView;
-//            // reuse views
-//            if (rowView == null) {
-//                LayoutInflater inflater = context.getLayoutInflater();
-//                rowView = inflater.inflate(R.layout.match_list_item, null);
-//                // configure view holder
-//                ViewHolder viewHolder = new ViewHolder();
-//                viewHolder.homeTeam = (TextView) rowView.findViewById(R.id.home_team);
-//                viewHolder.awayTeam = (TextView) rowView.findViewById(R.id.away_team);
-//                viewHolder.matchTime = (TextView) rowView.findViewById(R.id.match_time);
-//
-//                rowView.setTag(viewHolder);
-//            }
-//
-//            // fill data
-//            ViewHolder holder = (ViewHolder) rowView.getTag();
-//
-//            String homeTeam = matches.get(position).getHomeTeam();
-//            String awayTeam = matches.get(position).getAwayTeam();
-//            Long tsTamp = matches.get(position).getTstamp();
-//
-//            Date date = new Date(1000 * tsTamp);
-//
-//            holder.homeTeam.setText(homeTeam);
-//            holder.awayTeam.setText(awayTeam);
-//            holder.matchTime.setText(ConvertHelper.dateToView(date));
-//
-//            return rowView;
-//        }
-//    }
 
 }
