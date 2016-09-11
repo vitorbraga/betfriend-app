@@ -6,16 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import br.com.betfriend.R;
-import retrofit.RestAdapter;
 
-public class HistoryFragment extends Fragment {
 
-    public HistoryFragment() {
+public class StoreFragment extends Fragment {
+
+    public StoreFragment() {
         // Required empty public constructor
     }
 
@@ -28,13 +25,7 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
-    }
-
-    @Override
-    public void onResume() {
-
-        super.onResume();
+        return inflater.inflate(R.layout.fragment_store, container, false);
     }
 
     @Override
@@ -43,9 +34,13 @@ public class HistoryFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
     }
-
 
 }

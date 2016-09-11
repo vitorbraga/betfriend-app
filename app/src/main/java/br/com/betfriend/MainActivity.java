@@ -1,9 +1,10 @@
 package br.com.betfriend;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,19 +13,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import br.com.betfriend.databinding.ActivityMainBinding;
 import br.com.betfriend.fragments.HistoryFragment;
 import br.com.betfriend.fragments.HomeFragment;
+import br.com.betfriend.fragments.PrizesFragment;
+import br.com.betfriend.fragments.RankingFragment;
+import br.com.betfriend.fragments.SettingsFragment;
+import br.com.betfriend.fragments.StoreFragment;
+import br.com.betfriend.model.UserDataDTO;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
 
+    private UserDataDTO userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        userData = (UserDataDTO) getIntent().getSerializableExtra("USER_DATA_EXTRA");
+
+        binding.setUser(userData);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,6 +55,32 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = new HomeFragment();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        getSupportActionBar().setTitle(getString(R.string.drawer_home));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+//
+//        ServerApi api = restAdapter.create(ServerApi.class);
+//
+//        api.getUserData("application/json", userData.getEmail(), new Callback<UserDataDTO>() {
+//
+//            @Override
+//            public void success(UserDataDTO userDataDTO, Response response) {
+//
+//                Toast.makeText(getApplication(), "userdata Sucess", Toast.LENGTH_SHORT).show();
+//                userData = userDataDTO;
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Toast.makeText(getApplication(), "Fail", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
@@ -52,7 +92,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -82,15 +121,36 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            fragment = new HomeFragment();
-            title = "Home";
-        } else if (id == R.id.nav_history) {
-            fragment = new HistoryFragment();
-            title = "Histórico";
+        switch (id){
+            case R.id.nav_home:
+                fragment = new HomeFragment();
+                title = getString(R.string.drawer_home);
+                break;
+            case R.id.nav_history:
+                fragment = new HistoryFragment();
+                title = getString(R.string.drawer_history);
+                break;
+            case R.id.nav_rankings:
+                fragment = new RankingFragment();
+                title = getString(R.string.drawer_rankings);
+                break;
+            case R.id.nav_prizes:
+                fragment = new PrizesFragment();
+                title = getString(R.string.drawer_prizes);
+                break;
+            case R.id.nav_store:
+                fragment = new StoreFragment();
+                title = getString(R.string.drawer_store);
+                break;
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
+                title = getString(R.string.drawer_settings);
+                break;
         }
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        toolbar.setTitle(title);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

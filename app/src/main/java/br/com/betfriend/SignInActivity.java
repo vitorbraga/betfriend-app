@@ -31,6 +31,7 @@ import com.google.android.gms.plus.model.people.Person;
 
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.JsonResponse;
+import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -49,6 +50,8 @@ public class SignInActivity extends AppCompatActivity implements
     private static final int RC_SIGN_IN = 9001;
 
     private String email = "", personName = "", personPhoto = "", idToken = "";
+
+    private UserDataDTO userData;
 
     private GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
@@ -124,11 +127,13 @@ public class SignInActivity extends AppCompatActivity implements
 
     private void handleSignInResult(GoogleSignInResult result) {
 
+
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        Log.d(TAG, "status:" +  result.getStatus());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText(getString(R.string.app_name, acct.getDisplayName()));
+            mStatusTextView.setText("BetFriend");
 
             idToken = acct.getIdToken();
 
@@ -193,17 +198,19 @@ public class SignInActivity extends AppCompatActivity implements
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.signup(email, personName, personPhoto, idToken, new Callback<JsonResponse>() {
+        api.signup(email, personName, personPhoto, idToken, new Callback<UserDataDTO>() {
 
             @Override
-            public void success(JsonResponse json, Response response) {
+            public void success(UserDataDTO userDataDTO, Response response) {
 
                 Toast.makeText(getApplication(), "Sucess", Toast.LENGTH_SHORT).show();
-                if (json.getCode() == 0) {
+                if (userDataDTO.getCode() == 0) {
                     // New user registered
+                    userData = userDataDTO;
                     updateUI(true);
-                } else if (json.getCode() == 1) {
+                } else if (userDataDTO.getCode() == 1) {
                     // User was already registered
+                    userData = userDataDTO;
                     updateUI(true);
                 }
             }
@@ -271,6 +278,7 @@ public class SignInActivity extends AppCompatActivity implements
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
 
             Intent i = new Intent(SignInActivity.this, MainActivity.class);
+            i.putExtra("USER_DATA_EXTRA", userData);
             startActivity(i);
         } else {
             mStatusTextView.setText("Signed out");

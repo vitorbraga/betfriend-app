@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.SoccerMatch;
+import br.com.betfriend.model.UserDataDTO;
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -18,11 +19,15 @@ public interface ServerApi {
     @FormUrlEncoded
     void signup(@Field("email") String email, @Field("personName") String personName,
                 @Field("personPhoto") String personPhoto, @Field("idToken") String idToken,
-                Callback<JsonResponse> response);
+                Callback<UserDataDTO> response);
 
     @GET("/searchFriend/{personName}")
-    void signup(@Header("Content-Type") String contentType, @Field("personName") String personName,
+    void searchFriend(@Header("Content-Type") String contentType, @Field("personName") String personName,
                 Callback<JsonResponse> response);
+
+    @GET("/getUserData/{email}")
+    void getUserData(@Header("Content-Type") String contentType, @Field("email") String email,
+                      Callback<UserDataDTO> response);
 
 
 }

@@ -3,34 +3,30 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black"
+            android:title="@string/drawer_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_black"
+            android:title="@string/drawer_history" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_rankings"
+            android:icon="@drawable/ic_ranking"
+            android:title="@string/drawer_rankings" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+            android:id="@+id/nav_prizes"
+            android:icon="@drawable/ic_trophy"
+            android:title="@string/drawer_prizes" />
+        <item
+            android:id="@+id/nav_store"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:title="@string/drawer_store" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_setting_dark"
+            android:title="@string/drawer_settings" />
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    </group>
 
 </menu>

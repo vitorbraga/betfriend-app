@@ -1,9 +1,11 @@
 package br.com.betfriend.model;
 
+import android.databinding.BaseObservable;
+
 /**
  * Created by vitorbr on 09/09/16.
  */
-public class JsonResponse {
+public class JsonResponse extends BaseObservable {
 
     private Integer code;
 

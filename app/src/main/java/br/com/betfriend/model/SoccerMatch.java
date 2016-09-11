@@ -13,7 +13,7 @@ public class SoccerMatch {
 
     private String awayTeam;
 
-    private Integer tstamp;
+    private Long tstamp;
 
     public String getHomeTeam() {
         return homeTeam;
@@ -47,11 +47,11 @@ public class SoccerMatch {
         this.awayTeam = awayTeam;
     }
 
-    public Integer getTstamp() {
+    public Long getTstamp() {
         return tstamp;
     }
 
-    public void setTstamp(Integer tstamp) {
+    public void setTstamp(Long tstamp) {
         this.tstamp = tstamp;
     }
 }
