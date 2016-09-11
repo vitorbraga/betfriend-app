@@ -65,18 +65,6 @@ public class HomeFragment extends Fragment {
 
         userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
 
-        TextView nameTextView = (TextView) view.findViewById(R.id.summary_user_name);
-        nameTextView.setText(userData.getPersonName());
-
-        TextView pointsTextView = (TextView) view.findViewById(R.id.summary_points);
-        pointsTextView.setText(userData.getPoints().toString());
-
-        ImageView personPhotoImageView = (ImageView) view.findViewById(R.id.person_photo);
-        Picasso.with(getContext())
-                .load(userData.getPersonPhoto())
-                .transform(new CircleTransformation())
-                .into(personPhotoImageView);
-
         return view;
     }
 

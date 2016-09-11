@@ -12,6 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import br.com.betfriend.databinding.ActivityMainBinding;
 import br.com.betfriend.fragments.HistoryFragment;
@@ -21,6 +26,7 @@ import br.com.betfriend.fragments.RankingFragment;
 import br.com.betfriend.fragments.SettingsFragment;
 import br.com.betfriend.fragments.StoreFragment;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.CircleTransformation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,6 +57,20 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView nameTextView = (TextView) headerView.findViewById(R.id.header_user_name);
+        nameTextView.setText(userData.getPersonName());
+
+        TextView pointsTextView = (TextView) headerView.findViewById(R.id.header_user_points);
+        pointsTextView.setText(userData.getPoints().toString());
+
+        ImageView personPhotoImageView = (ImageView) headerView.findViewById(R.id.header_user_photo);
+        Picasso.with(this)
+                .load(userData.getPersonPhoto())
+                .transform(new CircleTransformation())
+                .into(personPhotoImageView);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("USER_DATA_EXTRA", userData);
@@ -128,6 +148,9 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_home:
                 fragment = new HomeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("USER_DATA_EXTRA", userData);
+                fragment.setArguments(bundle);
                 title = getString(R.string.drawer_home);
                 break;
             case R.id.nav_history:

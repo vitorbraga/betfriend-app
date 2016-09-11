@@ -4,58 +4,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/user_summary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/person_photo"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:id="@+id/summary_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vitor Braga" />
-
-        <TextView
-            android:id="@+id/summary_points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100" />
-    </LinearLayout>
-
     <br.com.betfriend.adapters.AnimatedExpandableListView
         android:id="@+id/matches_list"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/user_summary"
         android:scrollbars="none"
         android:layout_marginTop="10dp"
         android:layoutDirection="rtl"
         android:visibility="gone">
 
-
     </br.com.betfriend.adapters.AnimatedExpandableListView>
-
-    <!--    <ListView
-            android:id="@+id/matches_list"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/user_summary"
-            android:layout_marginTop="10dp"
-            android:visibility="gone">
-        </ListView>-->
 
     <ProgressBar
         android:id="@+id/main_progressbar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_summary"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 

@@ -10,4 +10,20 @@
         android:layout_height="wrap_content"
         android:text="settings"/>
 
+    <Button
+        android:id="@+id/disconnect_account_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_radius"
+        android:text="@string/disconnect_account" />
+
+    <Button
+        android:id="@+id/remove_account_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_radius"
+        android:text="@string/remove_account" />
+
 </LinearLayout>

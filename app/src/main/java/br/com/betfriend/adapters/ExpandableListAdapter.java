@@ -1,10 +1,16 @@
 package br.com.betfriend.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,15 +18,24 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.betfriend.R;
+import br.com.betfriend.StartBetActivity;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.utils.ConvertHelper;
 
 public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
-    static class ViewHolder {
+    static class ViewHolderGroup {
         public TextView homeTeam;
         public TextView awayTeam;
         public TextView matchTime;
+        public TextView matchId;
+    }
+
+    static class ViewHolderChild {
+        public TextView homeTeam;
+        public TextView awayTeam;
+        public Button sendButton;
+        public TextView matchId;
     }
 
     @Override
@@ -34,10 +49,67 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             LayoutInflater inflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.match_list_item, null);
+
+            ViewHolderChild viewHolderChild = new ViewHolderChild();
+            viewHolderChild.homeTeam = (TextView) rowView.findViewById(R.id.radio_team_1);
+            viewHolderChild.awayTeam = (TextView) rowView.findViewById(R.id.radio_team_2);
+            viewHolderChild.sendButton = (Button) rowView.findViewById(R.id.bet_button);
+            viewHolderChild.matchId = (TextView) rowView.findViewById(R.id.match_id);
+
+            rowView.setTag(viewHolderChild);
         }
+
+        ViewHolderChild holder = (ViewHolderChild) rowView.getTag();
+
+        String homeTeam = matches.get(groupPosition).getHomeTeam();
+        String awayTeam = matches.get(groupPosition).getAwayTeam();
+        String matchId = matches.get(groupPosition).getMatchId().toString();
+
+        holder.homeTeam.setText(homeTeam);
+        holder.awayTeam.setText(awayTeam);
+        holder.matchId.setText(matchId);
+
+        holder.sendButton.setOnClickListener(mInviteFriendClickListener);
 
         return rowView;
     }
+
+    private View.OnClickListener mInviteFriendClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            LinearLayout viewParent = (LinearLayout) v.getParent();
+            RadioGroup radioGroup = (RadioGroup) viewParent.findViewById(R.id.radio_group);
+            int checked = radioGroup.getCheckedRadioButtonId();
+            String matchId = ((TextView) viewParent.findViewById(R.id.match_id)).getText().toString();
+            String betOption = "";
+
+            switch(checked) {
+                case R.id.radio_team_1:
+                    Log.d("Checked: ", "team1");
+                    betOption = "1";
+                    break;
+                case R.id.radio_draw:
+                    Log.d("Checked: ", "draw");
+                    betOption = "X";
+                    break;
+                case R.id.radio_team_2:
+                    Log.d("Checked: ", "team2");
+                    betOption = "2";
+                    break;
+                default:
+                    Log.d("Checked: ", "No option selected");
+                    Toast.makeText(context, "Selecione um resultado", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
+            Intent intent = new Intent(context, StartBetActivity.class);
+            intent.putExtra("BET_OPTION_EXTRA", betOption);
+            intent.putExtra("MATCH_ID_EXTRA", matchId);
+            context.startActivity(intent);
+        }
+    };
 
     @Override
     public int getRealChildrenCount(int groupPosition) {
@@ -90,25 +162,28 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             convertView = infalInflater.inflate(R.layout.match_list_group, null);
 
             // configure view holder
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.homeTeam = (TextView) convertView.findViewById(R.id.home_team);
-            viewHolder.awayTeam = (TextView) convertView.findViewById(R.id.away_team);
-            viewHolder.matchTime = (TextView) convertView.findViewById(R.id.match_time);
+            ViewHolderGroup viewHolderGroup = new ViewHolderGroup();
+            viewHolderGroup.homeTeam = (TextView) convertView.findViewById(R.id.home_team);
+            viewHolderGroup.awayTeam = (TextView) convertView.findViewById(R.id.away_team);
+            viewHolderGroup.matchTime = (TextView) convertView.findViewById(R.id.match_time);
+            viewHolderGroup.matchId = (TextView) convertView.findViewById(R.id.match_id);
 
-            convertView.setTag(viewHolder);
+            convertView.setTag(viewHolderGroup);
         }
 
         // fill data
-        ViewHolder holder = (ViewHolder) convertView.getTag();
+        ViewHolderGroup holder = (ViewHolderGroup) convertView.getTag();
 
         String homeTeam = matches.get(groupPosition).getHomeTeam();
         String awayTeam = matches.get(groupPosition).getAwayTeam();
+        String matchId =  matches.get(groupPosition).getMatchId().toString();
         Long tsTamp = matches.get(groupPosition).getTstamp();
 
         Date date = new Date(1000 * tsTamp);
 
         holder.homeTeam.setText(homeTeam);
         holder.awayTeam.setText(awayTeam);
+        holder.matchId.setText(matchId);
         holder.matchTime.setText(ConvertHelper.dateToView(date));
 
         return convertView;
