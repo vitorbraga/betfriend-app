@@ -13,6 +13,11 @@
         android:layout_height="wrap_content"
         android:visibility="gone"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escolha um resultado:"/>
+
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
@@ -30,7 +35,7 @@
             android:button="@null"
             android:gravity="center"
             android:maxLength="12"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textColor="@drawable/rbtn_textcolor_selector" />
 
         <RadioButton
@@ -42,7 +47,7 @@
             android:button="@null"
             android:gravity="center"
             android:maxLength="12"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="Empate"
             android:textColor="@drawable/rbtn_textcolor_selector" />
 
@@ -55,7 +60,7 @@
             android:button="@null"
             android:gravity="center"
             android:maxLength="12"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textColor="@drawable/rbtn_textcolor_selector" />
     </RadioGroup>
 
@@ -65,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_radius"
-        android:text="Convidar amigo" />
+        android:textColor="@color/white"
+        android:text="Apostar com um amigo!" />
 
 </LinearLayout>

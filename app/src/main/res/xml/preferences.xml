@@ -1,0 +1,47 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Privacidade">
+
+        <CheckBoxPreference
+            android:key="key_visible"
+            android:title="Visível para apostas"
+            android:summary="Outros usuários poderão te convidar para apostar"
+            android:defaultValue="true"/>
+
+        <!--<EditTextPreference-->
+            <!--android:key="edittext_preference"-->
+            <!--android:title="titulo edittext"-->
+            <!--android:summary="summary edit text"-->
+            <!--android:dialogTitle="dialog title"-->
+            <!--android:dependency="checkbox_preference" />-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Gerenciar conta">
+
+        <!--<ListPreference-->
+            <!--android:key="list_preference"-->
+            <!--android:title="title list preference"-->
+            <!--android:dialogTitle="dialog title list pref"-->
+            <!--android:entries="@array/entries_list_preference"-->
+            <!--android:entryValues="@array/entryvalues_list_preference" />-->
+
+        <Preference
+            android:title="Desconectar conta Google"
+            android:key="disconnect_account">
+            <!--<intent android:action="android.intent.action.VIEW"-->
+                <!--android:data="http://codepath.com/" />-->
+        </Preference>
+
+        <Preference
+            android:title="Remover conta"
+            android:key="remove_account">
+            <!--<intent android:action="android.intent.action.VIEW"-->
+                <!--android:data="http://codepath.com/" />-->
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

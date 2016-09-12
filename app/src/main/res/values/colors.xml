@@ -8,9 +8,13 @@
     <color name="blue_grey_700">#455A64</color>
     <color name="blue_grey_800">#37474F</color>
     <color name="blue_grey_900">#263238</color>
+    <color name="grey">#b3b3b3</color>
+    <color name="white">#FFFFFF</color>
 
     <!-- App theme colors -->
     <color name="app_red">#F95738</color>
+    <color name="app_red_center">#CFF95738</color>
+    <color name="app_red_light">#AAF95738</color>
     <color name="app_dark_green">#B7F0AD</color>
     <color name="app_light_green">#D2FF96</color>
     <color name="app_yellow">#EDFF7A</color>

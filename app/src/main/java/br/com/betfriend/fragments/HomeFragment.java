@@ -38,7 +38,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends android.app.Fragment {
 
     private AnimatedExpandableListView matchesListView;
 

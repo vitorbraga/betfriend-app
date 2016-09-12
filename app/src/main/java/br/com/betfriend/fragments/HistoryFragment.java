@@ -13,7 +13,7 @@ import android.widget.TextView;
 import br.com.betfriend.R;
 import retrofit.RestAdapter;
 
-public class HistoryFragment extends Fragment {
+public class HistoryFragment extends android.app.Fragment {
 
     public HistoryFragment() {
         // Required empty public constructor

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         nameTextView.setText(userData.getPersonName());
 
         TextView pointsTextView = (TextView) headerView.findViewById(R.id.header_user_points);
-        pointsTextView.setText(userData.getPoints().toString());
+        pointsTextView.setText(getString(R.string.user_points, userData.getPoints().toString()));
 
         ImageView personPhotoImageView = (ImageView) headerView.findViewById(R.id.header_user_photo);
         Picasso.with(this)
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         bundle.putSerializable("USER_DATA_EXTRA", userData);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = new HomeFragment();
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+        android.app.Fragment fragment = new HomeFragment();
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         getSupportActionBar().setTitle(getString(R.string.drawer_home));
@@ -138,9 +138,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.app.FragmentManager fragmentManager = getFragmentManager();
 
-        Fragment fragment = null;
+        android.app.Fragment fragment = null;
         String title = "";
 
         int id = item.getItemId();

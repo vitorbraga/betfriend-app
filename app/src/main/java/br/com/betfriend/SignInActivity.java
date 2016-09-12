@@ -2,11 +2,7 @@ package br.com.betfriend;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,11 +19,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.plus.Plus;
 
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.UserDataDTO;
-import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -70,7 +64,7 @@ public class SignInActivity extends AppCompatActivity implements
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).addApi(Plus.API)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         // Button listeners
@@ -147,8 +141,10 @@ public class SignInActivity extends AppCompatActivity implements
 
     private void callSignUp() {
 
+        showProgressDialog();
+
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+                .setEndpoint(getString(R.string.server_uri)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
@@ -170,6 +166,7 @@ public class SignInActivity extends AppCompatActivity implements
 
             @Override
             public void failure(RetrofitError error) {
+                hideProgressDialog();
                 Toast.makeText(getApplication(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
@@ -227,6 +224,7 @@ public class SignInActivity extends AppCompatActivity implements
     private void updateUI(boolean signedIn) {
 
         if (signedIn) {
+            hideProgressDialog();
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
 

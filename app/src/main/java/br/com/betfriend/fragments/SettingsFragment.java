@@ -1,73 +1,72 @@
 package br.com.betfriend.fragments;
 
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import br.com.betfriend.R;
 
-public class SettingsFragment extends Fragment {
-
-    private Button mDisconnectAccountButton, mRemoveAccountButton;
-
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
+public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-    }
+        addPreferencesFromResource(R.xml.preferences);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_settings, container, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean visible = prefs.getBoolean("key_visible", true);
 
-        mDisconnectAccountButton = (Button) view.findViewById(R.id.disconnect_account_button);
-        mRemoveAccountButton = (Button) view.findViewById(R.id.remove_account_button);
+        prefs.edit().putBoolean("key_visible", visible).apply();
 
-        mDisconnectAccountButton.setOnClickListener(disconnectAccount);
-        mRemoveAccountButton.setOnClickListener(removeAccount);
+        Preference disconnectAccountPref= findPreference("disconnect_account");
+        disconnectAccountPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                String key = preference.getKey();
+                Log.d("key:", key);
+                Toast.makeText(getActivity(), "disconnect", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
-        return view;
-    }
+        Preference removeAccountPref= findPreference("remove_account");
+        removeAccountPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                String key = preference.getKey();
+                Log.d("key:", key);
+                Toast.makeText(getActivity(), "remove", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+        getActivity().setTheme(R.style.PreferencesTheme);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onPause() {
+        super.onPause();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    private View.OnClickListener disconnectAccount = new View.OnClickListener() {
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(getContext(), "Disconnect account", Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    private View.OnClickListener removeAccount = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(getContext(), "Remove account", Toast.LENGTH_SHORT).show();
-        }
-    };
-
+        Log.d("key:", key);
+        Toast.makeText(getActivity(), "key", Toast.LENGTH_SHORT).show();
+    }
 }
+
+
