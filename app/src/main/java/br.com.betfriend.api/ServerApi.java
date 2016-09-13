@@ -15,6 +15,13 @@ import retrofit.http.Path;
 
 public interface ServerApi {
 
+    // quando usar self, init, orientação objetos,
+//    srcPerson: srcPerson,
+//    destPerson: destPerson,
+//    matchId: matchId,
+//    option: option,
+//    amount: amount,
+
     @POST("/signup/")
     @FormUrlEncoded
     void signup(@Field("personId") String personId, @Field("email") String email, @Field("personName") String personName,
@@ -29,5 +36,23 @@ public interface ServerApi {
     void getUserData(@Header("Content-Type") String contentType, @Field("personId") String personId,
                       Callback<UserDataDTO> response);
 
+
+    @POST("/inviteToBet/")
+    @FormUrlEncoded
+    void inviteToBet(@Field("srcPerson") String srcPerson, @Field("destPerson") String destPerson, @Field("matchId") String matchId,
+                @Field("option") String option, @Field("amount") Integer amount,
+                Callback<JsonResponse> response);
+
+    @POST("/acceptBet/")
+    @FormUrlEncoded
+    void acceptBet(@Field("betId") String betId, @Field("srcPerson") String srcPerson, @Field("destPerson") String destPerson,
+                   @Field("matchId") String matchId, @Field("option") String option, @Field("amount") Integer amount,
+                   Callback<JsonResponse> response);
+
+    @POST("/refuseBet/")
+    @FormUrlEncoded
+    void refuseBet(@Field("betId") String betId, @Field("srcPerson") String srcPerson, @Field("destPerson") String destPerson,
+                   @Field("matchId") String matchId, @Field("amount") Integer amount,
+                   Callback<JsonResponse> response);
 
 }
