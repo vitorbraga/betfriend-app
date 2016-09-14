@@ -7,8 +7,11 @@ import android.widget.Toast;
 
 public class StartBetActivity extends Activity {
 
-    private String betOption;
-    private String matchId;
+    private String mBetOption;
+
+    private String mMatchId;
+
+    private int mAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,9 +19,11 @@ public class StartBetActivity extends Activity {
         setContentView(R.layout.activity_start_bet);
 
         Intent intent = getIntent();
-        betOption = intent.getStringExtra("BET_OPTION_EXTRA");
-        matchId = intent.getStringExtra("MATCH_ID_EXTRA");
+        mBetOption = intent.getStringExtra("BET_OPTION_EXTRA");
+        mMatchId = intent.getStringExtra("MATCH_ID_EXTRA");
+        mAmount = intent.getIntExtra("AMOUNT", -1);
 
-        Toast.makeText(getApplicationContext(), matchId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), mAmount+"", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), mMatchId, Toast.LENGTH_SHORT).show();
     }
 }

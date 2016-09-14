@@ -2,14 +2,18 @@ package br.com.betfriend.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ import java.util.List;
 import br.com.betfriend.R;
 import br.com.betfriend.StartBetActivity;
 import br.com.betfriend.model.SoccerMatch;
+import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.ConvertHelper;
 import br.com.betfriend.utils.TeamsDataEnum;
@@ -43,6 +48,8 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         public TextView awayTeam;
         public Button sendButton;
         public TextView matchId;
+        public SeekBar seekBar;
+        public EditText betValue;
     }
 
     @Override
@@ -62,19 +69,63 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             viewHolderChild.awayTeam = (TextView) rowView.findViewById(R.id.radio_team_2);
             viewHolderChild.sendButton = (Button) rowView.findViewById(R.id.bet_button);
             viewHolderChild.matchId = (TextView) rowView.findViewById(R.id.match_id);
+            viewHolderChild.seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
+            viewHolderChild.betValue = (EditText) rowView.findViewById(R.id.bet_value);
 
             rowView.setTag(viewHolderChild);
         }
 
-        ViewHolderChild holder = (ViewHolderChild) rowView.getTag();
+        final ViewHolderChild holder = (ViewHolderChild) rowView.getTag();
 
-        String homeTeam = matches.get(groupPosition).getHomeTeam();
-        String awayTeam = matches.get(groupPosition).getAwayTeam();
+        String homeTeam = matches.get(groupPosition).getHomeTeam().trim();
+        String awayTeam = matches.get(groupPosition).getAwayTeam().trim();
         String matchId = matches.get(groupPosition).getMatchId().toString();
 
-        holder.homeTeam.setText(homeTeam);
-        holder.awayTeam.setText(awayTeam);
+        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).correctName());
+        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).correctName());
         holder.matchId.setText(matchId);
+
+        holder.seekBar.setMax(userData.getPoints());
+        holder.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            int progress = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                progress = progressValue;
+                holder.betValue.setText(progress + "");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        holder.betValue.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.toString().equals("")) {
+                    holder.seekBar.setProgress(0);
+                } else {
+                    holder.seekBar.setProgress(Integer.parseInt(s.toString()));
+                }
+            }
+
+        });
 
         holder.sendButton.setOnClickListener(mInviteFriendClickListener);
 
@@ -89,9 +140,20 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             LinearLayout viewParent = (LinearLayout) v.getParent();
             RadioGroup radioGroup = (RadioGroup) viewParent.findViewById(R.id.radio_group);
             int checked = radioGroup.getCheckedRadioButtonId();
+
+            SeekBar seekBar = (SeekBar) viewParent.findViewById(R.id.seek_bar);
+            int amount = seekBar.getProgress();
+
+            // Validation amount
+            if(amount == 0 || amount > userData.getPoints()) {
+                Toast.makeText(context, "Valor não permitido para aposta.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String matchId = ((TextView) viewParent.findViewById(R.id.match_id)).getText().toString();
             String betOption = "";
 
+            // Validation result choice
             switch(checked) {
                 case R.id.radio_team_1:
                     Log.d("Checked: ", "team1");
@@ -108,12 +170,13 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
                 default:
                     Log.d("Checked: ", "No option selected");
                     Toast.makeText(context, "Selecione um resultado", Toast.LENGTH_SHORT).show();
-                    break;
+                    return;
             }
 
             Intent intent = new Intent(context, StartBetActivity.class);
             intent.putExtra("BET_OPTION_EXTRA", betOption);
             intent.putExtra("MATCH_ID_EXTRA", matchId);
+            intent.putExtra("AMOUNT", amount);
             context.startActivity(intent);
         }
     };
@@ -127,11 +190,14 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
 
     private ArrayList<SoccerMatch> matches;
 
+    private UserDataDTO userData;
+
     private HashMap<String, List<String>> _listDataChild;
 
-    public ExpandableListAdapter(Context context, ArrayList<SoccerMatch> matches) {
+    public ExpandableListAdapter(Context context, ArrayList<SoccerMatch> matches, UserDataDTO userData) {
         this.context = context;
         this.matches = matches;
+        this.userData = userData;
     }
 
     @Override

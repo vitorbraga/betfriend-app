@@ -12,6 +12,8 @@
     <color name="grey">#b3b3b3</color>
     <color name="white">#FFFFFF</color>
     <color name="black_grey">#444444</color>
+    <color name="radio_checked">#D6D6D6</color>
+    <color name="radio_unchecked">#F7F6F6</color>
 
     <!-- App theme colors -->
     <color name="app_green">#33691E</color>

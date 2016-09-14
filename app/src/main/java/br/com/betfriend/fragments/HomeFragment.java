@@ -1,27 +1,13 @@
 package br.com.betfriend.fragments;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 
@@ -31,7 +17,6 @@ import br.com.betfriend.adapters.ExpandableListAdapter;
 import br.com.betfriend.api.SoccerApi;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
-import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -42,7 +27,7 @@ public class HomeFragment extends android.app.Fragment {
 
     private AnimatedExpandableListView matchesListView;
 
-    private ProgressBar spinner;
+    private ProgressBar mSpinner;
 
     private UserDataDTO userData;
 
@@ -97,7 +82,7 @@ public class HomeFragment extends android.app.Fragment {
 
         });
 
-        spinner = (ProgressBar) getView().findViewById(R.id.main_progressbar);
+        mSpinner = (ProgressBar) getView().findViewById(R.id.main_progressbar);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.SOCCER_API_BASE_URI).build();
@@ -110,9 +95,9 @@ public class HomeFragment extends android.app.Fragment {
             public void success(ArrayList<SoccerMatch> matches, Response response) {
 
                 matchesListView.setVisibility(View.VISIBLE);
-                spinner.setVisibility(View.GONE);
+                mSpinner.setVisibility(View.GONE);
 
-                ExpandableListAdapter matchesAdapter = new ExpandableListAdapter(getActivity(), matches);
+                ExpandableListAdapter matchesAdapter = new ExpandableListAdapter(getActivity(), matches, userData);
                 matchesListView.setAdapter(matchesAdapter);
             }
 
