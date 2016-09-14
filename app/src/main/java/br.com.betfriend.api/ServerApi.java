@@ -1,9 +1,6 @@
 package br.com.betfriend.api;
 
-import java.util.ArrayList;
-
 import br.com.betfriend.model.JsonResponse;
-import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -11,16 +8,9 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
-import retrofit.http.Path;
 
 public interface ServerApi {
 
-    // quando usar self, init, orientação objetos,
-//    srcPerson: srcPerson,
-//    destPerson: destPerson,
-//    matchId: matchId,
-//    option: option,
-//    amount: amount,
 
     @POST("/signup/")
     @FormUrlEncoded

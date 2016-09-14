@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +23,9 @@ import java.util.List;
 import br.com.betfriend.R;
 import br.com.betfriend.StartBetActivity;
 import br.com.betfriend.model.SoccerMatch;
+import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.ConvertHelper;
+import br.com.betfriend.utils.TeamsDataEnum;
 
 public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
@@ -29,6 +34,8 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         public TextView awayTeam;
         public TextView matchTime;
         public TextView matchId;
+        public ImageView homeLogo;
+        public ImageView awayLogo;
     }
 
     static class ViewHolderChild {
@@ -167,6 +174,8 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             viewHolderGroup.awayTeam = (TextView) convertView.findViewById(R.id.away_team);
             viewHolderGroup.matchTime = (TextView) convertView.findViewById(R.id.match_time);
             viewHolderGroup.matchId = (TextView) convertView.findViewById(R.id.match_id);
+            viewHolderGroup.homeLogo = (ImageView) convertView.findViewById(R.id.home_logo);
+            viewHolderGroup.awayLogo = (ImageView) convertView.findViewById(R.id.away_logo);
 
             convertView.setTag(viewHolderGroup);
         }
@@ -174,17 +183,27 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         // fill data
         ViewHolderGroup holder = (ViewHolderGroup) convertView.getTag();
 
-        String homeTeam = matches.get(groupPosition).getHomeTeam();
-        String awayTeam = matches.get(groupPosition).getAwayTeam();
+        String homeTeam = matches.get(groupPosition).getHomeTeam().trim();
+        String awayTeam = matches.get(groupPosition).getAwayTeam().trim();
         String matchId =  matches.get(groupPosition).getMatchId().toString();
         Long tsTamp = matches.get(groupPosition).getTstamp();
 
         Date date = new Date(1000 * tsTamp);
 
-        holder.homeTeam.setText(homeTeam);
-        holder.awayTeam.setText(awayTeam);
+        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).label());
+        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).label());
         holder.matchId.setText(matchId);
         holder.matchTime.setText(ConvertHelper.dateToView(date));
+
+        Picasso.with(context)
+                .load(TeamsDataEnum.get(homeTeam).logo())
+                .fit()
+                .into(holder.homeLogo);
+
+        Picasso.with(context)
+                .load(TeamsDataEnum.get(awayTeam).logo())
+                .fit()
+                .into(holder.awayLogo);
 
         return convertView;
     }
