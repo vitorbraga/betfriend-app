@@ -34,6 +34,14 @@ import br.com.betfriend.utils.TeamsDataEnum;
 
 public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
+    private final Context context;
+
+    private ArrayList<SoccerMatch> matches;
+
+    private UserDataDTO userData;
+
+    private HashMap<String, List<String>> _listDataChild;
+
     static class ViewHolderGroup {
         public TextView homeTeam;
         public TextView awayTeam;
@@ -132,6 +140,17 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         return rowView;
     }
 
+    private static SoccerMatch getMatchById(Integer matchId, ArrayList<SoccerMatch> matches) {
+
+        for(SoccerMatch sm : matches) {
+            if(sm.getMatchId().equals(matchId)) {
+                return sm;
+            }
+        }
+
+        return null;
+    }
+
     private View.OnClickListener mInviteFriendClickListener = new View.OnClickListener() {
 
         @Override
@@ -152,6 +171,8 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
 
             String matchId = ((TextView) viewParent.findViewById(R.id.match_id)).getText().toString();
             String betOption = "";
+
+            SoccerMatch match = getMatchById(Integer.parseInt(matchId), matches);
 
             // Validation result choice
             switch(checked) {
@@ -176,7 +197,9 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             Intent intent = new Intent(context, StartBetActivity.class);
             intent.putExtra("BET_OPTION_EXTRA", betOption);
             intent.putExtra("MATCH_ID_EXTRA", matchId);
+            intent.putExtra("MATCH_EXTRA", match);
             intent.putExtra("AMOUNT", amount);
+            intent.putExtra("USER_DATA_EXTRA", userData);
             context.startActivity(intent);
         }
     };
@@ -185,14 +208,6 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
     public int getRealChildrenCount(int groupPosition) {
         return 1;
     }
-
-    private final Context context;
-
-    private ArrayList<SoccerMatch> matches;
-
-    private UserDataDTO userData;
-
-    private HashMap<String, List<String>> _listDataChild;
 
     public ExpandableListAdapter(Context context, ArrayList<SoccerMatch> matches, UserDataDTO userData) {
         this.context = context;

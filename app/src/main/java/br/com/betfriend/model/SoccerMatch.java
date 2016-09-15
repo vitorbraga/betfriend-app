@@ -1,9 +1,11 @@
 package br.com.betfriend.model;
 
+import java.io.Serializable;
+
 /**
  * Created by vitorbr on 08/09/16.
  */
-public class SoccerMatch {
+public class SoccerMatch implements Serializable{
 
     private Integer matchId;
 
