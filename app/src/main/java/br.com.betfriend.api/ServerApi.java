@@ -26,9 +26,8 @@ public interface ServerApi {
                 Callback<ArrayList<UserDataDTO>> response);
 
     @GET("/getUserData/{personId}")
-    void getUserData(@Header("Content-Type") String contentType, @Field("personId") String personId,
+    void getUserData(@Header("Content-Type") String contentType, @Path("personId") String personId,
                       Callback<UserDataDTO> response);
-
 
     @POST("/inviteToBet/")
     @FormUrlEncoded

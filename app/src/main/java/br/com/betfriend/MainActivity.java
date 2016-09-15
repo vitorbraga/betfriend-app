@@ -1,10 +1,10 @@
 package br.com.betfriend;
 
-import android.databinding.DataBindingUtil;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,12 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import br.com.betfriend.databinding.ActivityMainBinding;
+import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.fragments.HistoryFragment;
 import br.com.betfriend.fragments.HomeFragment;
 import br.com.betfriend.fragments.PrizesFragment;
@@ -27,24 +30,35 @@ import br.com.betfriend.fragments.SettingsFragment;
 import br.com.betfriend.fragments.StoreFragment;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
 
-    private UserDataDTO userData;
+    private UserDataDTO mUserData;
+
+    private NavigationView mNavigationView;
+
+    private ProgressBar mProgressBar;
+
+    private FrameLayout mFrameLayout;
+
+    private String mPersonId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        userData = (UserDataDTO) getIntent().getSerializableExtra("USER_DATA_EXTRA");
-
-        binding.setUser(userData);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        mPersonId = sharedPref.getString("PERSON_ID", "");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,56 +69,65 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-        View headerView = navigationView.getHeaderView(0);
+        mProgressBar = (ProgressBar) findViewById(R.id.main_progressbar);
 
-        TextView nameTextView = (TextView) headerView.findViewById(R.id.header_user_name);
-        nameTextView.setText(userData.getPersonName());
+        mFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
-        TextView pointsTextView = (TextView) headerView.findViewById(R.id.header_user_points);
-        pointsTextView.setText(getString(R.string.user_points, userData.getPoints().toString()));
-
-        ImageView personPhotoImageView = (ImageView) headerView.findViewById(R.id.header_user_photo);
-        Picasso.with(this)
-                .load(userData.getPersonPhoto())
-                .transform(new CircleTransformation())
-                .into(personPhotoImageView);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("USER_DATA_EXTRA", userData);
-
-        android.app.FragmentManager fragmentManager = getFragmentManager();
-        android.app.Fragment fragment = new HomeFragment();
-        fragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        getSupportActionBar().setTitle(getString(R.string.drawer_home));
     }
 
     @Override
     protected void onResume() {
+
         super.onResume();
 
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
-//
-//        ServerApi api = restAdapter.create(ServerApi.class);
-//
-//        api.getUserData("application/json", userData.getEmail(), new Callback<UserDataDTO>() {
-//
-//            @Override
-//            public void success(UserDataDTO userDataDTO, Response response) {
-//
-//                Toast.makeText(getApplication(), "userdata Sucess", Toast.LENGTH_SHORT).show();
-//                userData = userDataDTO;
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Toast.makeText(getApplication(), "Fail", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getString(R.string.server_uri)).build();
+
+        ServerApi api = restAdapter.create(ServerApi.class);
+
+        api.getUserData("application/json", mPersonId, new Callback<UserDataDTO>() {
+
+            @Override
+            public void success(UserDataDTO user, Response response) {
+
+                mUserData = user;
+
+                View headerView = mNavigationView.getHeaderView(0);
+
+                TextView nameTextView = (TextView) headerView.findViewById(R.id.header_user_name);
+                nameTextView.setText(mUserData.getPersonName());
+
+                TextView pointsTextView = (TextView) headerView.findViewById(R.id.header_user_points);
+                pointsTextView.setText(getString(R.string.user_points, mUserData.getPoints().toString()));
+
+                ImageView personPhotoImageView = (ImageView) headerView.findViewById(R.id.header_user_photo);
+                Picasso.with(getApplicationContext())
+                        .load(mUserData.getPersonPhoto())
+                        .transform(new CircleTransformation())
+                        .into(personPhotoImageView);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("USER_DATA_EXTRA", mUserData);
+
+                mProgressBar.setVisibility(View.GONE);
+                mFrameLayout.setVisibility(View.VISIBLE);
+
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                android.app.Fragment fragment = new HomeFragment();
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                getSupportActionBar().setTitle(getString(R.string.drawer_home));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplication(), "retorfit erro user", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -149,7 +172,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("USER_DATA_EXTRA", userData);
+                bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);
                 title = getString(R.string.drawer_home);
                 break;

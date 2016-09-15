@@ -20,11 +20,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
+import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.ConvertHelper;
 import br.com.betfriend.utils.TeamsDataEnum;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class StartBetActivity extends AppCompatActivity {
 
@@ -97,9 +103,9 @@ public class StartBetActivity extends AppCompatActivity {
 
         mDrawButton = (RadioButton) findViewById(R.id.radio_draw);
 
-        if(mBetOption.equals("1")) {
+        if (mBetOption.equals("1")) {
             mHomeButton.setChecked(true);
-        } else if(mBetOption.equals("2")) {
+        } else if (mBetOption.equals("2")) {
             mAwayButton.setChecked(true);
         } else {
             mDrawButton.setChecked(true);
@@ -121,6 +127,7 @@ public class StartBetActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
                 mBetValue.setText(progress + "");
+                mAmount = progress;
             }
 
             @Override
@@ -172,6 +179,36 @@ public class StartBetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "MAKE BET", Toast.LENGTH_SHORT).show();
+
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(getString(R.string.server_uri)).build();
+
+                ServerApi api = restAdapter.create(ServerApi.class);
+
+                api.inviteToBet(mUserData.getPersonId(), mFriend.getPersonId(), mMatch.getMatchId().toString(),
+                        mBetOption, mAmount, new Callback<JsonResponse>() {
+
+                    @Override
+                    public void success(JsonResponse json, Response response) {
+
+                        if (json.getCode() == 0) {
+                            // New user registered
+                            // success
+                            Intent intent = new Intent(getApplicationContext(), BetCompleteActivity.class);
+                            intent.putExtra("PERSON_ID_EXTRA", mUserData.getPersonId());
+                            startActivity(intent);
+                        } else {
+                            // User was already registered
+                            // failure
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(getApplication(), "Fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
     }

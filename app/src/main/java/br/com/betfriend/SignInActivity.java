@@ -1,8 +1,12 @@
 package br.com.betfriend;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +47,7 @@ public class SignInActivity extends AppCompatActivity implements
 
     private UserDataDTO userData;
 
+    private Activity mContext;
     private GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
@@ -51,6 +56,8 @@ public class SignInActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+        mContext = this;
 
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
@@ -153,15 +160,16 @@ public class SignInActivity extends AppCompatActivity implements
             @Override
             public void success(UserDataDTO userDataDTO, Response response) {
 
-                if (userDataDTO.getCode() == 0) {
-                    // New user registered
-                    userData = userDataDTO;
-                    updateUI(true);
-                } else if (userDataDTO.getCode() == 1) {
-                    // User was already registered
-                    userData = userDataDTO;
-                    updateUI(true);
-                }
+                // TODO Handle results
+                // New user registered
+                userData = userDataDTO;
+
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("PERSON_ID", userData.getPersonId());
+                editor.commit();
+
+                updateUI(true);
             }
 
             @Override
