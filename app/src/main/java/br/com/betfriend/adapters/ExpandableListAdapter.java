@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.betfriend.R;
+import br.com.betfriend.SearchFriendActivity;
 import br.com.betfriend.StartBetActivity;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
@@ -39,8 +40,6 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
     private ArrayList<SoccerMatch> matches;
 
     private UserDataDTO userData;
-
-    private HashMap<String, List<String>> _listDataChild;
 
     static class ViewHolderGroup {
         public TextView homeTeam;
@@ -194,9 +193,8 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
                     return;
             }
 
-            Intent intent = new Intent(context, StartBetActivity.class);
+            Intent intent = new Intent(context, SearchFriendActivity.class);
             intent.putExtra("BET_OPTION_EXTRA", betOption);
-            intent.putExtra("MATCH_ID_EXTRA", matchId);
             intent.putExtra("MATCH_EXTRA", match);
             intent.putExtra("AMOUNT", amount);
             intent.putExtra("USER_DATA_EXTRA", userData);

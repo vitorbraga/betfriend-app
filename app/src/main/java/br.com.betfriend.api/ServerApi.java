@@ -1,5 +1,7 @@
 package br.com.betfriend.api;
 
+import java.util.ArrayList;
+
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.UserDataDTO;
 import retrofit.Callback;
@@ -8,6 +10,7 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
+import retrofit.http.Path;
 
 public interface ServerApi {
 
@@ -19,8 +22,8 @@ public interface ServerApi {
                 Callback<UserDataDTO> response);
 
     @GET("/searchFriend/{personName}")
-    void searchFriend(@Header("Content-Type") String contentType, @Field("personName") String personName,
-                Callback<JsonResponse> response);
+    void searchFriend(@Header("Content-Type") String contentType, @Path("personName") String personName,
+                Callback<ArrayList<UserDataDTO>> response);
 
     @GET("/getUserData/{personId}")
     void getUserData(@Header("Content-Type") String contentType, @Field("personId") String personId,

@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import java.util.Date;
 
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.ConvertHelper;
 import br.com.betfriend.utils.TeamsDataEnum;
 
@@ -26,7 +30,7 @@ public class StartBetActivity extends AppCompatActivity {
 
     private String mBetOption;
 
-    private String mMatchId;
+    private UserDataDTO mFriend;
 
     private SoccerMatch mMatch;
 
@@ -34,14 +38,16 @@ public class StartBetActivity extends AppCompatActivity {
 
     private int mAmount;
 
-    private TextView matchTime, homeTeamLabel, awayTeamLabel;
+    private TextView matchTime, homeTeamLabel, awayTeamLabel, friendName, friendPoints;
     private RadioButton mHomeButton, mAwayButton, mDrawButton;
     private SeekBar mSeekBar;
     private EditText mBetValue;
-    private ImageView homeLogo, awayLogo;
+    private ImageView homeLogo, awayLogo, friendPhoto;
+    private Button makeBet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_bet);
 
@@ -51,10 +57,10 @@ public class StartBetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mBetOption = intent.getStringExtra("BET_OPTION_EXTRA");
-        mMatchId = intent.getStringExtra("MATCH_ID_EXTRA");
         mAmount = intent.getIntExtra("AMOUNT", -1);
         mMatch = (SoccerMatch) intent.getSerializableExtra("MATCH_EXTRA");
         mUserData = (UserDataDTO) intent.getSerializableExtra("USER_DATA_EXTRA");
+        mFriend = (UserDataDTO) intent.getSerializableExtra("FRIEND_EXTRA");
 
         String homeTeam = mMatch.getHomeTeam().trim();
         String awayTeam = mMatch.getAwayTeam().trim();
@@ -102,6 +108,7 @@ public class StartBetActivity extends AppCompatActivity {
         mBetValue = (EditText) findViewById(R.id.bet_value);
         mBetValue.setText(mAmount + "");
 
+        // Bet amount container
         mSeekBar = (SeekBar) findViewById(R.id.seek_bar);
         mSeekBar.setProgress(mAmount);
         mSeekBar.setMax(mUserData.getPoints());
@@ -138,14 +145,34 @@ public class StartBetActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(s.toString().equals("")) {
+                if (s.toString().equals("")) {
                     mSeekBar.setProgress(0);
                 } else {
                     mSeekBar.setProgress(Integer.parseInt(s.toString()));
                 }
             }
-
         });
 
+        // Friend container
+        friendPhoto = (ImageView) findViewById(R.id.friend_photo);
+        Picasso.with(getApplicationContext())
+                .load(mFriend.getPersonPhoto())
+                .transform(new CircleTransformation())
+                .into(friendPhoto);
+
+        friendName = (TextView) findViewById(R.id.friend_name);
+        friendName.setText(mFriend.getPersonName());
+
+        friendPoints = (TextView) findViewById(R.id.friend_points);
+        friendPoints.setText(getString(R.string.user_points, mFriend.getPoints().toString()));
+
+        // Make bet button
+        makeBet = (Button) findViewById(R.id.make_bet_button);
+        makeBet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "MAKE BET", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
+    android:padding="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".StartBetActivity"
     tools:showIn="@layout/activity_start_bet">
@@ -95,6 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/logos_container"
+        android:layout_marginTop="10dp"
         android:layoutDirection="ltr"
         android:orientation="vertical"
         android:padding="10dp">
@@ -165,6 +165,7 @@
             android:text="@string/bet_value" />
 
         <LinearLayout
+            android:id="@+id/bet_amount_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -189,17 +190,70 @@
                 android:textAlignment="center" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@id/radio_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_friend" />
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:text="@string/bet_with" />
+
+        <LinearLayout
+            android:id="@+id/friend_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="start">
+
+                <ImageView
+                    android:id="@+id/friend_photo"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.8"
+                android:orientation="vertical"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:id="@+id/friend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/friend_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/make_bet_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_radius_green"
+        android:textColor="@color/white"
+        android:text="@string/make_bet"/>
+
 </RelativeLayout>
