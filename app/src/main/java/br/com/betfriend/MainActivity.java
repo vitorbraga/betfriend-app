@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity
                 fragment.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
                 getSupportActionBar().setTitle(getString(R.string.drawer_home));
+                mNavigationView.getMenu().getItem(0).setChecked(true);
             }
 
             @Override
