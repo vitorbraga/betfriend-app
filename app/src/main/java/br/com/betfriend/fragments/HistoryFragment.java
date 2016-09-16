@@ -1,51 +1,43 @@
 package br.com.betfriend.fragments;
 
-import android.content.Context;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import br.com.betfriend.R;
-import retrofit.RestAdapter;
 
-public class HistoryFragment extends android.app.Fragment {
+public class HistoryFragment extends Fragment {
 
+    private FragmentTabHost mTabHost;
+
+    //Mandatory Constructor
     public HistoryFragment() {
-        // Required empty public constructor
     }
 
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+            Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_history,container, false);
+
+        mTabHost = (FragmentTabHost) rootView.findViewById(R.id.tabhost);
+
+        mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
+
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("Pendentes"),
+                PendingTabFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Finalizadas"),
+                FinishedTabFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Todas"),
+                PendingTabFragment.class, null);
+
+        return rootView;
     }
-
-    @Override
-    public void onResume() {
-
-        super.onResume();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-
 }

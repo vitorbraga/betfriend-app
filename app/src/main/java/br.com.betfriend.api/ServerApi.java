@@ -47,4 +47,16 @@ public interface ServerApi {
                    @Field("matchId") String matchId, @Field("amount") Integer amount,
                    Callback<JsonResponse> response);
 
+    @GET("/getPendingBets/{personId}")
+    void getPendingBets(@Header("Content-Type") String contentType, @Path("personId") String personId,
+                      Callback<ArrayList<UserDataDTO>> response);
+
+    @GET("/getFinishedBets/{personId}")
+    void getFinishedBets(@Header("Content-Type") String contentType, @Path("personId") String personId,
+                        Callback<ArrayList<UserDataDTO>> response);
+
+    @GET("/getAllBets/{personId}")
+    void getAllBets(@Header("Content-Type") String contentType, @Path("personId") String personId,
+                         Callback<ArrayList<UserDataDTO>> response);
+
 }

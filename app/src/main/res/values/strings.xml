@@ -139,5 +139,10 @@
     <!-- Confirm bet activity -->
     <string name="confirm_bet">Confirmar aposta</string>
 
+    <!-- History fragment -->
+    <string name="pending_tab">Pendentes</string>
+    <string name="finished_tab">Finalizadas</string>
+    <string name="all_tab">Todas</string>
+
 </resources>
 
