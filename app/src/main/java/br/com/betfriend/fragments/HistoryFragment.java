@@ -36,7 +36,7 @@ public class HistoryFragment extends Fragment {
         mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Finalizadas"),
                 FinishedTabFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Todas"),
-                PendingTabFragment.class, null);
+                AllTabFragment.class, null);
 
         return rootView;
     }

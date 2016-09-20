@@ -1,6 +1,7 @@
 package br.com.betfriend;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity
 
         mFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
+        Intent i = new Intent(this, BetInvitationService.class);
+        startService(i);
     }
 
     @Override
@@ -121,6 +124,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
                 getSupportActionBar().setTitle(getString(R.string.drawer_home));
                 mNavigationView.getMenu().getItem(0).setChecked(true);
+
             }
 
             @Override
@@ -169,7 +173,7 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 Bundle bundle = new Bundle();

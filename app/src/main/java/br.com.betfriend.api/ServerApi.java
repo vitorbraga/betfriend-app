@@ -2,7 +2,10 @@ package br.com.betfriend.api;
 
 import java.util.ArrayList;
 
+import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.JsonResponse;
+import br.com.betfriend.model.Match;
+import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -15,48 +18,51 @@ import retrofit.http.Path;
 public interface ServerApi {
 
 
-    @POST("/signup/")
+    @POST("/users/signup/")
     @FormUrlEncoded
     void signup(@Field("personId") String personId, @Field("email") String email, @Field("personName") String personName,
                 @Field("personPhoto") String personPhoto, @Field("idToken") String idToken,
                 Callback<UserDataDTO> response);
 
-    @GET("/searchFriend/{personName}")
+    @GET("/users/searchFriend/{personName}")
     void searchFriend(@Header("Content-Type") String contentType, @Path("personName") String personName,
                 Callback<ArrayList<UserDataDTO>> response);
 
-    @GET("/getUserData/{personId}")
+    @GET("/users/getUserData/{personId}")
     void getUserData(@Header("Content-Type") String contentType, @Path("personId") String personId,
                       Callback<UserDataDTO> response);
 
-    @POST("/inviteToBet/")
+    @POST("/bets/inviteToBet/")
     @FormUrlEncoded
     void inviteToBet(@Field("srcPerson") String srcPerson, @Field("destPerson") String destPerson, @Field("matchId") String matchId,
                 @Field("option") String option, @Field("amount") Integer amount,
                 Callback<JsonResponse> response);
 
-    @POST("/acceptBet/")
+    @POST("/bets/acceptBet/")
     @FormUrlEncoded
     void acceptBet(@Field("betId") String betId, @Field("srcPerson") String srcPerson, @Field("destPerson") String destPerson,
                    @Field("matchId") String matchId, @Field("option") String option, @Field("amount") Integer amount,
                    Callback<JsonResponse> response);
 
-    @POST("/refuseBet/")
+    @POST("/bets/refuseBet/")
     @FormUrlEncoded
     void refuseBet(@Field("betId") String betId, @Field("srcPerson") String srcPerson, @Field("destPerson") String destPerson,
                    @Field("matchId") String matchId, @Field("amount") Integer amount,
                    Callback<JsonResponse> response);
 
-    @GET("/getPendingBets/{personId}")
+    @GET("/bets/getPendingBets/{personId}")
     void getPendingBets(@Header("Content-Type") String contentType, @Path("personId") String personId,
-                      Callback<ArrayList<UserDataDTO>> response);
+                      Callback<ArrayList<Bet>> response);
 
-    @GET("/getFinishedBets/{personId}")
+    @GET("/bets/getFinishedBets/{personId}")
     void getFinishedBets(@Header("Content-Type") String contentType, @Path("personId") String personId,
-                        Callback<ArrayList<UserDataDTO>> response);
+                        Callback<ArrayList<Bet>> response);
 
-    @GET("/getAllBets/{personId}")
+    @GET("/bets/getAllBets/{personId}")
     void getAllBets(@Header("Content-Type") String contentType, @Path("personId") String personId,
-                         Callback<ArrayList<UserDataDTO>> response);
+                         Callback<ArrayList<Bet>> response);
+
+    @GET("/matches/getMatches/")
+    void getMatches(@Header("Content-Type") String contentType, Callback<ArrayList<Match>> response);
 
 }

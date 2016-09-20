@@ -42,7 +42,12 @@
             android:name=".SearchFriendActivity"
             android:label="@string/title_activity_search_friend"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BetCompleteActivity"></activity>
+        <activity android:name=".BetCompleteActivity" />
+
+        <service
+            android:name=".BetInvitationService"
+            android:enabled="true"
+            android:exported="false"></service>
     </application>
 
 </manifest>

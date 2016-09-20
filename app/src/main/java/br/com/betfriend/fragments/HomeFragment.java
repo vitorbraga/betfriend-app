@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,10 +15,9 @@ import java.util.ArrayList;
 import br.com.betfriend.R;
 import br.com.betfriend.adapters.AnimatedExpandableListView;
 import br.com.betfriend.adapters.ExpandableListAdapter;
-import br.com.betfriend.api.SoccerApi;
-import br.com.betfriend.model.SoccerMatch;
+import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
-import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -28,6 +28,8 @@ public class HomeFragment extends android.app.Fragment {
     private AnimatedExpandableListView matchesListView;
 
     private ProgressBar mSpinner;
+
+    private TextView mNoMatchesFound;
 
     private UserDataDTO userData;
 
@@ -69,9 +71,7 @@ public class HomeFragment extends android.app.Fragment {
 
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                // We call collapseGroupWithAnimation(int) and
-                // expandGroupWithAnimation(int) to animate group
-                // expansion/collapse.
+
                 if (matchesListView.isGroupExpanded(groupPosition)) {
                     matchesListView.collapseGroupWithAnimation(groupPosition);
                 } else {
@@ -84,21 +84,29 @@ public class HomeFragment extends android.app.Fragment {
 
         mSpinner = (ProgressBar) getView().findViewById(R.id.main_progressbar);
 
+        mNoMatchesFound = (TextView) getView().findViewById(R.id.no_matches_found);
+
+        // Get matches from server
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SOCCER_API_BASE_URI).build();
+                .setEndpoint(getString(R.string.server_uri)).build();
 
-        SoccerApi api = restAdapter.create(SoccerApi.class);
+        ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getMatches("application/json", Constants.SOCCER_API_KEY, "34", new Callback<ArrayList<SoccerMatch>>() {
+        api.getMatches("application/json", new Callback<ArrayList<Match>>() {
 
             @Override
-            public void success(ArrayList<SoccerMatch> matches, Response response) {
+            public void success(ArrayList<Match> matches, Response response) {
 
-                matchesListView.setVisibility(View.VISIBLE);
                 mSpinner.setVisibility(View.GONE);
 
-                ExpandableListAdapter matchesAdapter = new ExpandableListAdapter(getActivity(), matches, userData);
-                matchesListView.setAdapter(matchesAdapter);
+                if(matches.size() > 0) {
+                    matchesListView.setVisibility(View.VISIBLE);
+
+                    ExpandableListAdapter matchesAdapter = new ExpandableListAdapter(getActivity(), matches, userData);
+                    matchesListView.setAdapter(matchesAdapter);
+                } else {
+                    mNoMatchesFound.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

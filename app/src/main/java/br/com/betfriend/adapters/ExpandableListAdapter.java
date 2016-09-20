@@ -21,15 +21,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import br.com.betfriend.R;
 import br.com.betfriend.SearchFriendActivity;
-import br.com.betfriend.StartBetActivity;
-import br.com.betfriend.model.SoccerMatch;
+import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
-import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.ConvertHelper;
 import br.com.betfriend.utils.TeamsDataEnum;
 
@@ -37,7 +33,7 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
 
     private final Context context;
 
-    private ArrayList<SoccerMatch> matches;
+    private ArrayList<Match> matches;
 
     private UserDataDTO userData;
 
@@ -139,9 +135,9 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         return rowView;
     }
 
-    private static SoccerMatch getMatchById(Integer matchId, ArrayList<SoccerMatch> matches) {
+    private static Match getMatchById(Integer matchId, ArrayList<Match> matches) {
 
-        for(SoccerMatch sm : matches) {
+        for(Match sm : matches) {
             if(sm.getMatchId().equals(matchId)) {
                 return sm;
             }
@@ -171,7 +167,7 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             String matchId = ((TextView) viewParent.findViewById(R.id.match_id)).getText().toString();
             String betOption = "";
 
-            SoccerMatch match = getMatchById(Integer.parseInt(matchId), matches);
+            Match match = getMatchById(Integer.parseInt(matchId), matches);
 
             // Validation result choice
             switch(checked) {
@@ -207,7 +203,7 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         return 1;
     }
 
-    public ExpandableListAdapter(Context context, ArrayList<SoccerMatch> matches, UserDataDTO userData) {
+    public ExpandableListAdapter(Context context, ArrayList<Match> matches, UserDataDTO userData) {
         this.context = context;
         this.matches = matches;
         this.userData = userData;
@@ -265,9 +261,7 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         String homeTeam = matches.get(groupPosition).getHomeTeam().trim();
         String awayTeam = matches.get(groupPosition).getAwayTeam().trim();
         String matchId =  matches.get(groupPosition).getMatchId().toString();
-        Long tsTamp = matches.get(groupPosition).getTstamp();
-
-        Date date = new Date(1000 * tsTamp);
+        Date date = matches.get(groupPosition).getTstamp();
 
         holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).label());
         holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).label());

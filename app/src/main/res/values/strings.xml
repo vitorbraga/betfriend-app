@@ -9,7 +9,7 @@
     <!-- Drawer menu titles -->
     <string name="drawer_history">Histórico</string>
     <string name="drawer_store">Loja</string>
-    <string name="drawer_prizes">Prêmios</string>
+    <string name="drawer_prizes">Conquistas</string>
     <string name="drawer_home">Próximos jogos</string>
     <string name="drawer_rankings">Rankings</string>
     <string name="drawer_settings">Configurações</string>
@@ -128,6 +128,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="bet_with">Apostar com:</string>
     <string name="make_bet">Fazer aposta</string>
+    <string name="no_matches_found">Não foram encontradas partidas disponíveis.</string>
 
     <!-- Search friend activity -->
     <string name="select_friend">Selecione um amigo:</string>
@@ -143,6 +144,9 @@
     <string name="pending_tab">Pendentes</string>
     <string name="finished_tab">Finalizadas</string>
     <string name="all_tab">Todas</string>
+    <string name="no_finished_bets_found">Você ainda não possui apostas finalizadas.</string>
+    <string name="no_pending_bets_found">Você ainda não possui apostas pendentes.</string>
+    <string name="no_bets_found">Nenhuma aposta encontrada.</string>
 
 </resources>
 

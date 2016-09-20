@@ -1,18 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <br.com.betfriend.adapters.AnimatedExpandableListView
-        android:id="@+id/matches_list"
+    <ListView
+        android:id="@+id/bet_list"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layoutDirection="rtl"
-        android:scrollbars="none"
         android:visibility="gone">
-
-    </br.com.betfriend.adapters.AnimatedExpandableListView>
+    </ListView>
 
     <ProgressBar
         android:id="@+id/main_progressbar"
@@ -24,10 +20,10 @@
 
     <TextView
         android:gravity="center_horizontal"
-        android:id="@+id/no_matches_found"
+        android:id="@+id/no_bets_found"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/no_matches_found"
+        android:text="@string/no_bets_found"
         android:layout_marginTop="15dp"
         android:visibility="gone" />
 
