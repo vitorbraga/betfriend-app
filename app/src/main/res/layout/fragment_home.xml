@@ -22,13 +22,35 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
-    <TextView
-        android:gravity="center_horizontal"
-        android:id="@+id/no_matches_found"
+    <LinearLayout
+        android:id="@+id/no_matches_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/no_matches_found"
-        android:layout_marginTop="15dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:id="@+id/no_matches_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_matches_found"
+            android:layout_marginTop="25dp"/>
+
+        <Button
+            android:id="@+id/retry_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Recarregar"
+            android:drawablePadding="8dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_refresh_black_24dp"
+            android:drawableTint="@color/app_green"
+            android:textColor="@color/app_green_start"
+            android:textAllCaps="false"
+            android:layout_marginTop="30dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

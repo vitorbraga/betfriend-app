@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,9 @@ public class HomeFragment extends android.app.Fragment {
 
     private ProgressBar mSpinner;
 
-    private TextView mNoMatchesFound;
+    private LinearLayout mNoMatchesContainer;
+
+    private Button mRetryButton;
 
     private UserDataDTO userData;
 
@@ -41,7 +45,6 @@ public class HomeFragment extends android.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -84,9 +87,20 @@ public class HomeFragment extends android.app.Fragment {
 
         mSpinner = (ProgressBar) getView().findViewById(R.id.main_progressbar);
 
-        mNoMatchesFound = (TextView) getView().findViewById(R.id.no_matches_found);
+        mNoMatchesContainer = (LinearLayout) getView().findViewById(R.id.no_matches_container);
+        mRetryButton = (Button) getView().findViewById(R.id.retry_button);
 
         // Get matches from server
+        getMatches();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    private void getMatches() {
+
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getString(R.string.server_uri)).build();
 
@@ -99,13 +113,23 @@ public class HomeFragment extends android.app.Fragment {
 
                 mSpinner.setVisibility(View.GONE);
 
-                if(matches.size() > 0) {
+                if (matches.size() > 0) {
                     matchesListView.setVisibility(View.VISIBLE);
 
                     ExpandableListAdapter matchesAdapter = new ExpandableListAdapter(getActivity(), matches, userData);
                     matchesListView.setAdapter(matchesAdapter);
                 } else {
-                    mNoMatchesFound.setVisibility(View.VISIBLE);
+                    mNoMatchesContainer.setVisibility(View.VISIBLE);
+
+                    mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            mSpinner.setVisibility(View.VISIBLE);
+                            getMatches();
+                        }
+                    });
                 }
             }
 
@@ -115,11 +139,6 @@ public class HomeFragment extends android.app.Fragment {
                 Toast.makeText(getActivity(), "retorfit error getMatches", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
 }
