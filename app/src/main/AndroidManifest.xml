@@ -54,7 +54,7 @@
         <activity
             android:name=".BetInvitationsActivity"
             android:label="@string/title_activity_bet_invitations"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package br.com.betfriend.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,6 +25,7 @@ import java.util.Date;
 
 import br.com.betfriend.R;
 import br.com.betfriend.SearchFriendActivity;
+import br.com.betfriend.databinding.MatchListItemBinding;
 import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.ConvertHelper;
@@ -36,6 +38,8 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
     private ArrayList<Match> matches;
 
     private UserDataDTO userData;
+
+    private MatchListItemBinding mBinding;
 
     static class ViewHolderGroup {
         public TextView homeTeam;
@@ -63,9 +67,14 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
 
         // reuse views
         if (rowView == null) {
+
             LayoutInflater inflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.match_list_item, null);
+//            rowView = inflater.inflate(R.layout.match_list_item, null);
+
+            mBinding = DataBindingUtil.inflate(inflater, R.layout.match_list_item, parent, false);
+            rowView = mBinding.getRoot();
+            mBinding.setUser(userData);
 
             ViewHolderChild viewHolderChild = new ViewHolderChild();
             viewHolderChild.homeTeam = (TextView) rowView.findViewById(R.id.radio_team_1);
@@ -279,6 +288,10 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
                 .into(holder.awayLogo);
 
         return convertView;
+    }
+
+    public void setUserData(UserDataDTO user) {
+        userData = user;
     }
 
     @Override

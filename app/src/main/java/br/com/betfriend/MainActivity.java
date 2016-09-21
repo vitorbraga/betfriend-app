@@ -1,9 +1,10 @@
 package br.com.betfriend;
 
-import android.content.Context;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import br.com.betfriend.api.ServerApi;
@@ -28,13 +32,13 @@ import br.com.betfriend.fragments.HomeFragment;
 import br.com.betfriend.fragments.PrizesFragment;
 import br.com.betfriend.fragments.RankingFragment;
 import br.com.betfriend.fragments.SettingsFragment;
-import br.com.betfriend.fragments.StoreFragment;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,6 +54,69 @@ public class MainActivity extends AppCompatActivity
     private FrameLayout mFrameLayout;
 
     private String mPersonId;
+
+    final Handler mHandler = new Handler();
+
+    private static final long INTERVAL = 1 * 20 * 1000;
+
+    Runnable mUserDataRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+
+            try {
+                //do your code here
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplication());
+                final String personId = sharedPref.getString("PERSON_ID", "");
+
+                Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                        .create();
+
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(getString(R.string.server_uri))
+                        .setConverter(new GsonConverter(gson)).build();
+
+                ServerApi api = restAdapter.create(ServerApi.class);
+
+                api.getUserData("application/json", personId, new Callback<UserDataDTO>() {
+
+                    @Override
+                    public void success(UserDataDTO user, Response response) {
+
+                        if(mNavigationView != null) {
+
+                            View headerView = mNavigationView.getHeaderView(0);
+
+                            TextView pointsTextView = (TextView) headerView.findViewById(R.id.header_user_points);
+                            pointsTextView.setText(getString(R.string.user_points, user.getPoints().toString()));
+
+                            mUserData = user;
+                            android.app.FragmentManager fragmentManager = getFragmentManager();
+                            Fragment currentFragment = getFragmentManager().findFragmentById(R.id.content_frame);
+                            if(currentFragment instanceof HomeFragment) {
+                                ((HomeFragment) currentFragment).setUserData(mUserData);
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                        Toast.makeText(getApplicationContext(), "failure 33", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            } finally {
+                //also call the same runnable to call it at regular interval
+                mHandler.postDelayed(this, INTERVAL);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +144,12 @@ public class MainActivity extends AppCompatActivity
 
         mFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
+        // Start bet invitation checker
         Intent i = new Intent(this, BetInvitationService.class);
         startService(i);
+
+        // Start timer interval to check user data
+        mHandler.postDelayed(mUserDataRunnable, INTERVAL);
     }
 
     @Override
@@ -192,10 +263,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_prizes:
                 fragment = new PrizesFragment();
                 title = getString(R.string.drawer_prizes);
-                break;
-            case R.id.nav_store:
-                fragment = new StoreFragment();
-                title = getString(R.string.drawer_store);
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();

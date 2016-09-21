@@ -1,109 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="left"
-    android:layoutDirection="ltr"
-    android:orientation="vertical"
-    android:padding="10dp">
-
-    <TextView
-        android:id="@+id/match_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/choose_result"/>
-
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/radio_team_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rbtn_selector"
-            android:button="@null"
-            android:gravity="center"
-            android:maxLength="12"
-            android:padding="10dp"
-            android:textColor="@drawable/rbtn_textcolor_selector" />
-
-        <RadioButton
-            android:id="@+id/radio_draw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rbtn_selector"
-            android:button="@null"
-            android:gravity="center"
-            android:maxLength="12"
-            android:padding="10dp"
-            android:text="Empate"
-            android:textColor="@drawable/rbtn_textcolor_selector" />
-
-        <RadioButton
-            android:id="@+id/radio_team_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rbtn_selector"
-            android:button="@null"
-            android:gravity="center"
-            android:maxLength="12"
-            android:padding="10dp"
-            android:textColor="@drawable/rbtn_textcolor_selector" />
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:text="@string/bet_value"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="user"
+            type="br.com.betfriend.model.UserDataDTO" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        android:weightSum="1">
+        android:layout_height="match_parent"
+        android:gravity="left"
+        android:layoutDirection="ltr"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <SeekBar
-            android:id="@+id/seek_bar"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/match_id"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"/>
+            android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/bet_value"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:background="@drawable/edit_text_borders"
-            android:text="0"
-            android:textAlignment="center"
-            android:layout_weight="0.2"/>
+            android:gravity="center_horizontal"
+            android:text="@string/choose_result" />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_team_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rbtn_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:maxLength="12"
+                android:padding="10dp"
+                android:textColor="@drawable/rbtn_textcolor_selector" />
+
+            <RadioButton
+                android:id="@+id/radio_draw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rbtn_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:maxLength="12"
+                android:padding="10dp"
+                android:text="Empate"
+                android:textColor="@drawable/rbtn_textcolor_selector" />
+
+            <RadioButton
+                android:id="@+id/radio_team_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rbtn_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:maxLength="12"
+                android:padding="10dp"
+                android:textColor="@drawable/rbtn_textcolor_selector" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:text="@string/bet_value" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <SeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:max="@{user.points}"/>
+
+            <EditText
+                android:id="@+id/bet_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:background="@drawable/edit_text_borders"
+                android:inputType="number"
+                android:text="0"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bet_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_radius"
+            android:text="@string/bet_with_friend"
+            android:textColor="@color/black_grey" />
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/bet_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_radius"
-        android:textColor="@color/black_grey"
-        android:text="@string/bet_with_friend" />
-
-</LinearLayout>
+</layout>

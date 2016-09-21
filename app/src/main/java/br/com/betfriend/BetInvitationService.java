@@ -40,6 +40,14 @@ public class BetInvitationService extends Service {
     }
 
     @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        super.onStartCommand(intent, flags, startId);
+
+        return START_STICKY;
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -89,13 +97,13 @@ public class BetInvitationService extends Service {
 
                     // Set vibration if allowed by user
                     boolean vibrate = prefs.getBoolean("key_notif_vibrate", true);
-                    if(vibrate) {
+                    if (vibrate) {
                         mBuilder.setVibrate(new long[]{1000, 1000});
                     }
 
                     // Set notification sound if allowed by user
                     boolean notificationSound = prefs.getBoolean("key_notif_sound", true);
-                    if(notificationSound) {
+                    if (notificationSound) {
                         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         mBuilder.setSound(alarmSound);
                     }

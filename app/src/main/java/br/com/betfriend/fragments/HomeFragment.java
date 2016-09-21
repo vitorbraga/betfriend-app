@@ -12,6 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 
 import br.com.betfriend.R;
@@ -24,6 +27,7 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 public class HomeFragment extends android.app.Fragment {
 
@@ -36,6 +40,8 @@ public class HomeFragment extends android.app.Fragment {
     private Button mRetryButton;
 
     private UserDataDTO userData;
+
+    private ExpandableListAdapter mAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -101,8 +107,13 @@ public class HomeFragment extends android.app.Fragment {
 
     private void getMatches() {
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.server_uri)).build();
+                .setEndpoint(getString(R.string.server_uri))
+                .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
@@ -114,10 +125,12 @@ public class HomeFragment extends android.app.Fragment {
                 mSpinner.setVisibility(View.GONE);
 
                 if (matches.size() > 0) {
+
                     matchesListView.setVisibility(View.VISIBLE);
 
-                    ExpandableListAdapter matchesAdapter = new ExpandableListAdapter(getActivity(), matches, userData);
-                    matchesListView.setAdapter(matchesAdapter);
+                    mAdapter = new ExpandableListAdapter(getActivity(), matches, userData);
+                    matchesListView.setAdapter(mAdapter);
+
                 } else {
                     mNoMatchesContainer.setVisibility(View.VISIBLE);
 
@@ -139,6 +152,13 @@ public class HomeFragment extends android.app.Fragment {
                 Toast.makeText(getActivity(), "retorfit error getMatches", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setUserData(UserDataDTO user) {
+        userData = user;
+        if(mAdapter != null) {
+            mAdapter.setUserData(user);
+        }
     }
 
 }

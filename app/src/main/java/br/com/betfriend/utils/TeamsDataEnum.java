@@ -49,7 +49,19 @@ public enum TeamsDataEnum {
 
     PONTE_PRETA("Ponte Preta", "PON", R.drawable.ponte_preta_60x60, "Ponte Preta"),
 
-    VITORIA("Vitoria", "VIT", R.drawable.vitoria_60x60, "Vitória");
+    VITORIA("Vitoria", "VIT", R.drawable.vitoria_60x60, "Vitória"),
+
+    PAS_GIANINA("PAS Giannina", "PAS", R.drawable.vitoria_60x60, "PAS Giannina"),
+
+    PLATANINAS("Platanias", "PLA", R.drawable.vitoria_60x60, "Platanias"),
+
+    PANIONOS("Panionios NFC", "PNN", R.drawable.vitoria_60x60, "Panionios"),
+
+    VEROIA("Veroia", "VER", R.drawable.vitoria_60x60, "Veroia"),
+
+    PANAITOLIKOS("Panaitolikos", "PNK", R.drawable.vitoria_60x60, "Panaitolikos"),
+
+    PANATHINAIKOS("Panathinaikos", "PTK", R.drawable.vitoria_60x60, "Panathinaikos");
 
     private String description;
 
