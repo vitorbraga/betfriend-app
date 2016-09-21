@@ -19,6 +19,21 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Notificações">
+
+        <CheckBoxPreference
+            android:key="key_notif_sound"
+            android:title="Som de notificação"
+            android:defaultValue="true"/>
+
+        <CheckBoxPreference
+            android:key="key_notif_vibrate"
+            android:title="Vibração"
+            android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="Gerenciar conta">
 
         <!--<ListPreference-->

@@ -21,8 +21,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean visible = prefs.getBoolean("key_visible", true);
+        boolean notificationVibration = prefs.getBoolean("key_notif_vibrate", true);
+        boolean notificationSound = prefs.getBoolean("key_notif_sound", true);
 
         prefs.edit().putBoolean("key_visible", visible).apply();
+        prefs.edit().putBoolean("key_notif_vibrate", notificationVibration).apply();
+        prefs.edit().putBoolean("key_notif_sound", notificationSound).apply();
 
         Preference disconnectAccountPref= findPreference("disconnect_account");
         disconnectAccountPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -63,9 +67,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
         Log.d("key:", key);
-        Toast.makeText(getActivity(), "key", Toast.LENGTH_SHORT).show();
     }
 }
 

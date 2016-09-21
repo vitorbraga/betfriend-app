@@ -47,7 +47,12 @@
         <service
             android:name=".BetInvitationService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity
+            android:name=".BetInvitationsActivity"
+            android:label="@string/title_activity_bet_invitations"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

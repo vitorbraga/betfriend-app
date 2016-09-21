@@ -148,5 +148,12 @@
     <string name="no_pending_bets_found">Você ainda não possui apostas pendentes.</string>
     <string name="no_bets_found">Nenhuma aposta encontrada.</string>
 
+    <!-- BetInvitation Service -->
+    <string name="notification_content_title">Novo convite de aposta!</string>
+    <string name="notification_content_text">Toque para vê-lo.</string>
+    <string name="title_activity_bet_invitations">BetInvitationsActivity</string>
+
+    <!-- Bet invites activity  -->
+    <string name="bet_invites">Convites de aposta</string>
 </resources>
 
