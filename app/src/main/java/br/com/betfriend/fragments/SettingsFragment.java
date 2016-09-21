@@ -1,23 +1,40 @@
 package br.com.betfriend.fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import br.com.betfriend.R;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+import br.com.betfriend.R;
+import br.com.betfriend.SignInActivity;
+
+public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, GoogleApiClient.ConnectionCallbacks {
+
+    private GoogleApiClient mGoogleApiClient;
+
+    private ProgressBar mProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
+
+        mProgressBar = (ProgressBar) getActivity().findViewById(R.id.main_progressbar);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean visible = prefs.getBoolean("key_visible", true);
@@ -28,18 +45,39 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         prefs.edit().putBoolean("key_notif_vibrate", notificationVibration).apply();
         prefs.edit().putBoolean("key_notif_sound", notificationSound).apply();
 
-        Preference disconnectAccountPref= findPreference("disconnect_account");
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().requestProfile().requestIdToken(getString(R.string.server_client_id)).build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        mGoogleApiClient.connect();
+
+        Preference disconnectAccountPref = findPreference("disconnect_account");
         disconnectAccountPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                String key = preference.getKey();
-                Log.d("key:", key);
-                Toast.makeText(getActivity(), "disconnect", Toast.LENGTH_SHORT).show();
+
+                mProgressBar.setVisibility(View.VISIBLE);
+
+                Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+                        new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+
+                                Intent intent = new Intent(getActivity(), SignInActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                getActivity().startActivity(intent);
+                            }
+                        });
+
                 return false;
             }
         });
 
-        Preference removeAccountPref= findPreference("remove_account");
+        Preference removeAccountPref = findPreference("remove_account");
         removeAccountPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -68,6 +106,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d("key:", key);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 }
 
