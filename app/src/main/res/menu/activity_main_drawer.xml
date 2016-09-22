@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_home_black"
             android:title="@string/drawer_home" />
         <item
+            android:id="@+id/nav_invites"
+            android:icon="@drawable/ic_grade_black_24dp"
+            android:title="@string/drawer_invites" />
+        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_schedule_black_24dp"
             android:title="@string/drawer_history" />

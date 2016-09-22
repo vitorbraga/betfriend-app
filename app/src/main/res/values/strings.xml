@@ -8,6 +8,7 @@
 
     <!-- Drawer menu titles -->
     <string name="drawer_history">Histórico</string>
+    <string name="drawer_invites">Convites</string>
     <string name="drawer_store">Loja</string>
     <string name="drawer_prizes">Conquistas</string>
     <string name="drawer_home">Próximos jogos</string>
@@ -139,6 +140,9 @@
 
     <!-- Confirm bet activity -->
     <string name="confirm_bet">Confirmar aposta</string>
+
+    <!-- Invites fragment -->
+    <string name="no_invites_found">Você mão possui convites pendentes.</string>
 
     <!-- History fragment -->
     <string name="pending_tab">Pendentes</string>

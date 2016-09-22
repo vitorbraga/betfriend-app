@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,21 +32,26 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 
-public class AllTabFragment extends Fragment {
+public class InvitesFragment extends Fragment {
 
-    private ListView mHistoryListView;
+    private ListView mInvitesListView;
 
-    private ProgressBar mSpinner;
+    private ProgressBar mProgressBar;
+
+    private LinearLayout mNoInvitesFound;
+
+    private Button mRetryButton;
 
     static class ViewHolder {
         public TextView matchId;
         public TextView srcPerson;
         public TextView destPerson;
+        public Button acceptButton;
+        public Button refuseButton;
     }
 
-    private TextView mNoBetsFound;
-
-    public AllTabFragment() {
+    public InvitesFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -56,13 +63,32 @@ public class AllTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_tab_all, container, false);
+        return inflater.inflate(R.layout.fragment_invites, container, false);
+    }
 
-        mHistoryListView = (ListView) view.findViewById(R.id.bet_list);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
-        mSpinner = (ProgressBar) view.findViewById(R.id.main_progressbar);
+    @Override
+    public void onResume() {
 
-        mNoBetsFound = (TextView) view.findViewById(R.id.no_bets_found);
+        super.onResume();
+
+        mInvitesListView = (ListView) getView().findViewById(R.id.invites_list);
+
+        mProgressBar = (ProgressBar) getView().findViewById(R.id.invites_progressbar);
+
+        mNoInvitesFound = (LinearLayout) getView().findViewById(R.id.no_invites_container);
+
+        mRetryButton = (Button) getView().findViewById(R.id.retry_button);
+
+        getMatches();
+
+    }
+
+    private void getMatches() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String personId = sharedPref.getString("PERSON_ID", "");
@@ -77,36 +103,40 @@ public class AllTabFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getAllBets("application/json", personId, new Callback<ArrayList<Bet>>() {
+        api.getBetInvites("application/json", personId, new Callback<ArrayList<Bet>>() {
 
             @Override
             public void success(ArrayList<Bet> bets, Response response) {
 
-                mSpinner.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
 
-                if(bets.size() > 0) {
-                    mHistoryListView.setVisibility(View.VISIBLE);
+                if (bets.size() > 0) {
+                    mInvitesListView.setVisibility(View.VISIBLE);
+                    mNoInvitesFound.setVisibility(View.GONE);
 
-                    BetArrayAdapter betAdapter = new BetArrayAdapter(getActivity(), bets);
-                    mHistoryListView.setAdapter(betAdapter);
+                    InvitesArrayAdapter betAdapter = new InvitesArrayAdapter(getActivity(), bets);
+                    mInvitesListView.setAdapter(betAdapter);
 
                 } else {
-                    mNoBetsFound.setVisibility(View.VISIBLE);
+                    mNoInvitesFound.setVisibility(View.VISIBLE);
+
+                    mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            mProgressBar.setVisibility(View.VISIBLE);
+                            getMatches();
+                        }
+                    });
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "reetrofit error all bets", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "reetrofit error invirtez", Toast.LENGTH_SHORT).show();
             }
         });
-
-        return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
     }
 
     @Override
@@ -114,13 +144,13 @@ public class AllTabFragment extends Fragment {
         super.onDetach();
     }
 
-    class BetArrayAdapter extends ArrayAdapter<Bet> {
+    class InvitesArrayAdapter extends ArrayAdapter<Bet> {
 
         private final Activity context;
 
         private ArrayList<Bet> bets;
 
-        public BetArrayAdapter(Activity context, ArrayList<Bet> bets) {
+        public InvitesArrayAdapter(Activity context, ArrayList<Bet> bets) {
             super(context, R.layout.bet_list_item, bets);
             this.context = context;
             this.bets = bets;
@@ -133,12 +163,14 @@ public class AllTabFragment extends Fragment {
             // reuse views
             if (rowView == null) {
                 LayoutInflater inflater = context.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.bet_list_item, null);
+                rowView = inflater.inflate(R.layout.invite_list_item, null);
                 // configure view holder
                 ViewHolder viewHolder = new ViewHolder();
                 viewHolder.matchId = (TextView) rowView.findViewById(R.id.match_id);
                 viewHolder.srcPerson = (TextView) rowView.findViewById(R.id.src_person);
                 viewHolder.destPerson = (TextView) rowView.findViewById(R.id.dest_person);
+                viewHolder.acceptButton = (Button) rowView.findViewById(R.id.accept_button);
+                viewHolder.refuseButton = (Button) rowView.findViewById(R.id.refuse_button);
 
                 rowView.setTag(viewHolder);
             }
@@ -154,6 +186,26 @@ public class AllTabFragment extends Fragment {
 
             String destPerson = bets.get(position).getDestPerson();
             holder.destPerson.setText(destPerson);
+
+            holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "ACCEPT", Toast.LENGTH_SHORT).show();
+                    // show progress bar
+                    // send request
+                    // refresh screen (getMatches)
+                }
+            });
+
+            holder.refuseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "REFUSE", Toast.LENGTH_SHORT).show();
+                    // show progress bar
+                    // send request
+                    // refresh screen (getMatches)
+                }
+            });
 
             return rowView;
         }

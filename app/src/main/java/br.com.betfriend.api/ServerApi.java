@@ -69,6 +69,11 @@ public interface ServerApi {
     void getNewBetInvites(@Header("Content-Type") String contentType, @Path("personId") String personId,
                           Callback<ArrayList<Bet>> response);
 
+    @GET("/bets/getBetInvites/{personId}")
+    void getBetInvites(@Header("Content-Type") String contentType, @Path("personId") String personId,
+                          Callback<ArrayList<Bet>> response);
+
+
     @POST("/bets/invitationViewed/")
     @FormUrlEncoded
     void invitationViewed(@Field("personId") String personId, Callback<JsonResponse> response);

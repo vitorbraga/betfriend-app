@@ -124,8 +124,10 @@ public class HomeFragment extends android.app.Fragment {
 
                 mSpinner.setVisibility(View.GONE);
 
+
                 if (matches.size() > 0) {
 
+                    mNoMatchesContainer.setVisibility(View.GONE);
                     matchesListView.setVisibility(View.VISIBLE);
 
                     mAdapter = new ExpandableListAdapter(getActivity(), matches, userData);

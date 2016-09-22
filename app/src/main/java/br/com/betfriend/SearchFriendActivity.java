@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.model.Match;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
@@ -38,7 +39,7 @@ public class SearchFriendActivity extends AppCompatActivity {
 
     private String mBetOption;
 
-    private SoccerMatch mMatch;
+    private Match mMatch;
 
     private UserDataDTO mUserData;
 
@@ -78,7 +79,7 @@ public class SearchFriendActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mBetOption = intent.getStringExtra("BET_OPTION_EXTRA");
         mAmount = intent.getIntExtra("AMOUNT", -1);
-        mMatch = (SoccerMatch) intent.getSerializableExtra("MATCH_EXTRA");
+        mMatch = (Match) intent.getSerializableExtra("MATCH_EXTRA");
         mUserData = (UserDataDTO) intent.getSerializableExtra("USER_DATA_EXTRA");
 
         mContext = this;

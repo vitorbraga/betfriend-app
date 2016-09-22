@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/match_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/src_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/dest_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:visibility="gone"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"/>
+
+    <Button
+        android:id="@+id/accept_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aceitar"/>
+
+    <Button
+        android:id="@+id/refuse_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recusar"/>
+</LinearLayout>

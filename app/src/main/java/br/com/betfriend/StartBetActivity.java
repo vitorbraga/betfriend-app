@@ -22,6 +22,7 @@ import java.util.Date;
 
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.JsonResponse;
+import br.com.betfriend.model.Match;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
@@ -38,7 +39,7 @@ public class StartBetActivity extends AppCompatActivity {
 
     private UserDataDTO mFriend;
 
-    private SoccerMatch mMatch;
+    private Match mMatch;
 
     private UserDataDTO mUserData;
 
@@ -64,7 +65,7 @@ public class StartBetActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mBetOption = intent.getStringExtra("BET_OPTION_EXTRA");
         mAmount = intent.getIntExtra("AMOUNT", -1);
-        mMatch = (SoccerMatch) intent.getSerializableExtra("MATCH_EXTRA");
+        mMatch = (Match) intent.getSerializableExtra("MATCH_EXTRA");
         mUserData = (UserDataDTO) intent.getSerializableExtra("USER_DATA_EXTRA");
         mFriend = (UserDataDTO) intent.getSerializableExtra("FRIEND_EXTRA");
 
@@ -72,8 +73,7 @@ public class StartBetActivity extends AppCompatActivity {
         String awayTeam = mMatch.getAwayTeam().trim();
 
         matchTime = (TextView) findViewById(R.id.match_time);
-        Long tsTamp = mMatch.getTstamp();
-        Date date = new Date(1000 * tsTamp);
+        Date date = mMatch.getTstamp();
         matchTime.setText(ConvertHelper.dateToView(date));
 
         homeTeamLabel = (TextView) findViewById(R.id.home_team);

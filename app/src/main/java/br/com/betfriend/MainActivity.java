@@ -29,6 +29,7 @@ import com.squareup.picasso.Picasso;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.fragments.HistoryFragment;
 import br.com.betfriend.fragments.HomeFragment;
+import br.com.betfriend.fragments.InvitesFragment;
 import br.com.betfriend.fragments.PrizesFragment;
 import br.com.betfriend.fragments.RankingFragment;
 import br.com.betfriend.fragments.SettingsFragment;
@@ -251,6 +252,10 @@ public class MainActivity extends AppCompatActivity
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);
                 title = getString(R.string.drawer_home);
+                break;
+            case R.id.nav_invites:
+                fragment = new InvitesFragment();
+                title = getString(R.string.drawer_invites);
                 break;
             case R.id.nav_history:
                 fragment = new HistoryFragment();
