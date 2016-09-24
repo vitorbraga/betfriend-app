@@ -4,12 +4,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ListView
+    <br.com.betfriend.adapters.AnimatedExpandableListView
         android:id="@+id/invites_list"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:layoutDirection="rtl"
+        android:scrollbars="none"
         android:visibility="gone">
-    </ListView>
+
+    </br.com.betfriend.adapters.AnimatedExpandableListView>
 
     <ProgressBar
         android:id="@+id/invites_progressbar"

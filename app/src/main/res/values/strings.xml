@@ -142,7 +142,7 @@
     <string name="confirm_bet">Confirmar aposta</string>
 
     <!-- Invites fragment -->
-    <string name="no_invites_found">Você mão possui convites pendentes.</string>
+    <string name="no_invites_found">Você não possui convites pendentes.</string>
 
     <!-- History fragment -->
     <string name="pending_tab">Pendentes</string>
@@ -159,5 +159,6 @@
 
     <!-- Bet invites activity  -->
     <string name="bet_invites">Convites de aposta</string>
+    <string name="title_activity_bet_accepted">BetAcceptedActivity</string>
 </resources>
 

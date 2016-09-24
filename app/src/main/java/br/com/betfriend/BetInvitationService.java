@@ -129,23 +129,18 @@ public class BetInvitationService extends Service {
 
                         @Override
                         public void success(JsonResponse jsonResponse, Response response) {
-                            Toast.makeText(BetInvitationService.this, "invitation viewed success", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Toast.makeText(BetInvitationService.this, "invitation viewed failure", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
-//                    Toast.makeText(BetInvitationService.this, "sem novas apostas", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-
-                Toast.makeText(BetInvitationService.this, "failure 22", Toast.LENGTH_SHORT).show();
             }
         });
     }

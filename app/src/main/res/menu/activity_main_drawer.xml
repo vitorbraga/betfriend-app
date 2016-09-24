@@ -8,7 +8,7 @@
             android:title="@string/drawer_home" />
         <item
             android:id="@+id/nav_invites"
-            android:icon="@drawable/ic_grade_black_24dp"
+            android:icon="@drawable/ic_email_black"
             android:title="@string/drawer_invites" />
         <item
             android:id="@+id/nav_history"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -23,8 +24,12 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 import br.com.betfriend.R;
+import br.com.betfriend.adapters.AnimatedExpandableListView;
+import br.com.betfriend.adapters.ExpandableListAdapter;
+import br.com.betfriend.adapters.InvitesExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
+import br.com.betfriend.model.UserDataDTO;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -34,11 +39,15 @@ import retrofit.converter.GsonConverter;
 
 public class InvitesFragment extends Fragment {
 
-    private ListView mInvitesListView;
+    private AnimatedExpandableListView mInvitesListView;
 
     private ProgressBar mProgressBar;
 
     private LinearLayout mNoInvitesFound;
+
+    private InvitesExpandableListAdapter mAdapter;
+
+    private UserDataDTO userData;
 
     private Button mRetryButton;
 
@@ -63,7 +72,11 @@ public class InvitesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_invites, container, false);
+        View view = inflater.inflate(R.layout.fragment_invites, container, false);
+
+        userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
+
+        return view;
     }
 
     @Override
@@ -76,7 +89,22 @@ public class InvitesFragment extends Fragment {
 
         super.onResume();
 
-        mInvitesListView = (ListView) getView().findViewById(R.id.invites_list);
+        mInvitesListView = (AnimatedExpandableListView) getView().findViewById(R.id.invites_list);
+
+        mInvitesListView.setOnGroupClickListener(new AnimatedExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (mInvitesListView.isGroupExpanded(groupPosition)) {
+                    mInvitesListView.collapseGroupWithAnimation(groupPosition);
+                } else {
+                    mInvitesListView.expandGroupWithAnimation(groupPosition);
+                }
+                return true;
+            }
+
+        });
 
         mProgressBar = (ProgressBar) getView().findViewById(R.id.invites_progressbar);
 
@@ -85,7 +113,6 @@ public class InvitesFragment extends Fragment {
         mRetryButton = (Button) getView().findViewById(R.id.retry_button);
 
         getMatches();
-
     }
 
     private void getMatches() {
@@ -114,8 +141,8 @@ public class InvitesFragment extends Fragment {
                     mInvitesListView.setVisibility(View.VISIBLE);
                     mNoInvitesFound.setVisibility(View.GONE);
 
-                    InvitesArrayAdapter betAdapter = new InvitesArrayAdapter(getActivity(), bets);
-                    mInvitesListView.setAdapter(betAdapter);
+                    mAdapter = new InvitesExpandableListAdapter(getActivity(), bets, userData);
+                    mInvitesListView.setAdapter(mAdapter);
 
                 } else {
                     mNoInvitesFound.setVisibility(View.VISIBLE);
@@ -124,7 +151,6 @@ public class InvitesFragment extends Fragment {
 
                         @Override
                         public void onClick(View v) {
-
                             mProgressBar.setVisibility(View.VISIBLE);
                             getMatches();
                         }
@@ -181,10 +207,10 @@ public class InvitesFragment extends Fragment {
             String matchId = bets.get(position).getMatchId().toString();
             holder.matchId.setText(matchId);
 
-            String srcPerson = bets.get(position).getSrcPerson();
+            String srcPerson = bets.get(position).getSrcPerson().getPersonName();
             holder.srcPerson.setText(srcPerson);
 
-            String destPerson = bets.get(position).getDestPerson();
+            String destPerson = bets.get(position).getDestPerson().getPersonName();
             holder.destPerson.setText(destPerson);
 
             holder.acceptButton.setOnClickListener(new View.OnClickListener() {

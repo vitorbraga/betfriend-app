@@ -9,9 +9,11 @@ public class Bet {
 
     private String _id;
 
-    private String srcPerson;
+    private UserDataDTO srcPerson;
 
-    private String destPerson;
+    private UserDataDTO destPerson;
+
+    private Match match;
 
     private Integer status;
 
@@ -33,19 +35,19 @@ public class Bet {
         this._id = _id;
     }
 
-    public String getSrcPerson() {
+    public UserDataDTO getSrcPerson() {
         return srcPerson;
     }
 
-    public void setSrcPerson(String srcPerson) {
+    public void setSrcPerson(UserDataDTO srcPerson) {
         this.srcPerson = srcPerson;
     }
 
-    public String getDestPerson() {
+    public UserDataDTO getDestPerson() {
         return destPerson;
     }
 
-    public void setDestPerson(String destPerson) {
+    public void setDestPerson(UserDataDTO destPerson) {
         this.destPerson = destPerson;
     }
 
@@ -95,5 +97,13 @@ public class Bet {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
     }
 }

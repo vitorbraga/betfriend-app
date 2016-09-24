@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void failure(RetrofitError error) {
 
-                        Toast.makeText(getApplicationContext(), "failure 33", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "failure 33", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -242,19 +242,22 @@ public class MainActivity extends AppCompatActivity
 
         android.app.Fragment fragment = null;
         String title = "";
-
+        Bundle bundle = null;
         int id = item.getItemId();
 
         switch (id) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
-                Bundle bundle = new Bundle();
+                bundle = new Bundle();
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);
                 title = getString(R.string.drawer_home);
                 break;
             case R.id.nav_invites:
                 fragment = new InvitesFragment();
+                bundle = new Bundle();
+                bundle.putSerializable("USER_DATA_EXTRA", mUserData);
+                fragment.setArguments(bundle);
                 title = getString(R.string.drawer_invites);
                 break;
             case R.id.nav_history:

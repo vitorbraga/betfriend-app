@@ -151,10 +151,10 @@ public class PendingTabFragment extends Fragment {
             String matchId = bets.get(position).getMatchId().toString();
             holder.matchId.setText(matchId);
 
-            String srcPerson = bets.get(position).getSrcPerson();
+            String srcPerson = bets.get(position).getSrcPerson().getPersonName();
             holder.srcPerson.setText(srcPerson);
 
-            String destPerson = bets.get(position).getDestPerson();
+            String destPerson = bets.get(position).getDestPerson().getPersonName();
             holder.destPerson.setText(destPerson);
 
             return rowView;
