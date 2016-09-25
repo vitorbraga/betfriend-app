@@ -1,5 +1,7 @@
 package br.com.betfriend.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,8 +21,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import br.com.betfriend.BetAcceptedActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.SignInActivity;
+import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.model.JsonResponse;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -59,19 +68,31 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                mProgressBar.setVisibility(View.VISIBLE);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(getActivity().getString(R.string.disconnect_dialog_title))
+                        .setMessage(getActivity().getString(R.string.disconnect_dialog_description))
+                        .setPositiveButton(getActivity().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
+                                mProgressBar.setVisibility(View.VISIBLE);
 
-                                Intent intent = new Intent(getActivity(), SignInActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                getActivity().startActivity(intent);
+                                Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+                                        new ResultCallback<Status>() {
+                                            @Override
+                                            public void onResult(Status status) {
+
+                                                Intent intent = new Intent(getActivity(), SignInActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                getActivity().startActivity(intent);
+                                            }
+                                        });
                             }
-                        });
+                        })
+                        .setNegativeButton(getActivity().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
 
                 return false;
             }
@@ -81,9 +102,20 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         removeAccountPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                String key = preference.getKey();
-                Log.d("key:", key);
-                Toast.makeText(getActivity(), "remove", Toast.LENGTH_SHORT).show();
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(getActivity().getString(R.string.remove_account_dialog_title))
+                        .setMessage(getActivity().getString(R.string.remove_account_dialog_description))
+                        .setPositiveButton(getActivity().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Toast.makeText(getActivity(), "remove", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton(getActivity().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
                 return false;
             }
         });

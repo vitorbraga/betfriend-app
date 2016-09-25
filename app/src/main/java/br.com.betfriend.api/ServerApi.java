@@ -46,9 +46,7 @@ public interface ServerApi {
 
     @POST("/bets/refuseBet/")
     @FormUrlEncoded
-    void refuseBet(@Field("betId") String betId, @Field("srcPerson") String srcPerson, @Field("destPerson") String destPerson,
-                   @Field("matchId") String matchId, @Field("amount") Integer amount,
-                   Callback<JsonResponse> response);
+    void refuseBet(@Field("betId") String betId, Callback<JsonResponse> response);
 
     @GET("/bets/getPendingBets/{personId}")
     void getPendingBets(@Header("Content-Type") String contentType, @Path("personId") String personId,

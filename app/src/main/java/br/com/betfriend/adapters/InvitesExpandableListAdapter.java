@@ -1,6 +1,8 @@
 package br.com.betfriend.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 import br.com.betfriend.BetAcceptedActivity;
 import br.com.betfriend.BetCompleteActivity;
+import br.com.betfriend.BetRefusedActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.databinding.InviteBetListItemBinding;
@@ -149,13 +152,11 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             @Override
             public void onClick(View v) {
 
-                String option = "", matchId = "", betId = "", friendId = "";
-
                 LinearLayout viewParent = (LinearLayout) v.getParent().getParent();
 
-                matchId = ((TextView) viewParent.findViewById(R.id.match_id)).getText().toString();
-                betId = ((TextView) viewParent.findViewById(R.id.bet_id)).getText().toString();
-                friendId = ((TextView) viewParent.findViewById(R.id.friend_id)).getText().toString();
+                final String matchId = ((TextView) viewParent.findViewById(R.id.match_id)).getText().toString();
+                final String betId = ((TextView) viewParent.findViewById(R.id.bet_id)).getText().toString();
+                final String friendId = ((TextView) viewParent.findViewById(R.id.friend_id)).getText().toString();
 
                 RadioGroup radioGroup = (RadioGroup) viewParent.findViewById(R.id.radio_group);
                 int checked = radioGroup.getCheckedRadioButtonId();
@@ -173,6 +174,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                     return;
                 }
 
+                String option = "";
                 switch (checked) {
                     case R.id.radio_team_1:
                         option = "1";
@@ -184,41 +186,87 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                         option = "2";
                         break;
                 }
+                final String optionBet = option;
 
                 SeekBar seekBar = (SeekBar) viewParent.findViewById(R.id.seek_bar);
-                int amount = seekBar.getProgress();
+                final int amount = seekBar.getProgress();
                 if (amount == 0 || amount > userData.getPoints()) {
                     Toast.makeText(context, "Valor não permitido para aposta.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(context.getString(R.string.server_uri)).build();
+                new AlertDialog.Builder(context)
+                        .setTitle(context.getString(R.string.accept_dialog_title))
+                        .setMessage(context.getString(R.string.accept_dialog_description))
+                        .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                RestAdapter restAdapter = new RestAdapter.Builder()
+                                        .setEndpoint(context.getString(R.string.server_uri)).build();
 
-                ServerApi api = restAdapter.create(ServerApi.class);
+                                ServerApi api = restAdapter.create(ServerApi.class);
 
-                api.acceptBet(betId, userData.getPersonId(), friendId, matchId, option, amount, new Callback<JsonResponse>() {
+                                api.acceptBet(betId, userData.getPersonId(), friendId, matchId, optionBet, amount, new Callback<JsonResponse>() {
 
-                    @Override
-                    public void success(JsonResponse json, Response response) {
-                        Toast.makeText(context, "aceito", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, BetAcceptedActivity.class);
-                        context.startActivity(intent);
-                    }
+                                    @Override
+                                    public void success(JsonResponse json, Response response) {
+                                        Intent intent = new Intent(context, BetAcceptedActivity.class);
+                                        context.startActivity(intent);
+                                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Toast.makeText(context, "falha no aceito.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        Toast.makeText(context, "falha no aceito.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        }).show();
             }
         });
 
         holder.refuseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "refuse", Toast.LENGTH_SHORT).show();
+
+                LinearLayout viewParent = (LinearLayout) v.getParent().getParent();
+                final String betId = ((TextView) viewParent.findViewById(R.id.bet_id)).getText().toString();
+
+                new AlertDialog.Builder(context)
+                        .setTitle(context.getString(R.string.refuse_dialog_title))
+                        .setMessage(context.getString(R.string.refuse_dialog_description))
+                        .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+
+                                RestAdapter restAdapter = new RestAdapter.Builder()
+                                        .setEndpoint(context.getString(R.string.server_uri)).build();
+
+                                ServerApi api = restAdapter.create(ServerApi.class);
+
+                                api.refuseBet(betId, new Callback<JsonResponse>() {
+
+                                    @Override
+                                    public void success(JsonResponse json, Response response) {
+                                        Intent intent = new Intent(context, BetRefusedActivity.class);
+                                        context.startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
+
             }
         });
 

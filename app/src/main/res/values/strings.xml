@@ -5,6 +5,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_text">BetFriend</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+
 
     <!-- Drawer menu titles -->
     <string name="drawer_history">Histórico</string>
@@ -120,7 +123,13 @@
 
     <!-- Settings fragment -->
     <string name="remove_account">Remover conta</string>
-    <string name="disconnect_account">Desconectar conta</string>
+    <string name="disconnect_account">Logout</string>
+
+    <string name="disconnect_dialog_title">Logout</string>
+    <string name="disconnect_dialog_description">Tem certeza que deseja fazer logout?</string>
+
+    <string name="remove_account_dialog_title">Remover conta</string>
+    <string name="remove_account_dialog_description">Tem certeza que deseja fazer remover sua conta? Esta operação não poderá ser desfeita.</string>
 
     <!-- Home fragment -->
     <string name="choose_result">Escolha o resultado:</string>
@@ -159,6 +168,13 @@
 
     <!-- Bet invites activity  -->
     <string name="bet_invites">Convites de aposta</string>
-    <string name="title_activity_bet_accepted">BetAcceptedActivity</string>
+    <string name="title_activity_bet_accepted">Aposta aceita</string>
+    <string name="title_activity_bet_refused">Aposta recusada</string>
+
+    <string name="accept_dialog_title">Aceitar aposta</string>
+    <string name="accept_dialog_description">Tem certeza que deseja aceitar esta aposta?</string>
+
+    <string name="refuse_dialog_title">Recusar aposta</string>
+    <string name="refuse_dialog_description">Tem certeza que deseja recusar esta aposta?</string>
 </resources>
 
