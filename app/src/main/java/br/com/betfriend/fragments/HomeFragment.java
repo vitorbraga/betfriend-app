@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +31,7 @@ public class HomeFragment extends android.app.Fragment {
 
     private AnimatedExpandableListView matchesListView;
 
-    private ProgressBar mSpinner;
+    private ProgressBar mProgressBar;
 
     private LinearLayout mNoMatchesContainer;
 
@@ -90,10 +89,19 @@ public class HomeFragment extends android.app.Fragment {
 
         });
 
-        mSpinner = (ProgressBar) getView().findViewById(R.id.main_progressbar);
+        mProgressBar = (ProgressBar) getView().findViewById(R.id.main_progressbar);
 
         mNoMatchesContainer = (LinearLayout) getView().findViewById(R.id.no_matches_container);
         mRetryButton = (Button) getView().findViewById(R.id.retry_button);
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                mProgressBar.setVisibility(View.VISIBLE);
+                getMatches();
+            }
+        });
 
         // Get matches from server
         getMatches();
@@ -121,8 +129,7 @@ public class HomeFragment extends android.app.Fragment {
             @Override
             public void success(ArrayList<Match> matches, Response response) {
 
-                mSpinner.setVisibility(View.GONE);
-
+                mProgressBar.setVisibility(View.GONE);
 
                 if (matches.size() > 0) {
 
@@ -134,30 +141,21 @@ public class HomeFragment extends android.app.Fragment {
 
                 } else {
                     mNoMatchesContainer.setVisibility(View.VISIBLE);
-
-                    mRetryButton.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-
-                            mSpinner.setVisibility(View.VISIBLE);
-                            getMatches();
-                        }
-                    });
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                Toast.makeText(getActivity(), "retorfit error getMatches", Toast.LENGTH_SHORT).show();
+                mProgressBar.setVisibility(View.GONE);
+                mNoMatchesContainer.setVisibility(View.VISIBLE);
             }
         });
     }
 
     public void setUserData(UserDataDTO user) {
         userData = user;
-        if(mAdapter != null) {
+        if (mAdapter != null) {
             mAdapter.setUserData(user);
         }
     }

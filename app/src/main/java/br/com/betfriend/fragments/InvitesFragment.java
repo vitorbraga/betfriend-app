@@ -160,7 +160,6 @@ public class InvitesFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "reetrofit error invirtez", Toast.LENGTH_SHORT).show();
             }
         });
     }
