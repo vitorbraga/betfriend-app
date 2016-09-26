@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +22,9 @@ import java.util.Date;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.Match;
-import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
+import br.com.betfriend.utils.Constants;
 import br.com.betfriend.utils.ConvertHelper;
 import br.com.betfriend.utils.TeamsDataEnum;
 import retrofit.Callback;
@@ -181,7 +180,7 @@ public class StartBetActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "MAKE BET", Toast.LENGTH_SHORT).show();
 
                 RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(getString(R.string.server_uri)).build();
+                        .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 
                 ServerApi api = restAdapter.create(ServerApi.class);
 

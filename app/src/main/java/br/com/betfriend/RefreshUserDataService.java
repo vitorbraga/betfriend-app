@@ -25,6 +25,7 @@ import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -64,7 +65,7 @@ public class RefreshUserDataService extends Service {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.server_uri))
+                .setEndpoint(Constants.SERVER_API_BASE_URI)
                 .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);

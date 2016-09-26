@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +24,11 @@ import java.util.ArrayList;
 
 import br.com.betfriend.R;
 import br.com.betfriend.adapters.AnimatedExpandableListView;
-import br.com.betfriend.adapters.ExpandableListAdapter;
 import br.com.betfriend.adapters.InvitesExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -125,7 +124,7 @@ public class InvitesFragment extends Fragment {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.server_uri))
+                .setEndpoint(Constants.SERVER_API_BASE_URI)
                 .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);

@@ -30,6 +30,7 @@ import br.com.betfriend.model.Match;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
+import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -93,7 +94,7 @@ public class SearchFriendActivity extends AppCompatActivity {
         mFinishButton = (Button) findViewById(R.id.finish_button);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.server_uri)).build();
+                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 
         api = restAdapter.create(ServerApi.class);
 

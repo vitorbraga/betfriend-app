@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
+import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -73,7 +74,7 @@ public class PendingTabFragment extends Fragment {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.server_uri))
+                .setEndpoint(Constants.SERVER_API_BASE_URI)
                 .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);

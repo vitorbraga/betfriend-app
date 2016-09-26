@@ -21,6 +21,7 @@ import br.com.betfriend.adapters.ExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -119,7 +120,7 @@ public class HomeFragment extends android.app.Fragment {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.server_uri))
+                .setEndpoint(Constants.SERVER_API_BASE_URI)
                 .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);

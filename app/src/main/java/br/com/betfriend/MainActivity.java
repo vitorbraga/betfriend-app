@@ -35,6 +35,7 @@ import br.com.betfriend.fragments.RankingFragment;
 import br.com.betfriend.fragments.SettingsFragment;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
+import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity
                         .create();
 
                 RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(getString(R.string.server_uri))
+                        .setEndpoint(Constants.SERVER_API_BASE_URI)
                         .setConverter(new GsonConverter(gson)).build();
 
                 ServerApi api = restAdapter.create(ServerApi.class);
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.server_uri)).build();
+                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);
 

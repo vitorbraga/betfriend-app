@@ -33,6 +33,7 @@ import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
+import br.com.betfriend.utils.Constants;
 import br.com.betfriend.utils.TeamsDataEnum;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -202,7 +203,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
                                 RestAdapter restAdapter = new RestAdapter.Builder()
-                                        .setEndpoint(context.getString(R.string.server_uri)).build();
+                                        .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 
                                 ServerApi api = restAdapter.create(ServerApi.class);
 
@@ -244,7 +245,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                                 // continue with delete
 
                                 RestAdapter restAdapter = new RestAdapter.Builder()
-                                        .setEndpoint(context.getString(R.string.server_uri)).build();
+                                        .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 
                                 ServerApi api = restAdapter.create(ServerApi.class);
 
