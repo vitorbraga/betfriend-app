@@ -12,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +29,7 @@ import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.fragments.HistoryFragment;
 import br.com.betfriend.fragments.HomeFragment;
 import br.com.betfriend.fragments.InvitesFragment;
-import br.com.betfriend.fragments.PrizesFragment;
+import br.com.betfriend.fragments.AccomplishmentsFragment;
 import br.com.betfriend.fragments.RankingFragment;
 import br.com.betfriend.fragments.SettingsFragment;
 import br.com.betfriend.model.UserDataDTO;
@@ -270,7 +269,7 @@ public class MainActivity extends AppCompatActivity
                 title = getString(R.string.drawer_rankings);
                 break;
             case R.id.nav_prizes:
-                fragment = new PrizesFragment();
+                fragment = new AccomplishmentsFragment();
                 bundle = new Bundle();
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);

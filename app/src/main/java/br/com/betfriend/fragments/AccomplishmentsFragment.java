@@ -3,17 +3,13 @@ package br.com.betfriend.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.OvershootInterpolator;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
@@ -21,17 +17,23 @@ import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import br.com.betfriend.R;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.GamificationUtils;
 
-public class PrizesFragment extends SampleFragment {
+public class AccomplishmentsFragment extends SampleFragment {
 
     private DecoView mBetWon, mInvitesMade, mInvitesAccepted,
             mGoldenMedal, mPodium;
+
+    private TextView mBetWonBounds, mInvitesMadeBounds, mInvitesAcceptedBounds,
+            mGoldenMedalBounds, mPodiumBounds;
 
     private int mSeries1Index;
 
     private UserDataDTO userData;
 
-    public PrizesFragment() {
+    private float LINE_WIDTH = 6f;
+
+    public AccomplishmentsFragment() {
         // Required empty public constructor
     }
 
@@ -44,12 +46,55 @@ public class PrizesFragment extends SampleFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_prizes, container, false);
+        View view = inflater.inflate(R.layout.fragment_accomplishments, container, false);
 
         userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
 
-
         mBetWon = (DecoView) view.findViewById(R.id.bets_won);
+        mBetWon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMedalDetailsDialog(R.id.bets_won);
+            }
+        });
+
+        mInvitesMade = (DecoView) view.findViewById(R.id.invites_made);
+        mInvitesMade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMedalDetailsDialog(R.id.invites_made);
+            }
+        });
+
+        mInvitesAccepted = (DecoView) view.findViewById(R.id.invites_accepted);
+        mInvitesAccepted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMedalDetailsDialog(R.id.invites_accepted);
+            }
+        });
+
+        mPodium = (DecoView) view.findViewById(R.id.podium);
+        mPodium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMedalDetailsDialog(R.id.podium);
+            }
+        });
+
+        mGoldenMedal = (DecoView) view.findViewById(R.id.golden_medal);
+        mGoldenMedal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMedalDetailsDialog(R.id.golden_medal);
+            }
+        });
+
+        mBetWonBounds = (TextView) view.findViewById(R.id.bets_won_bounds);
+        mInvitesMadeBounds = (TextView) view.findViewById(R.id.invites_accepted_bounds);
+        mInvitesAcceptedBounds = (TextView) view.findViewById(R.id.invites_made_bounds);
+        mGoldenMedalBounds = (TextView) view.findViewById(R.id.golden_medal_bounds);
+        mPodiumBounds = (TextView) view.findViewById(R.id.podium_bounds);
 
         return view;
     }
@@ -69,7 +114,14 @@ public class PrizesFragment extends SampleFragment {
         super.onDetach();
     }
 
+    private void showMedalDetailsDialog(int arcId) {
+
+
+        Toast.makeText(getActivity(), "arcId: " + arcId, Toast.LENGTH_SHORT).show();
+    }
+
     private void createTracks(int arcViewId, Interpolator interpolator, int color) {
+
         final View view = getView();
         if (view == null) {
             return;
@@ -83,29 +135,34 @@ public class PrizesFragment extends SampleFragment {
         decoView.deleteAll();
         decoView.configureAngles(320, 180);
 
-        float mSeriesMax = 50f;
+        int mSeriesMax = 50;
         switch (arcViewId) {
             case R.id.bets_won:
-                mSeriesMax = 20;
+                mSeriesMax = GamificationUtils.getUpperBound(arcViewId, userData.getBetsWon());
+                mBetWonBounds.setText(getString(R.string.medal_bounds, userData.getBetsWon(), mSeriesMax));
                 break;
             case R.id.invites_made:
-                mSeriesMax = 100;
+                mSeriesMax = GamificationUtils.getUpperBound(arcViewId, userData.getInvitesMade());;
+                mInvitesMadeBounds.setText(getString(R.string.medal_bounds, userData.getInvitesMade(), mSeriesMax));
                 break;
             case R.id.invites_accepted:
-                mSeriesMax = 100;
+                mSeriesMax = GamificationUtils.getUpperBound(arcViewId, userData.getInvitesAccepted());;
+                mInvitesAcceptedBounds.setText(getString(R.string.medal_bounds, userData.getInvitesAccepted(), mSeriesMax));
                 break;
             case R.id.golden_medal:
-                mSeriesMax = 5;
+                mSeriesMax = GamificationUtils.getUpperBound(arcViewId, userData.getGoldMedal());;
+                mGoldenMedalBounds.setText(getString(R.string.medal_bounds, userData.getGoldMedal(), mSeriesMax));
                 break;
             case R.id.podium:
-                mSeriesMax = 10;
+                mSeriesMax = GamificationUtils.getUpperBound(arcViewId, userData.getPodium());;
+                mPodiumBounds.setText(getString(R.string.medal_bounds, userData.getPodium(), mSeriesMax));
                 break;
 
         }
         // Cinza por tras
         SeriesItem arcBackTrack = new SeriesItem.Builder(Color.argb(255, 228, 228, 228))
                 .setRange(0, mSeriesMax, mSeriesMax)
-                .setLineWidth(getDimension(4f))
+                .setLineWidth(getDimension(LINE_WIDTH))
                 .build();
 
         decoView.addSeries(arcBackTrack);
@@ -113,7 +170,7 @@ public class PrizesFragment extends SampleFragment {
         SeriesItem seriesItem1 = new SeriesItem.Builder(color)
                 .setRange(0, mSeriesMax, 0)
                 .setInterpolator(interpolator)
-                .setLineWidth(getDimension(4f))
+                .setLineWidth(getDimension(LINE_WIDTH))
                 .setSpinDuration(5000)
                 .setSpinClockwise(true)
                 .build();

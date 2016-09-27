@@ -44,7 +44,7 @@
             <!--android:entryValues="@array/entryvalues_list_preference" />-->
 
         <Preference
-            android:title="Desconectar conta Google"
+            android:title="Logout"
             android:key="disconnect_account">
             <!--<intent android:action="android.intent.action.VIEW"-->
                 <!--android:data="http://codepath.com/" />-->

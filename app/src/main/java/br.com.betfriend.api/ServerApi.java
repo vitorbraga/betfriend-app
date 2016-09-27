@@ -24,9 +24,9 @@ public interface ServerApi {
                 @Field("personPhoto") String personPhoto, @Field("idToken") String idToken,
                 Callback<UserDataDTO> response);
 
-    @GET("/users/searchFriend/{personName}")
+    @GET("/users/searchFriend/{personName}/{userId}")
     void searchFriend(@Header("Content-Type") String contentType, @Path("personName") String personName,
-                Callback<ArrayList<UserDataDTO>> response);
+                      @Path("userId") String userId, Callback<ArrayList<UserDataDTO>> response);
 
     @GET("/users/getUserData/{personId}")
     void getUserData(@Header("Content-Type") String contentType, @Path("personId") String personId,

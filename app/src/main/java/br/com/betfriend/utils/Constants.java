@@ -10,5 +10,4 @@ public class Constants {
     public static final String SOCCER_API_BASE_URI = "https://arisalexis-soccer-odds-v1.p.mashape.com/";
 
     public static final String SERVER_API_BASE_URI = "http://www.betfriendapp.com/";
-
 }

@@ -109,7 +109,7 @@ public class SearchFriendActivity extends AppCompatActivity {
 
                 if (s.toString().length() >= 3) {
 
-                    api.searchFriend("application/json", s.toString(), new Callback<ArrayList<UserDataDTO>>() {
+                    api.searchFriend("application/json", s.toString(), mUserData.getPersonId(), new Callback<ArrayList<UserDataDTO>>() {
 
                         @Override
                         public void success(ArrayList<UserDataDTO> users, Response response) {
