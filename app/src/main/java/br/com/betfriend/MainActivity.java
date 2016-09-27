@@ -271,6 +271,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_prizes:
                 fragment = new PrizesFragment();
+                bundle = new Bundle();
+                bundle.putSerializable("USER_DATA_EXTRA", mUserData);
+                fragment.setArguments(bundle);
                 title = getString(R.string.drawer_prizes);
                 break;
             case R.id.nav_settings:
