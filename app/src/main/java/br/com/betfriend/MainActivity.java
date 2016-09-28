@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void success(UserDataDTO user, Response response) {
 
-                        if(mNavigationView != null) {
+                        if (mNavigationView != null) {
 
                             View headerView = mNavigationView.getHeaderView(0);
 
@@ -95,10 +97,9 @@ public class MainActivity extends AppCompatActivity
                             mUserData = user;
                             android.app.FragmentManager fragmentManager = getFragmentManager();
                             Fragment currentFragment = getFragmentManager().findFragmentById(R.id.content_frame);
-                            if(currentFragment instanceof HomeFragment) {
+                            if (currentFragment instanceof HomeFragment) {
                                 ((HomeFragment) currentFragment).setUserData(mUserData);
                             }
-
                         }
                     }
 
@@ -137,6 +138,22 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        View parentLayout = findViewById(android.R.id.content);
+        boolean betFinished = getIntent().getBooleanExtra("BET_COMPLETED", false);
+        if (betFinished) {
+            Snackbar snack = Snackbar.make(parentLayout, "Aposta realizada com sucesso!", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Fechar", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    });
+            View view = snack.getView();
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+            view.setLayoutParams(params);
+            view.setBackground(getDrawable(R.color.app_green_start));
+            snack.show();
+        }
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);

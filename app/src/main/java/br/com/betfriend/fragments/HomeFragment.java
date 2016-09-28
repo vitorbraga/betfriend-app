@@ -2,6 +2,7 @@ package br.com.betfriend.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class HomeFragment extends android.app.Fragment {
 
     private ExpandableListAdapter mAdapter;
 
+    private Context mContext;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -57,6 +60,8 @@ public class HomeFragment extends android.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mContext = getActivity();
 
         userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
 
@@ -82,9 +87,12 @@ public class HomeFragment extends android.app.Fragment {
 
                 if (matchesListView.isGroupExpanded(groupPosition)) {
                     matchesListView.collapseGroupWithAnimation(groupPosition);
+                    v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
                 } else {
                     matchesListView.expandGroupWithAnimation(groupPosition);
+                    v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.very_light_grey));
                 }
+
                 return true;
             }
 

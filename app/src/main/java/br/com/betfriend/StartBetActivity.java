@@ -193,8 +193,9 @@ public class StartBetActivity extends AppCompatActivity {
                         if (json.getCode() == 0) {
                             // New user registered
                             // success
-                            Intent intent = new Intent(getApplicationContext(), BetCompleteActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("PERSON_ID_EXTRA", mUserData.getPersonId());
+                            intent.putExtra("BET_COMPLETED", true);
                             startActivity(intent);
                         } else {
                             // User was already registered
