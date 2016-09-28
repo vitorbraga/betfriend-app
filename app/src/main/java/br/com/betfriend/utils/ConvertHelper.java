@@ -2,6 +2,8 @@ package br.com.betfriend.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by amade on 10/09/2016.
@@ -9,6 +11,8 @@ import java.util.Date;
 public class ConvertHelper {
 
     private static final String DATE_FORMAT_DEFAULT = "dd/MM/yyyy HH:mm";
+
+    private static final Integer TIMEZONE_OFFSET = 2;
 
     public static boolean isEmptyOrVoid(final Date date) {
         if (date == null) {
@@ -19,12 +23,12 @@ public class ConvertHelper {
         return false;
     }
 
-    public static String dateToView(final Date date) {
+    public static String dateToView(Date date) {
 
         if (!isEmptyOrVoid(date)) {
+            date = new Date(date.getTime() - TimeUnit.HOURS.toMillis(TIMEZONE_OFFSET));
             final SimpleDateFormat mySdf = new SimpleDateFormat(
                     DATE_FORMAT_DEFAULT);
-            mySdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT-2"));
             return mySdf.format(date);
         }
 

@@ -20,6 +20,7 @@
     <color name="app_green">#416441</color>
     <color name="app_green_center">#366F20</color>
     <color name="app_green_start">#397421</color>
+    <color name="app_green_button">#5E915E</color>
     <color name="app_red">#F95738</color>
     <color name="app_red_center">#CFF95738</color>
     <color name="app_red_light">#AAF95738</color>

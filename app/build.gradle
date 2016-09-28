@@ -43,6 +43,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.android.support:support-v13:24.2.0'
     compile 'com.github.bmarrdev:android-DecoView-charting:v1.2'
+    compile 'com.google.android.gms:play-services-appindexing:9.4.0'
 }
 
 
