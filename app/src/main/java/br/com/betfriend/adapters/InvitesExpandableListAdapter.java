@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -23,7 +22,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import br.com.betfriend.BetAcceptedActivity;
-import br.com.betfriend.BetCompleteActivity;
 import br.com.betfriend.BetRefusedActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
@@ -34,6 +32,7 @@ import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.Constants;
+import br.com.betfriend.utils.ConvertHelper;
 import br.com.betfriend.utils.TeamsDataEnum;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -53,27 +52,26 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
         public TextView homeTeam;
         public TextView awayTeam;
         public TextView matchId;
+        public TextView matchDate;
         public ImageView homeLogo;
         public ImageView awayLogo;
+        public TextView amount;
         public ImageView personPhoto;
         public TextView personName;
     }
 
     static class ViewHolderChild {
-        public TextView homeTeam;
-        public TextView awayTeam;
         public Button acceptButton;
         public Button refuseButton;
         public TextView betId;
         public TextView matchId;
+        public TextView amount;
         public TextView friendOption;
         public TextView friendId;
-        public SeekBar seekBar;
-        public EditText betValue;
         public RadioGroup radioGroup;
-        public RadioButton homeButton;
-        public RadioButton drawButton;
-        public RadioButton awayButton;
+        public RadioButton homeRadioButton;
+        public RadioButton drawRadioButton;
+        public RadioButton awayRadioButton;
     }
 
     @Override
@@ -94,20 +92,17 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             mBinding.setUserInvite(userData);
 
             ViewHolderChild viewHolderChild = new ViewHolderChild();
-            viewHolderChild.homeTeam = (TextView) rowView.findViewById(R.id.radio_team_1);
-            viewHolderChild.awayTeam = (TextView) rowView.findViewById(R.id.radio_team_2);
             viewHolderChild.acceptButton = (Button) rowView.findViewById(R.id.accept_button);
             viewHolderChild.refuseButton = (Button) rowView.findViewById(R.id.refuse_button);
             viewHolderChild.betId = (TextView) rowView.findViewById(R.id.bet_id);
             viewHolderChild.matchId = (TextView) rowView.findViewById(R.id.match_id);
+            viewHolderChild.amount = (TextView) rowView.findViewById(R.id.amount);
             viewHolderChild.friendOption = (TextView) rowView.findViewById(R.id.friend_option);
             viewHolderChild.friendId = (TextView) rowView.findViewById(R.id.friend_id);
-            viewHolderChild.seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
-            viewHolderChild.betValue = (EditText) rowView.findViewById(R.id.bet_value);
             viewHolderChild.radioGroup = (RadioGroup) rowView.findViewById(R.id.radio_group);
-            viewHolderChild.homeButton = (RadioButton) rowView.findViewById(R.id.radio_team_1);
-            viewHolderChild.drawButton = (RadioButton) rowView.findViewById(R.id.radio_draw);
-            viewHolderChild.awayButton = (RadioButton) rowView.findViewById(R.id.radio_team_2);
+            viewHolderChild.homeRadioButton = (RadioButton) rowView.findViewById(R.id.radio_team_1);
+            viewHolderChild.drawRadioButton = (RadioButton) rowView.findViewById(R.id.radio_draw);
+            viewHolderChild.awayRadioButton = (RadioButton) rowView.findViewById(R.id.radio_team_2);
 
             rowView.setTag(viewHolderChild);
         }
@@ -119,34 +114,28 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
         String matchId = bets.get(groupPosition).getMatch().getMatchId().toString();
         String betId = bets.get(groupPosition).get_id();
         String friendId = bets.get(groupPosition).getSrcPerson().getPersonId();
+        Integer amount = bets.get(groupPosition).getAmount();
 
         String option = bets.get(groupPosition).getOption();
 
-        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).correctName());
-        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).correctName());
+        holder.homeRadioButton.setText(TeamsDataEnum.get(homeTeam).label());
+        holder.awayRadioButton.setText(TeamsDataEnum.get(awayTeam).label());
         holder.matchId.setText(matchId);
+        holder.amount.setText(amount.toString());
         holder.betId.setText(betId);
         holder.friendId.setText(friendId);
 
-        // Set seekbar
-        holder.seekBar.setMax(userData.getPoints());
-        holder.seekBar.setProgress(bets.get(groupPosition).getAmount());
-        holder.seekBar.setEnabled(false);
-
         // Set ragio buttons
         if (option.equals("1")) {
-            holder.homeButton.setEnabled(false);
-            holder.friendOption.setText(holder.homeButton.getId() + "");
+            holder.homeRadioButton.setEnabled(false);
+            holder.friendOption.setText(holder.homeRadioButton.getId() + "");
         } else if (option.equals("X")) {
-            holder.drawButton.setEnabled(false);
-            holder.friendOption.setText(holder.drawButton.getId() + "");
+            holder.drawRadioButton.setEnabled(false);
+            holder.friendOption.setText(holder.drawRadioButton.getId() + "");
         } else {
-            holder.awayButton.setEnabled(false);
-            holder.friendOption.setText(holder.awayButton.getId() + "");
+            holder.awayRadioButton.setEnabled(false);
+            holder.friendOption.setText(holder.awayRadioButton.getId() + "");
         }
-
-        // Set edittext
-        holder.betValue.setText(bets.get(groupPosition).getAmount().toString());
 
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
 
@@ -158,6 +147,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                 final String matchId = ((TextView) viewParent.findViewById(R.id.match_id)).getText().toString();
                 final String betId = ((TextView) viewParent.findViewById(R.id.bet_id)).getText().toString();
                 final String friendId = ((TextView) viewParent.findViewById(R.id.friend_id)).getText().toString();
+                final Integer amount = Integer.parseInt(((TextView) viewParent.findViewById(R.id.amount)).getText().toString());
 
                 RadioGroup radioGroup = (RadioGroup) viewParent.findViewById(R.id.radio_group);
                 int checked = radioGroup.getCheckedRadioButtonId();
@@ -188,13 +178,6 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                         break;
                 }
                 final String optionBet = option;
-
-                SeekBar seekBar = (SeekBar) viewParent.findViewById(R.id.seek_bar);
-                final int amount = seekBar.getProgress();
-                if (amount == 0 || amount > userData.getPoints()) {
-                    Toast.makeText(context, "Valor não permitido para aposta.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
                 new AlertDialog.Builder(context)
                         .setTitle(context.getString(R.string.accept_dialog_title))
@@ -335,8 +318,10 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             viewHolderGroup.homeTeam = (TextView) convertView.findViewById(R.id.home_team);
             viewHolderGroup.awayTeam = (TextView) convertView.findViewById(R.id.away_team);
             viewHolderGroup.matchId = (TextView) convertView.findViewById(R.id.match_id);
+            viewHolderGroup.matchDate = (TextView) convertView.findViewById(R.id.match_date);
             viewHolderGroup.homeLogo = (ImageView) convertView.findViewById(R.id.home_logo);
             viewHolderGroup.awayLogo = (ImageView) convertView.findViewById(R.id.away_logo);
+            viewHolderGroup.amount = (TextView) convertView.findViewById(R.id.amount);
             viewHolderGroup.personName = (TextView) convertView.findViewById(R.id.person_name);
             viewHolderGroup.personPhoto = (ImageView) convertView.findViewById(R.id.person_photo);
 
@@ -351,11 +336,14 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
         String matchId = bets.get(groupPosition).getMatch().getMatchId().toString();
         String personName = bets.get(groupPosition).getSrcPerson().getPersonName();
         String personPhoto = bets.get(groupPosition).getSrcPerson().getPersonPhoto();
+        Integer amount = bets.get(groupPosition).getAmount();
 
-        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).correctName());
-        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).correctName());
+        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).label());
+        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).label());
         holder.matchId.setText(matchId);
         holder.personName.setText(personName);
+        holder.amount.setText(amount.toString());
+        holder.matchDate.setText(ConvertHelper.dateToViewShort(bets.get(groupPosition).getMatch().getTstamp()));
 
         Picasso.with(context)
                 .load(TeamsDataEnum.get(homeTeam).logo())

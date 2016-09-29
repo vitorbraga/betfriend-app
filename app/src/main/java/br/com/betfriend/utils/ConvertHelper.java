@@ -12,6 +12,8 @@ public class ConvertHelper {
 
     private static final String DATE_FORMAT_DEFAULT = "dd/MM/yyyy HH:mm";
 
+    private static final String DATE_FORMAT_SHORT = "dd/MM HH:mm";
+
     private static final Integer TIMEZONE_OFFSET = 2;
 
     public static boolean isEmptyOrVoid(final Date date) {
@@ -29,6 +31,18 @@ public class ConvertHelper {
             date = new Date(date.getTime() - TimeUnit.HOURS.toMillis(TIMEZONE_OFFSET));
             final SimpleDateFormat mySdf = new SimpleDateFormat(
                     DATE_FORMAT_DEFAULT);
+            return mySdf.format(date);
+        }
+
+        return null;
+    }
+
+    public static String dateToViewShort(Date date) {
+
+        if (!isEmptyOrVoid(date)) {
+            date = new Date(date.getTime() - TimeUnit.HOURS.toMillis(TIMEZONE_OFFSET));
+            final SimpleDateFormat mySdf = new SimpleDateFormat(
+                    DATE_FORMAT_SHORT);
             return mySdf.format(date);
         }
 
