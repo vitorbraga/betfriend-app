@@ -5,6 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import br.com.betfriend.BetAcceptedActivity;
@@ -75,7 +86,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
     }
 
     @Override
-    public View getRealChildView(int groupPosition, final int childPosition,
+    public View getRealChildView(final int groupPosition, final int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
 
         View rowView = convertView;
@@ -85,7 +96,6 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
             LayoutInflater inflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            rowView = inflater.inflate(R.layout.match_list_item, null);
 
             mBinding = DataBindingUtil.inflate(inflater, R.layout.invite_bet_list_item, parent, false);
             rowView = mBinding.getRoot();
@@ -125,17 +135,81 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
         holder.betId.setText(betId);
         holder.friendId.setText(friendId);
 
+        Drawable img = null;
         // Set ragio buttons
         if (option.equals("1")) {
+
             holder.homeRadioButton.setEnabled(false);
+            img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
+            holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
             holder.friendOption.setText(holder.homeRadioButton.getId() + "");
+
         } else if (option.equals("X")) {
+
             holder.drawRadioButton.setEnabled(false);
+            img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
+            holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
             holder.friendOption.setText(holder.drawRadioButton.getId() + "");
+
         } else {
+
             holder.awayRadioButton.setEnabled(false);
+            img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
+            holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
             holder.friendOption.setText(holder.awayRadioButton.getId() + "");
         }
+
+        holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int checked = group.getCheckedRadioButtonId();
+
+                Drawable img = getDrawableFromURL(userData.getPersonPhoto());
+                switch (checked) {
+
+                    case R.id.radio_team_1:
+
+                        holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+
+                        if(holder.drawRadioButton.isEnabled()) {
+                            holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        }
+
+                        if(holder.awayRadioButton.isEnabled()) {
+                            holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        }
+
+                        break;
+
+                    case R.id.radio_draw:
+
+                        holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+
+                        if(holder.homeRadioButton.isEnabled()) {
+                            holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        }
+
+                        if(holder.awayRadioButton.isEnabled()) {
+                            holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        }
+
+                        break;
+
+                    case R.id.radio_team_2:
+
+                        holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+
+                        if(holder.homeRadioButton.isEnabled()) {
+                            holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        }
+
+                        if(holder.drawRadioButton.isEnabled()) {
+                            holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        }
+                        break;
+                }
+            }
+        });
 
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
 
@@ -361,6 +435,27 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                 .into(holder.personPhoto);
 
         return convertView;
+    }
+
+    public static Drawable getDrawableFromURL(String url) {
+
+        Bitmap x;
+
+        try {
+
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.connect();
+
+            InputStream input = connection.getInputStream();
+            x = BitmapFactory.decodeStream(input);
+
+            return new BitmapDrawable((new CircleTransformation()).transform(x));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void setUserData(UserDataDTO user) {
