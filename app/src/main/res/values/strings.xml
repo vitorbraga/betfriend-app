@@ -167,7 +167,7 @@
     <string name="title_activity_bet_invitations">BetInvitationsActivity</string>
 
     <!-- Bet invites activity  -->
-    <string name="bet_invites">Convites de aposta</string>
+    <string name="bet_invites">Convites</string>
     <string name="title_activity_bet_accepted">Aposta aceita</string>
     <string name="title_activity_bet_refused">Aposta recusada</string>
 

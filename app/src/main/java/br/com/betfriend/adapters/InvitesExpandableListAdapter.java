@@ -4,11 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -19,12 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +31,6 @@ import br.com.betfriend.BetAcceptedActivity;
 import br.com.betfriend.BetRefusedActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
-import br.com.betfriend.databinding.InviteBetListItemBinding;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.Match;
@@ -57,7 +51,6 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
     private ArrayList<Bet> bets;
 
     private UserDataDTO userData;
-    private InviteBetListItemBinding mBinding;
 
     static class ViewHolderGroup {
         public TextView homeTeam;
@@ -97,9 +90,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             LayoutInflater inflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            mBinding = DataBindingUtil.inflate(inflater, R.layout.invite_bet_list_item, parent, false);
-            rowView = mBinding.getRoot();
-            mBinding.setUserInvite(userData);
+            rowView = inflater.inflate(R.layout.invite_bet_list_item, parent, false);
 
             ViewHolderChild viewHolderChild = new ViewHolderChild();
             viewHolderChild.acceptButton = (Button) rowView.findViewById(R.id.accept_button);

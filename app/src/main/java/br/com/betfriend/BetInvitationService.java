@@ -88,7 +88,7 @@ public class BetInvitationService extends Service {
 
                     NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(getApplicationContext())
-                                    .setSmallIcon(R.drawable.ic_launcher)
+                                    .setSmallIcon(R.mipmap.ic_launcher)
                                     .setContentTitle(getString(R.string.notification_content_title))
                                     .setContentText(getString(R.string.notification_content_text));
 

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     final Handler mHandler = new Handler();
 
-    private static final long INTERVAL = 1 * 20 * 1000;
+    private static final long INTERVAL = 1 * 60 * 1000;
 
     Runnable mUserDataRunnable = new Runnable() {
 
@@ -93,6 +93,14 @@ public class MainActivity extends AppCompatActivity
 
                             TextView pointsTextView = (TextView) headerView.findViewById(R.id.header_user_points);
                             pointsTextView.setText(getString(R.string.user_points, user.getPoints().toString()));
+
+                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplication());
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("PERSON_ID", user.getPersonId());
+                            editor.putString("PERSON_PHOTO", user.getPersonPhoto());
+                            editor.putString("PERSON_NAME", user.getPersonName());
+                            editor.putInt("POINTS", user.getPoints());
+                            editor.commit();
 
                             mUserData = user;
                             android.app.FragmentManager fragmentManager = getFragmentManager();

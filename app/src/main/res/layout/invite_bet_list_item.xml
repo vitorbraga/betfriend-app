@@ -1,135 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="left"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <data>
+    <TextView
+        android:id="@+id/bet_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
-        <variable
-            name="userInvite"
-            type="br.com.betfriend.model.UserDataDTO" />
-    </data>
+    <TextView
+        android:id="@+id/match_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/friend_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/friend_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/choose_result" />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_team_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rbtn_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:maxLength="12"
+            android:padding="10dp"
+            android:textColor="@drawable/rbtn_textcolor_selector" />
+
+        <RadioButton
+            android:id="@+id/radio_draw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rbtn_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:maxLength="12"
+            android:padding="10dp"
+            android:text="Empate"
+            android:textColor="@drawable/rbtn_textcolor_selector" />
+
+        <RadioButton
+            android:id="@+id/radio_team_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rbtn_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:maxLength="12"
+            android:padding="10dp"
+            android:textColor="@drawable/rbtn_textcolor_selector" />
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="left"
-        android:layoutDirection="ltr"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-        <TextView
-            android:id="@+id/bet_id"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/refuse_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.5"
+            android:background="#ffdad8"
+            android:drawableLeft="@drawable/ic_clear_black_24dp"
+            android:paddingLeft="10dp"
+            android:text="Recusar"
+            android:textColor="@color/black_grey" />
 
-        <TextView
-            android:id="@+id/match_id"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/accept_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/friend_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/friend_option"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/choose_result" />
-
-        <RadioGroup
-            android:id="@+id/radio_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radio_team_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rbtn_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:maxLength="12"
-                android:padding="10dp"
-                android:textColor="@drawable/rbtn_textcolor_selector" />
-
-            <RadioButton
-                android:id="@+id/radio_draw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rbtn_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:maxLength="12"
-                android:padding="10dp"
-                android:text="Empate"
-                android:textColor="@drawable/rbtn_textcolor_selector" />
-
-            <RadioButton
-                android:id="@+id/radio_team_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rbtn_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:maxLength="12"
-                android:padding="10dp"
-                android:textColor="@drawable/rbtn_textcolor_selector" />
-        </RadioGroup>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <Button
-                android:id="@+id/refuse_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="0.5"
-                android:background="#ffdad8"
-                android:paddingLeft="10dp"
-                android:text="Recusar"
-                android:drawableLeft="@drawable/ic_clear_black_24dp"
-                android:textColor="@color/black_grey" />
-
-            <Button
-                android:id="@+id/accept_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="0.5"
-                android:paddingLeft="10dp"
-                android:background="#cbe8ba"
-                android:drawableLeft="@drawable/ic_check_black_24dp"
-                android:text="Aceitar"
-                android:textColor="@color/black_grey" />
-
-        </LinearLayout>
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.5"
+            android:background="#cbe8ba"
+            android:drawableLeft="@drawable/ic_check_black_24dp"
+            android:paddingLeft="10dp"
+            android:text="Aceitar"
+            android:textColor="@color/black_grey" />
 
     </LinearLayout>
-</layout>
+
+</LinearLayout>

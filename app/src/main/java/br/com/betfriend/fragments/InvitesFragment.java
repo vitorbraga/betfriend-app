@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +51,7 @@ public class InvitesFragment extends Fragment {
 
     private Button mRetryButton;
 
-    static class ViewHolder {
-        public TextView matchId;
-        public TextView srcPerson;
-        public TextView destPerson;
-        public Button acceptButton;
-        public Button refuseButton;
-    }
+    private Context mContext;
 
     public InvitesFragment() {
         // Required empty public constructor
@@ -74,6 +69,8 @@ public class InvitesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_invites, container, false);
 
         userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
+
+        mContext = getActivity();
 
         return view;
     }
@@ -97,8 +94,10 @@ public class InvitesFragment extends Fragment {
 
                 if (mInvitesListView.isGroupExpanded(groupPosition)) {
                     mInvitesListView.collapseGroupWithAnimation(groupPosition);
+                    v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
                 } else {
                     mInvitesListView.expandGroupWithAnimation(groupPosition);
+                    v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.very_light_grey));
                 }
                 return true;
             }
@@ -111,10 +110,10 @@ public class InvitesFragment extends Fragment {
 
         mRetryButton = (Button) getView().findViewById(R.id.retry_button);
 
-        getMatches();
+        getBetInvites();
     }
 
-    private void getMatches() {
+    private void getBetInvites() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String personId = sharedPref.getString("PERSON_ID", "");
@@ -151,7 +150,7 @@ public class InvitesFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             mProgressBar.setVisibility(View.VISIBLE);
-                            getMatches();
+                            getBetInvites();
                         }
                     });
                 }
@@ -166,73 +165,6 @@ public class InvitesFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    class InvitesArrayAdapter extends ArrayAdapter<Bet> {
-
-        private final Activity context;
-
-        private ArrayList<Bet> bets;
-
-        public InvitesArrayAdapter(Activity context, ArrayList<Bet> bets) {
-            super(context, R.layout.bet_list_item, bets);
-            this.context = context;
-            this.bets = bets;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View rowView = convertView;
-            // reuse views
-            if (rowView == null) {
-                LayoutInflater inflater = context.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.invite_list_item, null);
-                // configure view holder
-                ViewHolder viewHolder = new ViewHolder();
-                viewHolder.matchId = (TextView) rowView.findViewById(R.id.match_id);
-                viewHolder.srcPerson = (TextView) rowView.findViewById(R.id.src_person);
-                viewHolder.destPerson = (TextView) rowView.findViewById(R.id.dest_person);
-                viewHolder.acceptButton = (Button) rowView.findViewById(R.id.accept_button);
-                viewHolder.refuseButton = (Button) rowView.findViewById(R.id.refuse_button);
-
-                rowView.setTag(viewHolder);
-            }
-
-            // fill data
-            ViewHolder holder = (ViewHolder) rowView.getTag();
-
-            String matchId = bets.get(position).getMatchId().toString();
-            holder.matchId.setText(matchId);
-
-            String srcPerson = bets.get(position).getSrcPerson().getPersonName();
-            holder.srcPerson.setText(srcPerson);
-
-            String destPerson = bets.get(position).getDestPerson().getPersonName();
-            holder.destPerson.setText(destPerson);
-
-            holder.acceptButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "ACCEPT", Toast.LENGTH_SHORT).show();
-                    // show progress bar
-                    // send request
-                    // refresh screen (getMatches)
-                }
-            });
-
-            holder.refuseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "REFUSE", Toast.LENGTH_SHORT).show();
-                    // show progress bar
-                    // send request
-                    // refresh screen (getMatches)
-                }
-            });
-
-            return rowView;
-        }
     }
 
 }

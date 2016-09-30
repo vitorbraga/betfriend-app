@@ -68,10 +68,6 @@ public class SignInActivity extends AppCompatActivity implements
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().requestProfile().requestIdToken(getString(R.string.server_client_id)).build();
 
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by gso.
-        // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -80,10 +76,6 @@ public class SignInActivity extends AppCompatActivity implements
         // Button listeners
         findViewById(R.id.login_button).setOnClickListener(this);
 
-//        SignInButton signInButton = (SignInButton) findViewById(R.id.login_button);
-//        signInButton.setSize(SignInButton.SIZE_STANDARD);
-//        signInButton.setScopes(gso.getScopeArray());
-//        setGooglePlusButtonText(signInButton, "Entrar com o Google");
     }
 
     protected void setGooglePlusButtonText(SignInButton signInButton,
@@ -118,8 +110,6 @@ public class SignInActivity extends AppCompatActivity implements
             handleSignInResult(result);
         } else {
             // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
             showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
@@ -215,6 +205,9 @@ public class SignInActivity extends AppCompatActivity implements
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("PERSON_ID", userData.getPersonId());
+                editor.putString("PERSON_PHOTO", userData.getPersonPhoto());
+                editor.putString("PERSON_NAME", userData.getPersonName());
+                editor.putInt("POINTS", userData.getPoints());
                 editor.commit();
 
                 updateUI(true);
