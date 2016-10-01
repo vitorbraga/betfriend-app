@@ -48,8 +48,6 @@
             android:label="@string/title_activity_search_friend"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BetCompleteActivity" />
-
         <service
             android:name=".BetInvitationService"
             android:enabled="true"
@@ -57,12 +55,7 @@
 
         <activity
             android:name=".BetInvitationsActivity"
-            android:label="@string/title_activity_bet_invitations"
             android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity
-            android:name=".BetAcceptedActivity"
-            android:label="@string/title_activity_bet_accepted"/>
 
         <activity
             android:name=".BetRefusedActivity"

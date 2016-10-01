@@ -27,8 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import br.com.betfriend.BetAcceptedActivity;
-import br.com.betfriend.BetRefusedActivity;
+import br.com.betfriend.BetInvitationsActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
@@ -259,7 +258,9 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                                     @Override
                                     public void success(JsonResponse json, Response response) {
-                                        Intent intent = new Intent(context, BetAcceptedActivity.class);
+
+                                        Intent intent = new Intent(context, BetInvitationsActivity.class);
+                                        intent.putExtra("BET_ACCEPTED", true);
                                         context.startActivity(intent);
                                     }
 
@@ -301,7 +302,8 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                                     @Override
                                     public void success(JsonResponse json, Response response) {
-                                        Intent intent = new Intent(context, BetRefusedActivity.class);
+                                        Intent intent = new Intent(context, BetInvitationsActivity.class);
+                                        intent.putExtra("BET_REFUSED", true);
                                         context.startActivity(intent);
                                     }
 

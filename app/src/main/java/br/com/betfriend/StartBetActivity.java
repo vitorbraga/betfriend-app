@@ -177,7 +177,6 @@ public class StartBetActivity extends AppCompatActivity {
         makeBet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "MAKE BET", Toast.LENGTH_SHORT).show();
 
                 RestAdapter restAdapter = new RestAdapter.Builder()
                         .setEndpoint(Constants.SERVER_API_BASE_URI).build();
@@ -197,9 +196,6 @@ public class StartBetActivity extends AppCompatActivity {
                             intent.putExtra("PERSON_ID_EXTRA", mUserData.getPersonId());
                             intent.putExtra("BET_COMPLETED", true);
                             startActivity(intent);
-                        } else {
-                            // User was already registered
-                            // failure
                         }
                     }
 

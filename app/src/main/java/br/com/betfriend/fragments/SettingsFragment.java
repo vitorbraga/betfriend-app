@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -21,15 +20,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import br.com.betfriend.BetAcceptedActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.SignInActivity;
-import br.com.betfriend.api.ServerApi;
-import br.com.betfriend.model.JsonResponse;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -81,6 +73,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                                             @Override
                                             public void onResult(Status status) {
 
+                                                // Clear all shared preferences
+                                                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                                settings.edit().clear().commit();
+
                                                 Intent intent = new Intent(getActivity(), SignInActivity.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -109,6 +105,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         .setPositiveButton(getActivity().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
+                                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                settings.edit().clear().commit();
                                 Toast.makeText(getActivity(), "remove", Toast.LENGTH_SHORT).show();
                             }
                         })

@@ -1,10 +1,10 @@
 package br.com.betfriend;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -38,6 +39,8 @@ public class BetInvitationsActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
 
+    private Activity mActivity;
+
     private LinearLayout mNoInvitesFound;
 
     private InvitesExpandableListAdapter mAdapter;
@@ -56,12 +59,30 @@ public class BetInvitationsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.bet_invites));
+
+        boolean betAccepted = getIntent().getBooleanExtra("BET_ACCEPTED", false);
+        if (betAccepted) {
+            showSnackbar("Aposta aceita. Boa sorte!");
+        }
+
+        boolean betRefused = getIntent().getBooleanExtra("BET_REFUSED", false);
+        if (betRefused) {
+            showSnackbar("Aposta recusada.");
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
     protected void onResume() {
 
         super.onResume();
+
+        mActivity = this;
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplication());
 
@@ -99,6 +120,22 @@ public class BetInvitationsActivity extends AppCompatActivity {
         getBetInvites();
     }
 
+    private void showSnackbar(String message) {
+
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar snack = Snackbar.make(parentLayout, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Fechar", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                });
+        View view = snack.getView();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+        view.setLayoutParams(params);
+        view.setBackground(getDrawable(R.color.app_green_start));
+        snack.show();
+    }
+
     private void getBetInvites() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -125,7 +162,7 @@ public class BetInvitationsActivity extends AppCompatActivity {
                     mInvitesListView.setVisibility(View.VISIBLE);
                     mNoInvitesFound.setVisibility(View.GONE);
 
-                    mAdapter = new InvitesExpandableListAdapter(getApplicationContext(), bets, userData);
+                    mAdapter = new InvitesExpandableListAdapter(mActivity, bets, userData);
                     mInvitesListView.setAdapter(mAdapter);
 
                 } else {

@@ -6,13 +6,16 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -89,6 +92,7 @@ public class BetInvitationService extends Service {
                     NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(getApplicationContext())
                                     .setSmallIcon(R.mipmap.ic_launcher)
+                                    .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher))
                                     .setContentTitle(getString(R.string.notification_content_title))
                                     .setContentText(getString(R.string.notification_content_text));
 
@@ -103,6 +107,7 @@ public class BetInvitationService extends Service {
                     }
 
                     // Set notification sound if allowed by user
+
                     boolean notificationSound = prefs.getBoolean("key_notif_sound", true);
                     if (notificationSound) {
                         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

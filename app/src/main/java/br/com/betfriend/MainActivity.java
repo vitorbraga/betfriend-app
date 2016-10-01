@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
 
         mFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
-        // Start bet invitation checker
+        // Start bet invitation checker service
         Intent i = new Intent(this, BetInvitationService.class);
         startService(i);
 
