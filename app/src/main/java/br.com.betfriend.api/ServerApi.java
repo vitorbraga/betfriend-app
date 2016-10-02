@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.Match;
+import br.com.betfriend.model.Ranking;
 import br.com.betfriend.model.SoccerMatch;
 import br.com.betfriend.model.UserDataDTO;
 import retrofit.Callback;
@@ -74,4 +75,7 @@ public interface ServerApi {
     @POST("/bets/invitationViewed/")
     @FormUrlEncoded
     void invitationViewed(@Field("personId") String personId, Callback<JsonResponse> response);
+
+    @GET("/rankings/getLastWeekRanking/")
+    void getLastWeekRanking(@Header("Content-Type") String contentType, Callback<ArrayList<Ranking>> response);
 }

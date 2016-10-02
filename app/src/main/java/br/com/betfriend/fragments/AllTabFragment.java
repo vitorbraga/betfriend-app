@@ -33,7 +33,7 @@ import retrofit.converter.GsonConverter;
 
 public class AllTabFragment extends Fragment {
 
-    private ListView mHistoryListView;
+    private ListView mBetListView;
 
     private ProgressBar mSpinner;
 
@@ -59,7 +59,7 @@ public class AllTabFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_tab_all, container, false);
 
-        mHistoryListView = (ListView) view.findViewById(R.id.bet_list);
+        mBetListView = (ListView) view.findViewById(R.id.bet_list);
 
         mSpinner = (ProgressBar) view.findViewById(R.id.main_progressbar);
 
@@ -86,10 +86,10 @@ public class AllTabFragment extends Fragment {
                 mSpinner.setVisibility(View.GONE);
 
                 if(bets.size() > 0) {
-                    mHistoryListView.setVisibility(View.VISIBLE);
+                    mBetListView.setVisibility(View.VISIBLE);
 
                     BetArrayAdapter betAdapter = new BetArrayAdapter(getActivity(), bets);
-                    mHistoryListView.setAdapter(betAdapter);
+                    mBetListView.setAdapter(betAdapter);
 
                 } else {
                     mNoBetsFound.setVisibility(View.VISIBLE);
@@ -159,5 +159,4 @@ public class AllTabFragment extends Fragment {
             return rowView;
         }
     }
-
 }

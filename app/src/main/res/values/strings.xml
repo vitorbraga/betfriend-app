@@ -15,7 +15,7 @@
     <string name="drawer_store">Loja</string>
     <string name="drawer_prizes">Conquistas</string>
     <string name="drawer_home">Próximos jogos</string>
-    <string name="drawer_rankings">Rankings</string>
+    <string name="drawer_rankings">Ranking semanal</string>
     <string name="drawer_settings">Configurações</string>
 
     <string name="user_points">%s moedas</string>
@@ -182,5 +182,10 @@
 
     <!-- Accomplishments fragment -->
     <string name="medal_bounds" formatted="false">%s/%s</string>
+
+    <!-- Rankings fragment -->
+    <string name="rank_rate" formatted="false">%s/%s</string>
+    <string name="rank_percentage" formatted="false">%s%</string>
+    <string name="no_ranking_found">Ranking ainda indisponível.</string>
 </resources>
 
