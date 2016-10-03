@@ -133,7 +133,7 @@ public class HomeFragment extends android.app.Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getMatches("application/json", new Callback<ArrayList<Match>>() {
+        api.getMatches(Constants.SERVER_KEY, "application/json", new Callback<ArrayList<Match>>() {
 
             @Override
             public void success(ArrayList<Match> matches, Response response) {

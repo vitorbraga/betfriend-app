@@ -70,7 +70,7 @@ public class RankingFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getLastWeekRanking("application/json", new Callback<ArrayList<Ranking>>() {
+        api.getLastWeekRanking(Constants.SERVER_KEY, "application/json", new Callback<ArrayList<Ranking>>() {
 
             @Override
             public void success(ArrayList<Ranking> rankings, Response response) {

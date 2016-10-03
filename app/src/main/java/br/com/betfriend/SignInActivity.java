@@ -193,7 +193,7 @@ public class SignInActivity extends AppCompatActivity implements
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.signup(personId, email, personName, personPhoto, idToken, new Callback<UserDataDTO>() {
+        api.signup(Constants.SERVER_KEY, personId, email, personName, personPhoto, idToken, new Callback<UserDataDTO>() {
 
             @Override
             public void success(UserDataDTO userDataDTO, Response response) {

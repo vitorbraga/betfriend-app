@@ -78,7 +78,7 @@ public class AllTabFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getAllBets("application/json", personId, new Callback<ArrayList<Bet>>() {
+        api.getAllBets(Constants.SERVER_KEY, "application/json", personId, new Callback<ArrayList<Bet>>() {
 
             @Override
             public void success(ArrayList<Bet> bets, Response response) {

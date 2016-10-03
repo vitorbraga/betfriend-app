@@ -128,7 +128,7 @@ public class BetInvitationsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                     }
-                });
+                }).setActionTextColor(ContextCompat.getColor(getApplication(), R.color.app_yellow));
         View view = snack.getView();
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
         view.setLayoutParams(params);
@@ -151,7 +151,7 @@ public class BetInvitationsActivity extends AppCompatActivity {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getBetInvites("application/json", personId, new Callback<ArrayList<Bet>>() {
+        api.getBetInvites(Constants.SERVER_KEY, "application/json", personId, new Callback<ArrayList<Bet>>() {
 
             @Override
             public void success(ArrayList<Bet> bets, Response response) {

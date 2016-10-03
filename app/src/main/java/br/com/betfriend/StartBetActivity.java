@@ -183,7 +183,8 @@ public class StartBetActivity extends AppCompatActivity {
 
                 ServerApi api = restAdapter.create(ServerApi.class);
 
-                api.inviteToBet(mUserData.getPersonId(), mFriend.getPersonId(), mMatch.getMatchId().toString(),
+                api.inviteToBet(Constants.SERVER_KEY, mUserData.getPersonId(),
+                        mFriend.getPersonId(), mMatch.getMatchId().toString(),
                         mBetOption, mAmount, new Callback<JsonResponse>() {
 
                     @Override

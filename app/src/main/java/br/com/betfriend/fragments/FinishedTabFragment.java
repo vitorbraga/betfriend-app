@@ -79,7 +79,7 @@ public class FinishedTabFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getFinishedBets("application/json", personId, new Callback<ArrayList<Bet>>() {
+        api.getFinishedBets(Constants.SERVER_KEY, "application/json", personId, new Callback<ArrayList<Bet>>() {
 
             @Override
             public void success(ArrayList<Bet> bets, Response response) {

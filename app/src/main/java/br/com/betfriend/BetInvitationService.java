@@ -82,7 +82,7 @@ public class BetInvitationService extends Service {
 
         final ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getNewBetInvites("application/json", personId, new Callback<ArrayList<Bet>>() {
+        api.getNewBetInvites(Constants.SERVER_KEY, "application/json", personId, new Callback<ArrayList<Bet>>() {
 
             @Override
             public void success(ArrayList<Bet> bets, Response response) {
@@ -131,7 +131,7 @@ public class BetInvitationService extends Service {
                     mNotificationManager.notify(100, mBuilder.build());
 
                     // Change notified status
-                    api.invitationViewed(personId, new Callback<JsonResponse>() {
+                    api.invitationViewed(Constants.SERVER_KEY, personId, new Callback<JsonResponse>() {
 
                         @Override
                         public void success(JsonResponse jsonResponse, Response response) {

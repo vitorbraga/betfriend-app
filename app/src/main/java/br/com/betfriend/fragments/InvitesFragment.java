@@ -128,7 +128,7 @@ public class InvitesFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getBetInvites("application/json", personId, new Callback<ArrayList<Bet>>() {
+        api.getBetInvites(Constants.SERVER_KEY, "application/json", personId, new Callback<ArrayList<Bet>>() {
 
             @Override
             public void success(ArrayList<Bet> bets, Response response) {

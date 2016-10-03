@@ -79,7 +79,7 @@ public class PendingTabFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getPendingBets("application/json", personId, new Callback<ArrayList<Bet>>() {
+        api.getPendingBets(Constants.SERVER_KEY, "application/json", personId, new Callback<ArrayList<Bet>>() {
 
             @Override
             public void success(ArrayList<Bet> bets, Response response) {

@@ -254,7 +254,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                                 ServerApi api = restAdapter.create(ServerApi.class);
 
-                                api.acceptBet(betId, userData.getPersonId(), friendId, matchId, optionBet, amount, new Callback<JsonResponse>() {
+                                api.acceptBet(Constants.SERVER_KEY, betId, userData.getPersonId(), friendId, matchId, optionBet, amount, new Callback<JsonResponse>() {
 
                                     @Override
                                     public void success(JsonResponse json, Response response) {
@@ -298,7 +298,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                                 ServerApi api = restAdapter.create(ServerApi.class);
 
-                                api.refuseBet(betId, new Callback<JsonResponse>() {
+                                api.refuseBet(Constants.SERVER_KEY, betId, new Callback<JsonResponse>() {
 
                                     @Override
                                     public void success(JsonResponse json, Response response) {

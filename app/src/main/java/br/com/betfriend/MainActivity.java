@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity
 
                 ServerApi api = restAdapter.create(ServerApi.class);
 
-                api.getUserData("application/json", personId, new Callback<UserDataDTO>() {
+                api.getUserData(Constants.SERVER_KEY, "application/json", personId, new Callback<UserDataDTO>() {
 
                     @Override
                     public void success(UserDataDTO user, Response response) {
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClick(View v) {
                         }
-                    });
+                    }).setActionTextColor(ContextCompat.getColor(getApplication(), R.color.app_yellow));
             View view = snack.getView();
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
             view.setLayoutParams(params);
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getUserData("application/json", mPersonId, new Callback<UserDataDTO>() {
+        api.getUserData(Constants.SERVER_KEY, "application/json", mPersonId, new Callback<UserDataDTO>() {
 
             @Override
             public void success(UserDataDTO user, Response response) {

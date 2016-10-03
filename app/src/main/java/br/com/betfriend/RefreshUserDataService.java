@@ -70,7 +70,7 @@ public class RefreshUserDataService extends Service {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-        api.getUserData("application/json", personId, new Callback<UserDataDTO>() {
+        api.getUserData(Constants.SERVER_KEY, "application/json", personId, new Callback<UserDataDTO>() {
 
             @Override
             public void success(UserDataDTO user, Response response) {
