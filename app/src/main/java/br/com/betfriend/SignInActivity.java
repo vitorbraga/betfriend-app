@@ -122,13 +122,9 @@ public class SignInActivity extends AppCompatActivity implements
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "SignIn Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "SignIn Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://br.com.betfriend/http/host/path")
         );
         AppIndex.AppIndexApi.start(mGoogleApiClient, viewAction);
@@ -216,7 +212,7 @@ public class SignInActivity extends AppCompatActivity implements
             @Override
             public void failure(RetrofitError error) {
                 hideProgressDialog();
-                Toast.makeText(getApplication(), "Fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), "Erro inesperado.", Toast.LENGTH_SHORT).show();
             }
         });
 

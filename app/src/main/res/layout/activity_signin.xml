@@ -14,46 +14,20 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:textColor="@color/app_green_button"
-            android:textSize="14sp"
-            android:text="Confia no seu palpite?\nAposte com um amigo!"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/desc_google_icon"
+            android:src="@drawable/logo_2" />
 
         <ImageView
-            android:id="@+id/google_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="60dp"
+            android:id="@+id/logo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/desc_google_icon"
-            android:src="@drawable/logo" />
-
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/title_text"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="36sp" />
-
-        <TextView
-            android:id="@+id/detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fadeScrollbars="true"
-            android:gravity="center"
-            android:maxLines="5"
-            android:padding="10dp"
-            android:scrollbars="vertical"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:src="@drawable/logo_text" />
 
     </LinearLayout>
 
