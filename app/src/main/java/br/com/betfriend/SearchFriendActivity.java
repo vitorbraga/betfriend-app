@@ -130,10 +130,8 @@ public class SearchFriendActivity extends AppCompatActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Toast.makeText(getApplication(), "retorfit erro freind", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
             }
 
