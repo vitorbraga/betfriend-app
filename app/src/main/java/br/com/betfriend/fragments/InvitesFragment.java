@@ -1,22 +1,17 @@
 package br.com.betfriend.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -94,11 +89,10 @@ public class InvitesFragment extends Fragment {
 
                 if (mInvitesListView.isGroupExpanded(groupPosition)) {
                     mInvitesListView.collapseGroupWithAnimation(groupPosition);
-                    v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
                 } else {
                     mInvitesListView.expandGroupWithAnimation(groupPosition);
-                    v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.very_light_grey));
                 }
+                
                 return true;
             }
 

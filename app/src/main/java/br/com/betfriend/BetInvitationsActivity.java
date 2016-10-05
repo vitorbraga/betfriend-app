@@ -101,11 +101,10 @@ public class BetInvitationsActivity extends AppCompatActivity {
 
                 if (mInvitesListView.isGroupExpanded(groupPosition)) {
                     mInvitesListView.collapseGroupWithAnimation(groupPosition);
-                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.transparent));
                 } else {
                     mInvitesListView.expandGroupWithAnimation(groupPosition);
-                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.very_light_grey));
                 }
+
                 return true;
             }
 

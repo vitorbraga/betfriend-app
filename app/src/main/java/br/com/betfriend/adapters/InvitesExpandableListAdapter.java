@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -393,6 +394,12 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             viewHolderGroup.personPhoto = (ImageView) convertView.findViewById(R.id.person_photo);
 
             convertView.setTag(viewHolderGroup);
+        }
+
+        if (isExpanded) {
+            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.very_light_grey));
+        } else {
+            convertView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         }
 
         // fill data

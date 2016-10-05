@@ -138,7 +138,6 @@
     <string name="choose_result">Escolha o resultado:</string>
     <string name="bet_value">Valor da aposta:</string>
     <string name="bet_with_friend">Apostar com um amigo</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="bet_with">Apostar com:</string>
     <string name="make_bet">Fazer aposta</string>
     <string name="no_matches_found">Não foram encontradas partidas disponíveis.</string>
@@ -163,6 +162,7 @@
     <string name="no_finished_bets_found">Você ainda não possui apostas finalizadas.</string>
     <string name="no_pending_bets_found">Você ainda não possui apostas pendentes.</string>
     <string name="no_bets_found">Nenhuma aposta encontrada.</string>
+    <string name="chosen_results">Resultados escolhidos:</string>
 
     <!-- BetInvitation Service -->
     <string name="notification_content_title">Novo convite de aposta!</string>

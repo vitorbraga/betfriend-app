@@ -17,15 +17,23 @@ public class Bet {
 
     private Integer status;
 
+    private Integer result;
+
     private String option;
 
     private Integer matchId;
 
     private Integer amount;
 
+    private boolean notified;
+
+    private String notChosenOption;
+
     private Date created;
 
     private Date updated;
+
+    private int checked;
 
     public String get_id() {
         return _id;
@@ -105,5 +113,37 @@ public class Bet {
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public boolean isNotified() {
+        return notified;
+    }
+
+    public void setNotified(boolean notified) {
+        this.notified = notified;
+    }
+
+    public String getNotChosenOption() {
+        return notChosenOption;
+    }
+
+    public void setNotChosenOption(String notChosenOption) {
+        this.notChosenOption = notChosenOption;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
+    public int getChecked() {
+        return checked;
+    }
+
+    public void setChecked(int checked) {
+        this.checked = checked;
     }
 }

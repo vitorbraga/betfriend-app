@@ -3,6 +3,7 @@ package br.com.betfriend.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -57,6 +59,9 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         public TextView matchId;
         public SeekBar seekBar;
         public EditText betValue;
+        public RadioButton homeButton;
+        public RadioButton drawButton;
+        public RadioButton awayButton;
     }
 
     @Override
@@ -70,7 +75,6 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
 
             LayoutInflater inflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            rowView = inflater.inflate(R.layout.match_list_item, null);
 
             mBinding = DataBindingUtil.inflate(inflater, R.layout.match_list_item, parent, false);
             rowView = mBinding.getRoot();
@@ -83,6 +87,9 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             viewHolderChild.matchId = (TextView) rowView.findViewById(R.id.match_id);
             viewHolderChild.seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
             viewHolderChild.betValue = (EditText) rowView.findViewById(R.id.bet_value);
+            viewHolderChild.homeButton = (RadioButton) rowView.findViewById(R.id.radio_team_1);
+            viewHolderChild.drawButton = (RadioButton) rowView.findViewById(R.id.radio_draw);
+            viewHolderChild.awayButton = (RadioButton) rowView.findViewById(R.id.radio_team_2);
 
             rowView.setTag(viewHolderChild);
         }
@@ -96,6 +103,10 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).correctName());
         holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).correctName());
         holder.matchId.setText(matchId);
+
+        holder.homeButton.setChecked(false);
+        holder.drawButton.setChecked(false);
+        holder.awayButton.setChecked(false);
 
         holder.seekBar.setMax(userData.getPoints());
         holder.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -264,6 +275,12 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
             convertView.setTag(viewHolderGroup);
         }
 
+        if (isExpanded) {
+            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.very_light_grey));
+        } else {
+            convertView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+        }
+
         // fill data
         ViewHolderGroup holder = (ViewHolderGroup) convertView.getTag();
 
@@ -296,7 +313,7 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
     @Override

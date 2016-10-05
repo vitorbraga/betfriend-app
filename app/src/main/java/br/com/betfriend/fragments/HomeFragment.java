@@ -3,6 +3,7 @@ package br.com.betfriend.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,10 +88,8 @@ public class HomeFragment extends android.app.Fragment {
 
                 if (matchesListView.isGroupExpanded(groupPosition)) {
                     matchesListView.collapseGroupWithAnimation(groupPosition);
-                    v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
                 } else {
                     matchesListView.expandGroupWithAnimation(groupPosition);
-                    v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.very_light_grey));
                 }
 
                 return true;

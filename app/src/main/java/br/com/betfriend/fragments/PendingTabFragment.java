@@ -1,18 +1,18 @@
 package br.com.betfriend.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -21,8 +21,11 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 import br.com.betfriend.R;
+import br.com.betfriend.adapters.AnimatedExpandableListView;
+import br.com.betfriend.adapters.BetsExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
+import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -32,22 +35,23 @@ import retrofit.converter.GsonConverter;
 
 public class PendingTabFragment extends Fragment {
 
-    private ListView mHistoryListView;
+    private AnimatedExpandableListView mBetsListView;
 
-    private ProgressBar mSpinner;
+    private BetsExpandableListAdapter mAdapter;
 
-    private TextView mNoBetsFound;
+    private ProgressBar mProgressBar;
 
-    static class ViewHolder {
-        public TextView matchId;
-        public TextView srcPerson;
-        public TextView destPerson;
-    }
+    private LinearLayout mNoBetsFound;
+
+    private UserDataDTO userData;
+
+    private Button mRetryButton;
+
+    private Context mContext;
 
     public PendingTabFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,11 +64,56 @@ public class PendingTabFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab_pending, container, false);
 
-        mHistoryListView = (ListView) view.findViewById(R.id.bet_list);
+        userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
 
-        mSpinner = (ProgressBar) view.findViewById(R.id.main_progressbar);
+        mContext = getActivity();
 
-        mNoBetsFound = (TextView) view.findViewById(R.id.no_bets_found);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        mBetsListView = (AnimatedExpandableListView) getView().findViewById(R.id.bet_list);
+
+        mBetsListView.setOnGroupClickListener(new AnimatedExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (mBetsListView.isGroupExpanded(groupPosition)) {
+                    mBetsListView.collapseGroupWithAnimation(groupPosition);
+                } else {
+                    mBetsListView.expandGroupWithAnimation(groupPosition);
+                }
+
+                return true;
+            }
+
+        });
+
+        mProgressBar = (ProgressBar) getView().findViewById(R.id.bets_progressbar);
+
+        mNoBetsFound = (LinearLayout) getView().findViewById(R.id.no_bets_container);
+
+        mRetryButton = (Button) getView().findViewById(R.id.retry_button);
+
+        getPendingBets();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    public void getPendingBets() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String personId = sharedPref.getString("PERSON_ID", "");
@@ -84,16 +133,26 @@ public class PendingTabFragment extends Fragment {
             @Override
             public void success(ArrayList<Bet> bets, Response response) {
 
-                mSpinner.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
 
-                if(bets.size() > 0) {
-                    mHistoryListView.setVisibility(View.VISIBLE);
+                if (bets.size() > 0) {
+                    mBetsListView.setVisibility(View.VISIBLE);
+                    mNoBetsFound.setVisibility(View.GONE);
 
-                    BetArrayAdapter betAdapter = new BetArrayAdapter(getActivity(), bets);
-                    mHistoryListView.setAdapter(betAdapter);
+                    mAdapter = new BetsExpandableListAdapter(getActivity(), bets, userData);
+                    mBetsListView.setAdapter(mAdapter);
 
                 } else {
-                    mNoBetsFound.setVisibility(View.VISIBLE);
+                    mBetsListView.setVisibility(View.VISIBLE);
+
+                    mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            mProgressBar.setVisibility(View.VISIBLE);
+                            getPendingBets();
+                        }
+                    });
                 }
 
             }
@@ -104,62 +163,6 @@ public class PendingTabFragment extends Fragment {
             }
         });
 
-        return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    class BetArrayAdapter extends ArrayAdapter<Bet> {
-
-        private final Activity context;
-
-        private ArrayList<Bet> bets;
-
-        public BetArrayAdapter(Activity context, ArrayList<Bet> bets) {
-            super(context, R.layout.history_list_item, bets);
-            this.context = context;
-            this.bets = bets;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View rowView = convertView;
-            // reuse views
-            if (rowView == null) {
-                LayoutInflater inflater = context.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.bet_list_item, null);
-                // configure view holder
-                ViewHolder viewHolder = new ViewHolder();
-                viewHolder.matchId = (TextView) rowView.findViewById(R.id.match_id);
-                viewHolder.srcPerson = (TextView) rowView.findViewById(R.id.src_person);
-                viewHolder.destPerson = (TextView) rowView.findViewById(R.id.dest_person);
-
-                rowView.setTag(viewHolder);
-            }
-
-            // fill data
-            ViewHolder holder = (ViewHolder) rowView.getTag();
-
-            String matchId = bets.get(position).getMatchId().toString();
-            holder.matchId.setText(matchId);
-
-            String srcPerson = bets.get(position).getSrcPerson().getPersonName();
-            holder.srcPerson.setText(srcPerson);
-
-            String destPerson = bets.get(position).getDestPerson().getPersonName();
-            holder.destPerson.setText(destPerson);
-
-            return rowView;
-        }
     }
 
 }

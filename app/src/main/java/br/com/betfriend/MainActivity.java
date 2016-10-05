@@ -14,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +28,10 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.fragments.AccomplishmentsFragment;
 import br.com.betfriend.fragments.HistoryFragment;
 import br.com.betfriend.fragments.HomeFragment;
 import br.com.betfriend.fragments.InvitesFragment;
-import br.com.betfriend.fragments.AccomplishmentsFragment;
 import br.com.betfriend.fragments.RankingFragment;
 import br.com.betfriend.fragments.SettingsFragment;
 import br.com.betfriend.model.UserDataDTO;
@@ -220,7 +219,9 @@ public class MainActivity extends AppCompatActivity
                 android.app.Fragment fragment = new HomeFragment();
                 fragment.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                getSupportActionBar().setTitle(getString(R.string.drawer_home));
+                if(getSupportActionBar() != null){
+                    getSupportActionBar().setTitle(getString(R.string.drawer_home));
+                }
                 mNavigationView.getMenu().getItem(0).setChecked(true);
 
             }
@@ -288,6 +289,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_history:
                 fragment = new HistoryFragment();
+                bundle = new Bundle();
+                bundle.putSerializable("USER_DATA_EXTRA", mUserData);
+                fragment.setArguments(bundle);
                 title = getString(R.string.drawer_history);
                 break;
             case R.id.nav_rankings:
