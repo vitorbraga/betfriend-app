@@ -7,7 +7,7 @@
     <string name="title_text">BetFriend</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
-
+    <string name="close">Fechar</string>
 
     <!-- Drawer menu titles -->
     <string name="drawer_history">Histórico</string>

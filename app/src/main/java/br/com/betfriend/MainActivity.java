@@ -21,7 +21,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
 
     private UserDataDTO mUserData;
+
+    private DrawerLayout mDrawerLayout;
 
     private NavigationView mNavigationView;
 
@@ -139,17 +140,17 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
         View parentLayout = findViewById(android.R.id.content);
         boolean betFinished = getIntent().getBooleanExtra("BET_COMPLETED", false);
         if (betFinished) {
             Snackbar snack = Snackbar.make(parentLayout, "Aposta realizada com sucesso!", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Fechar", new View.OnClickListener() {
+                    .setAction(getString(R.string.close), new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                         }
@@ -229,7 +230,6 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplication(), "retorfit erro user", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -238,7 +238,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         // Close application when pressing back
-        moveTaskToBack(true);
+
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+
+            if(!mNavigationView.getMenu().getItem(0).isChecked()) {
+                onNavigationItemSelected(mNavigationView.getMenu().getItem(0));
+                mNavigationView.getMenu().getItem(0).setChecked(true);
+            } else {
+                moveTaskToBack(true);
+            }
+        }
     }
 
     @Override
