@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="14sp"
-            android:textColor="@color/black_grey"
+            android:textColor="@color/grey_2"
             android:layout_marginStart="10dp"
             android:textStyle="bold"
             android:maxLength="15"/>
@@ -123,6 +123,17 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/date_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:textColor="@color/grey_2"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

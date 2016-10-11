@@ -18,6 +18,8 @@ public class UserDataDTO extends JsonResponse implements Serializable {
 
     private String idToken;
 
+    private boolean visible;
+
     private Integer points;
 
     private Integer betsWon;
@@ -118,5 +120,13 @@ public class UserDataDTO extends JsonResponse implements Serializable {
     public void setPoints(Integer points) {
         this.points = points;
         notifyPropertyChanged(BR.points);
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }

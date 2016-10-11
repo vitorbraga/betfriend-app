@@ -143,7 +143,8 @@ public class PendingTabFragment extends Fragment {
                     mBetsListView.setAdapter(mAdapter);
 
                 } else {
-                    mBetsListView.setVisibility(View.VISIBLE);
+                    mBetsListView.setVisibility(View.GONE);
+                    mNoBetsFound.setVisibility(View.VISIBLE);
 
                     mRetryButton.setOnClickListener(new View.OnClickListener() {
 

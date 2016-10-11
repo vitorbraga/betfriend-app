@@ -78,4 +78,13 @@ public interface ServerApi {
 
     @GET("/rankings/getLastWeekRanking/")
     void getLastWeekRanking(@Header("Server-Key") String serverKey, @Header("Content-Type") String contentType, Callback<ArrayList<Ranking>> response);
+
+    @POST("/users/setBetVisibility/")
+    @FormUrlEncoded
+    void setBetVisibility(@Header("Server-Key") String serverKey, @Field("personId") String personId, @Field("visible") boolean visible,
+                   Callback<JsonResponse> response);
+
+    @POST("/users/removeAccount/")
+    @FormUrlEncoded
+    void removeAccount(@Header("Server-Key") String serverKey, @Field("personId") String personId, Callback<JsonResponse> response);
 }

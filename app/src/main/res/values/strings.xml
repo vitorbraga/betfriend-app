@@ -163,6 +163,7 @@
     <string name="no_pending_bets_found">Você ainda não possui apostas pendentes.</string>
     <string name="no_bets_found">Nenhuma aposta encontrada.</string>
     <string name="chosen_results">Resultados escolhidos:</string>
+    <string name="bet_finished">Finalizada: %s</string>
 
     <!-- BetInvitation Service -->
     <string name="notification_content_title">Novo convite de aposta!</string>

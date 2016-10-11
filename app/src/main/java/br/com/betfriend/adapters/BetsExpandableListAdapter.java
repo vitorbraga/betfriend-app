@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 import br.com.betfriend.R;
 import br.com.betfriend.model.Bet;
@@ -50,6 +51,7 @@ public class BetsExpandableListAdapter extends AnimatedExpandableListView.Animat
         public TextView amount;
         public ImageView personPhoto;
         public TextView personName;
+        public TextView dateFinished;
     }
 
     static class ViewHolderChild {
@@ -197,6 +199,7 @@ public class BetsExpandableListAdapter extends AnimatedExpandableListView.Animat
             viewHolderGroup.amount = (TextView) convertView.findViewById(R.id.amount);
             viewHolderGroup.personName = (TextView) convertView.findViewById(R.id.person_name);
             viewHolderGroup.personPhoto = (ImageView) convertView.findViewById(R.id.person_photo);
+            viewHolderGroup.dateFinished = (TextView) convertView.findViewById(R.id.date_finished);
 
             convertView.setTag(viewHolderGroup);
         }
@@ -225,6 +228,12 @@ public class BetsExpandableListAdapter extends AnimatedExpandableListView.Animat
         holder.amount.setText(amount.toString());
         holder.betStatus.setText(BetResultEnum.get(result).label());
         holder.betStatus.setBackground(context.getDrawable(BetResultEnum.get(result).color()));
+
+        Date dateFinished = bets.get(groupPosition).getDateFinished();
+        if(dateFinished != null) {
+            holder.dateFinished.setText(ConvertHelper.dateToView(dateFinished));
+            holder.dateFinished.setVisibility(View.VISIBLE);
+        }
 
         Picasso.with(context)
                 .load(TeamsDataEnum.get(homeTeam).logo())

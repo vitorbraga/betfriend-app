@@ -33,6 +33,8 @@ public class Bet {
 
     private Date updated;
 
+    private Date dateFinished;
+
     private int checked;
 
     public String get_id() {
@@ -145,5 +147,13 @@ public class Bet {
 
     public void setChecked(int checked) {
         this.checked = checked;
+    }
+
+    public Date getDateFinished() {
+        return dateFinished;
+    }
+
+    public void setDateFinished(Date dateFinished) {
+        this.dateFinished = dateFinished;
     }
 }

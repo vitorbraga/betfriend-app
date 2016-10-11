@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ConvertHelper {
 
-    private static final String DATE_FORMAT_DEFAULT = "dd/MM/yyyy HH:mm";
+    private static final String DATE_FORMAT_DEFAULT = "dd/MM/yy HH:mm";
 
     private static final String DATE_FORMAT_SHORT = "dd/MM HH:mm";
 

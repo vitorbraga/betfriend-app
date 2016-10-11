@@ -33,7 +33,7 @@ import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.ConvertHelper;
 import br.com.betfriend.utils.TeamsDataEnum;
 
-public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
+public class MatchesExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
     private final Context context;
 
@@ -223,7 +223,7 @@ public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedEx
         return 1;
     }
 
-    public ExpandableListAdapter(Context context, ArrayList<Match> matches, UserDataDTO userData) {
+    public MatchesExpandableListAdapter(Context context, ArrayList<Match> matches, UserDataDTO userData) {
         this.context = context;
         this.matches = matches;
         this.userData = userData;

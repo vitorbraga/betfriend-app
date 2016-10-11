@@ -93,7 +93,7 @@ public class FinishedTabFragment extends Fragment {
                 } else {
                     mBetsListView.expandGroupWithAnimation(groupPosition);
                 }
-                
+
                 return true;
             }
 
@@ -148,7 +148,8 @@ public class FinishedTabFragment extends Fragment {
                     mBetsListView.setAdapter(mAdapter);
 
                 } else {
-                    mBetsListView.setVisibility(View.VISIBLE);
+                    mBetsListView.setVisibility(View.GONE);
+                    mNoBetsFound.setVisibility(View.VISIBLE);
 
                     mRetryButton.setOnClickListener(new View.OnClickListener() {
 

@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity
                             editor.putString("PERSON_PHOTO", user.getPersonPhoto());
                             editor.putString("PERSON_NAME", user.getPersonName());
                             editor.putInt("POINTS", user.getPoints());
+                            editor.putBoolean("key_visible", user.isVisible());
                             editor.commit();
 
                             mUserData = user;
@@ -113,13 +114,10 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void failure(RetrofitError error) {
-
-//                        Toast.makeText(getApplicationContext(), "failure 33", Toast.LENGTH_SHORT).show();
                     }
                 });
 
             } catch (Exception e) {
-                // TODO: handle exception
                 e.printStackTrace();
             } finally {
                 //also call the same runnable to call it at regular interval
@@ -182,6 +180,9 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
 
         super.onResume();
+
+        mFrameLayout.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.SERVER_API_BASE_URI).build();

@@ -2,8 +2,6 @@ package br.com.betfriend.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 
 import br.com.betfriend.R;
 import br.com.betfriend.adapters.AnimatedExpandableListView;
-import br.com.betfriend.adapters.ExpandableListAdapter;
+import br.com.betfriend.adapters.MatchesExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
@@ -42,7 +40,7 @@ public class HomeFragment extends android.app.Fragment {
 
     private UserDataDTO userData;
 
-    private ExpandableListAdapter mAdapter;
+    private MatchesExpandableListAdapter mAdapter;
 
     private Context mContext;
 
@@ -144,7 +142,7 @@ public class HomeFragment extends android.app.Fragment {
                     mNoMatchesContainer.setVisibility(View.GONE);
                     matchesListView.setVisibility(View.VISIBLE);
 
-                    mAdapter = new ExpandableListAdapter(getActivity(), matches, userData);
+                    mAdapter = new MatchesExpandableListAdapter(getActivity(), matches, userData);
                     matchesListView.setAdapter(mAdapter);
 
                 } else {

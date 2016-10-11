@@ -20,8 +20,16 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import br.com.betfriend.BetInvitationsActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.SignInActivity;
+import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.model.JsonResponse;
+import br.com.betfriend.utils.Constants;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -69,18 +77,18 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                                 mProgressBar.setVisibility(View.VISIBLE);
 
                                 Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                                        new ResultCallback<Status>() {
-                                            @Override
-                                            public void onResult(Status status) {
+                                                        new ResultCallback<Status>() {
+                                                            @Override
+                                                            public void onResult(Status status) {
 
-                                                // Clear all shared preferences
-                                                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                                                settings.edit().clear().commit();
+                                                                // Clear all shared preferences
+                                                                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                                                settings.edit().clear().commit();
 
-                                                Intent intent = new Intent(getActivity(), SignInActivity.class);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                getActivity().startActivity(intent);
+                                                                Intent intent = new Intent(getActivity(), SignInActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                getActivity().startActivity(intent);
                                             }
                                         });
                             }
@@ -105,9 +113,45 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         .setPositiveButton(getActivity().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                                settings.edit().clear().commit();
-                                Toast.makeText(getActivity(), "remove", Toast.LENGTH_SHORT).show();
+                                mProgressBar.setVisibility(View.VISIBLE);
+
+                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+                                String personId = prefs.getString("PERSON_ID", "");
+
+                                RestAdapter restAdapter = new RestAdapter.Builder()
+                                        .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+
+                                ServerApi api = restAdapter.create(ServerApi.class);
+
+                                api.removeAccount(Constants.SERVER_KEY, personId, new Callback<JsonResponse>() {
+
+                                    @Override
+                                    public void success(JsonResponse json, Response response) {
+
+                                        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+                                                new ResultCallback<Status>() {
+                                                    @Override
+                                                    public void onResult(Status status) {
+
+                                                        // Clear all shared preferences
+                                                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                                        settings.edit().clear().commit();
+
+                                                        Intent intent = new Intent(getActivity(), SignInActivity.class);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        getActivity().startActivity(intent);
+                                                    }
+                                                });
+
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                    }
+                                });
+
                             }
                         })
                         .setNegativeButton(getActivity().getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -135,7 +179,31 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Log.d("key:", key);
+
+        if(key.equals("key_visible")) {
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+            boolean visible = prefs.getBoolean("key_visible", true);
+            String personId = prefs.getString("PERSON_ID", "");
+
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+
+            ServerApi api = restAdapter.create(ServerApi.class);
+
+            api.setBetVisibility(Constants.SERVER_KEY, personId, visible, new Callback<JsonResponse>() {
+
+                @Override
+                public void success(JsonResponse json, Response response) {
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                }
+            });
+
+        }
     }
 
     @Override
