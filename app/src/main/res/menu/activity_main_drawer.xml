@@ -23,6 +23,10 @@
             android:icon="@drawable/ic_schedule_black_24dp"
             android:title="@string/drawer_history" />
         <item
+            android:id="@+id/request_coins"
+            android:icon="@drawable/ic_coin"
+            android:title="@string/drawer_request_coins" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/drawer_settings" />

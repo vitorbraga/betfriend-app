@@ -180,36 +180,36 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="20dp">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:padding="20dp">-->
 
-                <TextView
-                    android:id="@+id/another_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center"
-                    android:text="Monstro"
-                    android:textSize="14sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/another_text"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="Monstro"-->
+                    <!--android:textSize="14sp" />-->
 
-                <com.hookedonplay.decoviewlib.DecoView
-                    android:id="@+id/another"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/another_text" />
+                <!--<com.hookedonplay.decoviewlib.DecoView-->
+                    <!--android:id="@+id/another"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_below="@id/another_text" />-->
 
-                <TextView
-                    android:id="@+id/another_bounds"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/another_text"
-                    android:gravity="center"
-                    android:text="20/145"
-                    android:textSize="14sp" />
-            </RelativeLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/another_bounds"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_below="@id/another_text"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="20/145"-->
+                    <!--android:textSize="14sp" />-->
+            <!--</RelativeLayout>-->
 
         </LinearLayout>
 

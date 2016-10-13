@@ -32,6 +32,7 @@ import br.com.betfriend.fragments.HistoryFragment;
 import br.com.betfriend.fragments.HomeFragment;
 import br.com.betfriend.fragments.InvitesFragment;
 import br.com.betfriend.fragments.RankingFragment;
+import br.com.betfriend.fragments.RequestCoinsFragment;
 import br.com.betfriend.fragments.SettingsFragment;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
@@ -320,6 +321,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
                 title = getString(R.string.drawer_settings);
+                break;
+            case R.id.request_coins:
+                fragment = new RequestCoinsFragment();
+                title = getString(R.string.drawer_request_coins);
                 break;
         }
 

@@ -17,6 +17,7 @@
     <string name="drawer_home">Próximos jogos</string>
     <string name="drawer_rankings">Ranking semanal</string>
     <string name="drawer_settings">Configurações</string>
+    <string name="drawer_request_coins">Pedir moedas</string>
 
     <string name="user_points">%s moedas</string>
 
@@ -191,5 +192,10 @@
     <string name="rank_rate" formatted="false">%s/%s</string>
     <string name="rank_percentage" formatted="false">%s%</string>
     <string name="no_ranking_found">Ranking ainda indisponível.</string>
+
+    <!-- Coin request fragment -->
+    <string name="request_coins">Pedir moedas!</string>
+    <string name="countdown_finished">A contagem regressiva acabou!</string>
+
 </resources>
 

@@ -186,7 +186,6 @@ public class AccomplishmentsFragment extends SampleFragment {
             createTracks(R.id.invites_accepted, new LinearInterpolator(), Color.parseColor("#003366"));
             createTracks(R.id.golden_medal, new LinearInterpolator(), Color.parseColor("#66A7C5"));
             createTracks(R.id.podium, new LinearInterpolator(), Color.parseColor("#FF6000"));
-            createTracks(R.id.another, new LinearInterpolator(), Color.parseColor("#6F0564"));
         }
     }
 
@@ -198,7 +197,6 @@ public class AccomplishmentsFragment extends SampleFragment {
             setupEvents(R.id.invites_accepted);
             setupEvents(R.id.golden_medal);
             setupEvents(R.id.podium);
-            setupEvents(R.id.another);
         }
     }
 

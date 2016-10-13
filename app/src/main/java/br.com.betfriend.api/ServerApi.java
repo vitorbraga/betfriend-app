@@ -3,6 +3,7 @@ package br.com.betfriend.api;
 import java.util.ArrayList;
 
 import br.com.betfriend.model.Bet;
+import br.com.betfriend.model.CoinRequest;
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.Match;
 import br.com.betfriend.model.Ranking;
@@ -87,4 +88,12 @@ public interface ServerApi {
     @POST("/users/removeAccount/")
     @FormUrlEncoded
     void removeAccount(@Header("Server-Key") String serverKey, @Field("personId") String personId, Callback<JsonResponse> response);
+
+    @GET("/coinRequests/checkRequestCountdown/{personId}")
+    void checkRequestCountdown(@Header("Server-Key") String serverKey, @Header("Content-Type") String contentType, @Path("personId") String personId,
+                      Callback<CoinRequest> response);
+
+    @POST("/coinRequests/newRequest/")
+    @FormUrlEncoded
+    void newRequest(@Header("Server-Key") String serverKey, @Field("personId") String personId, Callback<JsonResponse> response);
 }
