@@ -113,29 +113,35 @@ public class BetsExpandableListAdapter extends AnimatedExpandableListView.Animat
 
             holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgSrc, null, null, null);
 
-            if(notChosenOption.equals("X")) {
-                holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
-            } else {
-                holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+            if(!notChosenOption.equals("-1")) {
+                if(notChosenOption.equals("X")) {
+                    holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+                } else {
+                    holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+                }
             }
 
         } else if (option.equals("X")) {
 
             holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgSrc, null, null, null);
 
-            if(notChosenOption.equals("1")) {
-                holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
-            } else {
-                holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+            if(!notChosenOption.equals("-1")) {
+                if (notChosenOption.equals("1")) {
+                    holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+                } else {
+                    holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+                }
             }
 
         } else {
             holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgSrc, null, null, null);
 
-            if(notChosenOption.equals("1")) {
-                holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
-            } else {
-                holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+            if(!notChosenOption.equals("-1")) {
+                if (notChosenOption.equals("1")) {
+                    holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+                } else {
+                    holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(imgDest, null, null, null);
+                }
             }
         }
 

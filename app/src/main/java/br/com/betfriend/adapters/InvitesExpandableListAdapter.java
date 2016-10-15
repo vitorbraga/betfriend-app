@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -47,6 +48,8 @@ import retrofit.client.Response;
 public class InvitesExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
     private final Context context;
+
+    private ProgressBar mProgressBar;
 
     private ArrayList<Bet> bets;
 
@@ -249,7 +252,9 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                         .setMessage(context.getString(R.string.accept_dialog_description))
                         .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
+
+                                mProgressBar.setVisibility(View.VISIBLE);
+
                                 RestAdapter restAdapter = new RestAdapter.Builder()
                                         .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 
@@ -260,6 +265,8 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                                     @Override
                                     public void success(JsonResponse json, Response response) {
 
+                                        mProgressBar.setVisibility(View.GONE);
+
                                         Intent intent = new Intent(context, BetInvitationsActivity.class);
                                         intent.putExtra("BET_ACCEPTED", true);
                                         context.startActivity(intent);
@@ -267,7 +274,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                                     @Override
                                     public void failure(RetrofitError error) {
-                                        Toast.makeText(context, "falha no aceito.", Toast.LENGTH_SHORT).show();
+                                        mProgressBar.setVisibility(View.GONE);
                                     }
                                 });
                             }
@@ -292,7 +299,8 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                         .setMessage(context.getString(R.string.refuse_dialog_description))
                         .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
+
+                                mProgressBar.setVisibility(View.VISIBLE);
 
                                 RestAdapter restAdapter = new RestAdapter.Builder()
                                         .setEndpoint(Constants.SERVER_API_BASE_URI).build();
@@ -303,6 +311,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                                     @Override
                                     public void success(JsonResponse json, Response response) {
+                                        mProgressBar.setVisibility(View.GONE);
                                         Intent intent = new Intent(context, BetInvitationsActivity.class);
                                         intent.putExtra("BET_REFUSED", true);
                                         context.startActivity(intent);
@@ -310,6 +319,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                                     @Override
                                     public void failure(RetrofitError error) {
+                                        mProgressBar.setVisibility(View.GONE);
                                     }
                                 });
                             }
@@ -325,26 +335,16 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
         return rowView;
     }
 
-    private static Match getMatchById(Integer matchId, ArrayList<Match> matches) {
-
-        for (Match sm : matches) {
-            if (sm.getMatchId().equals(matchId)) {
-                return sm;
-            }
-        }
-
-        return null;
-    }
-
     @Override
     public int getRealChildrenCount(int groupPosition) {
         return 1;
     }
 
-    public InvitesExpandableListAdapter(Context context, ArrayList<Bet> bets, UserDataDTO userData) {
+    public InvitesExpandableListAdapter(Context context, ArrayList<Bet> bets, UserDataDTO userData, ProgressBar progressBar) {
         this.context = context;
         this.bets = bets;
         this.userData = userData;
+        this.mProgressBar = progressBar;
     }
 
     @Override

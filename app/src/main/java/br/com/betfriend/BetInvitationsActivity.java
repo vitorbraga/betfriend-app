@@ -161,7 +161,7 @@ public class BetInvitationsActivity extends AppCompatActivity {
                     mInvitesListView.setVisibility(View.VISIBLE);
                     mNoInvitesFound.setVisibility(View.GONE);
 
-                    mAdapter = new InvitesExpandableListAdapter(mActivity, bets, userData);
+                    mAdapter = new InvitesExpandableListAdapter(mActivity, bets, userData, mProgressBar);
                     mInvitesListView.setAdapter(mAdapter);
 
                 } else {

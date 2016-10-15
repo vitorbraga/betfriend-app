@@ -77,6 +77,10 @@ public interface ServerApi {
     @FormUrlEncoded
     void invitationViewed(@Header("Server-Key") String serverKey, @Field("personId") String personId, Callback<JsonResponse> response);
 
+    @POST("/bets/cancelBet/")
+    @FormUrlEncoded
+    void cancelBet(@Header("Server-Key") String serverKey, @Field("betId") String betId, Callback<JsonResponse> response);
+
     @GET("/rankings/getLastWeekRanking/")
     void getLastWeekRanking(@Header("Server-Key") String serverKey, @Header("Content-Type") String contentType, Callback<ArrayList<Ranking>> response);
 

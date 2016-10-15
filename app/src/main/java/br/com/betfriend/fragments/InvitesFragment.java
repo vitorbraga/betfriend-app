@@ -133,7 +133,7 @@ public class InvitesFragment extends Fragment {
                     mInvitesListView.setVisibility(View.VISIBLE);
                     mNoInvitesFound.setVisibility(View.GONE);
 
-                    mAdapter = new InvitesExpandableListAdapter(getActivity(), bets, userData);
+                    mAdapter = new InvitesExpandableListAdapter(getActivity(), bets, userData, mProgressBar);
                     mInvitesListView.setAdapter(mAdapter);
 
                 } else {

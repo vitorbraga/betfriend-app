@@ -165,6 +165,10 @@
     <string name="no_bets_found">Nenhuma aposta encontrada.</string>
     <string name="chosen_results">Resultados escolhidos:</string>
     <string name="bet_finished">Finalizada: %s</string>
+    <string name="cancel_bet">Cancelar aposta</string>
+
+    <string name="cancel_dialog_title">Cancelar aposta</string>
+    <string name="cancel_dialog_description">Tem certeza que deseja cancelar esta aposta?</string>
 
     <!-- BetInvitation Service -->
     <string name="notification_content_title">Novo convite de aposta!</string>
