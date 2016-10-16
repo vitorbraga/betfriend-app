@@ -44,7 +44,7 @@ public class StartBetActivity extends AppCompatActivity {
 
     private int mAmount;
 
-    private TextView matchTime, homeTeamLabel, awayTeamLabel, friendName, friendPoints;
+    private TextView matchTime, homeTeamLabel, awayTeamLabel, friendName, friendWinRate;
     private RadioButton mHomeButton, mAwayButton, mDrawButton;
     private SeekBar mSeekBar;
     private EditText mBetValue;
@@ -169,8 +169,18 @@ public class StartBetActivity extends AppCompatActivity {
         friendName = (TextView) findViewById(R.id.friend_name);
         friendName.setText(mFriend.getPersonName());
 
-        friendPoints = (TextView) findViewById(R.id.friend_points);
-        friendPoints.setText(getString(R.string.user_points, mFriend.getPoints().toString()));
+
+        friendWinRate = (TextView) findViewById(R.id.friend_win_rate);
+        Integer betsFinished = mFriend.getBetsFinished();
+        Integer betsWon = mFriend.getBetsWon();
+        String winRate = "0%";
+        if(betsFinished != 0) {
+            float winRateFloat = ((float) betsWon) / ((float) betsFinished);
+            float percentage = winRateFloat * 100;
+            friendWinRate.setText(String.format("%.0f%%", percentage));
+        } else {
+            friendWinRate.setText(winRate);
+        }
 
         // Make bet button
         makeBet = (Button) findViewById(R.id.make_bet_button);

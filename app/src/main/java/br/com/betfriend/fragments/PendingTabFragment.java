@@ -85,13 +85,13 @@ public class PendingTabFragment extends Fragment {
 
         mContext = getActivity();
 
-        mBetsListView = (AnimatedExpandableListView) getView().findViewById(R.id.bet_list);
+        mBetsListView = (AnimatedExpandableListView) view.findViewById(R.id.bet_list);
 
-        mProgressBar = (ProgressBar) getView().findViewById(R.id.bets_progressbar);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.bets_progressbar);
 
-        mNoBetsFound = (LinearLayout) getView().findViewById(R.id.no_bets_container);
+        mNoBetsFound = (LinearLayout) view.findViewById(R.id.no_bets_container);
 
-        mRetryButton = (Button) getView().findViewById(R.id.retry_button);
+        mRetryButton = (Button) view.findViewById(R.id.retry_button);
 
         return view;
     }

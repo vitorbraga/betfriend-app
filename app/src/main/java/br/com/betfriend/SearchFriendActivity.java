@@ -23,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 public class SearchFriendActivity extends AppCompatActivity {
 
@@ -66,7 +69,7 @@ public class SearchFriendActivity extends AppCompatActivity {
         public TextView friendId;
         public TextView personName;
         public ImageView personPhoto;
-        public TextView personPoints;
+        public TextView winRate;
     }
 
     @Override
@@ -95,8 +98,13 @@ public class SearchFriendActivity extends AppCompatActivity {
 
         mFinishButton = (Button) findViewById(R.id.finish_button);
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+                .setEndpoint(Constants.SERVER_API_BASE_URI)
+                .setConverter(new GsonConverter(gson)).build();
 
         api = restAdapter.create(ServerApi.class);
 
@@ -201,9 +209,8 @@ public class SearchFriendActivity extends AppCompatActivity {
                 ViewHolder viewHolder = new ViewHolder();
                 viewHolder.friendId = (TextView) rowView.findViewById(R.id.friend_id);
                 viewHolder.personName = (TextView) rowView.findViewById(R.id.person_name);
-                viewHolder.personPoints = (TextView) rowView.findViewById(R.id.person_points);
                 viewHolder.personPhoto = (ImageView) rowView.findViewById(R.id.person_photo);
-
+                viewHolder.winRate = (TextView) rowView.findViewById(R.id.win_rate);
                 rowView.setTag(viewHolder);
             }
 
@@ -212,12 +219,22 @@ public class SearchFriendActivity extends AppCompatActivity {
 
             holder.friendId.setText(users.get(position).getPersonId());
 
-            String title = users.get(position).getPersonName();
-            Integer points = users.get(position).getPoints();
-            String personPhoto = users.get(position).getPersonPhoto();
+            UserDataDTO user = users.get(position);
+            String title = user.getPersonName();
+            String personPhoto = user.getPersonPhoto();
+
+            Integer betsFinished = user.getBetsFinished();
+            Integer betsWon = user.getBetsWon();
+            String winRate = "0%";
+            if(betsFinished != 0) {
+                float winRateFloat = ((float) betsWon) / ((float) betsFinished);
+                float percentage = winRateFloat * 100;
+                holder.winRate.setText(String.format("%.0f%%", percentage));
+            } else {
+                holder.winRate.setText(winRate);
+            }
 
             holder.personName.setText(title);
-            holder.personPoints.setText(getString(R.string.user_points, points.toString()));
 
             Picasso.with(context)
                     .load(personPhoto)

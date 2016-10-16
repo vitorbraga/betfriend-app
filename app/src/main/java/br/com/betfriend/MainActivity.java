@@ -186,8 +186,13 @@ public class MainActivity extends AppCompatActivity
         mFrameLayout.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+                .setEndpoint(Constants.SERVER_API_BASE_URI)
+                .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);
 

@@ -41,12 +41,17 @@
             android:textStyle="bold"
             android:textSize="15dp" />
 
+        <!--<TextView-->
+            <!--android:id="@+id/person_points"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="3dp"/>-->
+
         <TextView
-            android:id="@+id/person_points"
+            android:id="@+id/win_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"/>
-
     </LinearLayout>
 
 </LinearLayout>

@@ -27,6 +27,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.UserDataDTO;
@@ -35,6 +37,7 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 /**
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
@@ -184,8 +187,13 @@ public class SignInActivity extends AppCompatActivity implements
 
         showProgressDialog();
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+                .setEndpoint(Constants.SERVER_API_BASE_URI)
+                .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);
 

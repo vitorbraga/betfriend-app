@@ -3,6 +3,7 @@ package br.com.betfriend.model;
 import android.databinding.Bindable;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import br.com.betfriend.BR;
 
@@ -26,11 +27,15 @@ public class UserDataDTO extends JsonResponse implements Serializable {
 
     private Integer invitesAccepted;
 
+    private Integer betsFinished;
+
     private Integer invitesMade;
 
     private Integer podium;
 
     private Integer goldMedal;
+
+    private Date lastCoinRequest;
 
     public String getPersonId() {
         return personId;
@@ -128,5 +133,21 @@ public class UserDataDTO extends JsonResponse implements Serializable {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public Integer getBetsFinished() {
+        return betsFinished;
+    }
+
+    public void setBetsFinished(Integer betsFinished) {
+        this.betsFinished = betsFinished;
+    }
+
+    public Date getLastCoinRequest() {
+        return lastCoinRequest;
+    }
+
+    public void setLastCoinRequest(Date lastCoinRequest) {
+        this.lastCoinRequest = lastCoinRequest;
     }
 }
