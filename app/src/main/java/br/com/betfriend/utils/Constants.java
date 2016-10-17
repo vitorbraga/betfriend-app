@@ -5,7 +5,7 @@ package br.com.betfriend.utils;
  */
 public class Constants {
 
-    public static final Integer SOCCER_API_TIMEZONE_OFFSET = 2;
+    public static final Integer SOCCER_API_TIMEZONE_OFFSET = 0;
 
     public static final Integer SERVER_TIMEZONE_OFFSET = 3;
 
