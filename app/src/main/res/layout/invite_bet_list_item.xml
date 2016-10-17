@@ -76,7 +76,7 @@
             android:gravity="center"
             android:maxLength="12"
             android:padding="10dp"
-            android:text="Empate"
+            android:text="@string/draw"
             android:textColor="@drawable/rbtn_textcolor_selector" />
 
         <RadioButton
@@ -107,7 +107,7 @@
             android:background="#ffdad8"
             android:drawableLeft="@drawable/ic_clear_black_24dp"
             android:paddingLeft="10dp"
-            android:text="Recusar"
+            android:text="@string/refuse"
             android:textColor="@color/black_grey" />
 
         <Button
@@ -120,7 +120,7 @@
             android:background="#cbe8ba"
             android:drawableLeft="@drawable/ic_check_black_24dp"
             android:paddingLeft="10dp"
-            android:text="Aceitar"
+            android:text="@string/accept"
             android:textColor="@color/black_grey" />
 
     </LinearLayout>

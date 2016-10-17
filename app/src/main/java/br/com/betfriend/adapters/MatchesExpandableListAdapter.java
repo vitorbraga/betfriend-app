@@ -180,7 +180,7 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
             // Validation amount
             if(amount == 0 || amount > userData.getPoints()) {
-                Toast.makeText(context, "Valor não permitido para aposta.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.value_not_allowed), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -192,20 +192,16 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
             // Validation result choice
             switch(checked) {
                 case R.id.radio_team_1:
-                    Log.d("Checked: ", "team1");
                     betOption = "1";
                     break;
                 case R.id.radio_draw:
-                    Log.d("Checked: ", "draw");
                     betOption = "X";
                     break;
                 case R.id.radio_team_2:
-                    Log.d("Checked: ", "team2");
                     betOption = "2";
                     break;
                 default:
-                    Log.d("Checked: ", "No option selected");
-                    Toast.makeText(context, "Selecione um resultado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.chose_some_result), Toast.LENGTH_SHORT).show();
                     return;
             }
 

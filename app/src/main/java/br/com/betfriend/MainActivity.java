@@ -27,7 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import br.com.betfriend.api.ServerApi;
-import br.com.betfriend.fragments.AccomplishmentsFragment;
+import br.com.betfriend.fragments.AchievementsFragment;
 import br.com.betfriend.fragments.HistoryFragment;
 import br.com.betfriend.fragments.HomeFragment;
 import br.com.betfriend.fragments.InvitesFragment;
@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity
                 title = getString(R.string.drawer_rankings);
                 break;
             case R.id.nav_prizes:
-                fragment = new AccomplishmentsFragment();
+                fragment = new AchievementsFragment();
                 bundle = new Bundle();
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);

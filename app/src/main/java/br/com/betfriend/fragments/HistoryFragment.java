@@ -39,9 +39,9 @@ public class HistoryFragment extends Fragment {
 
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("Em aberto"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator(getActivity().getString(R.string.tab_pending)),
                 PendingTabFragment.class, bundle);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Finalizadas"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator(getActivity().getString(R.string.tab_finished)),
                 FinishedTabFragment.class, bundle);
 
         return rootView;

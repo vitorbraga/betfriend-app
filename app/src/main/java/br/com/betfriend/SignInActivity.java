@@ -221,7 +221,7 @@ public class SignInActivity extends AppCompatActivity implements
             @Override
             public void failure(RetrofitError error) {
                 hideProgressDialog();
-                Toast.makeText(getApplication(), "Erro inesperado.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), getString(R.string.unexpected_error), Toast.LENGTH_SHORT).show();
             }
         });
 

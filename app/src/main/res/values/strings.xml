@@ -2,24 +2,24 @@
     <string name="app_name">BetFriend</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_text">BetFriend</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_text">BetFriend</string>
-    <string name="yes">Sim</string>
-    <string name="no">Não</string>
-    <string name="close">Fechar</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="close">Close</string>
 
     <!-- Drawer menu titles -->
-    <string name="drawer_history">Histórico</string>
-    <string name="drawer_invites">Convites</string>
-    <string name="drawer_store">Loja</string>
-    <string name="drawer_prizes">Conquistas</string>
-    <string name="drawer_home">Próximos jogos</string>
-    <string name="drawer_rankings">Ranking semanal</string>
-    <string name="drawer_settings">Configurações</string>
-    <string name="drawer_request_coins">Pedir moedas</string>
+    <string name="drawer_history">History</string>
+    <string name="drawer_invites">Invites</string>
+    <string name="drawer_store">Store</string>
+    <string name="drawer_prizes">Achievements</string>
+    <string name="drawer_home">Next matches</string>
+    <string name="drawer_rankings">Weekly ranking</string>
+    <string name="drawer_settings">Settings</string>
+    <string name="drawer_request_coins">Request coins</string>
 
-    <string name="user_points">%s moedas</string>
+    <string name="user_points">%s coins</string>
 
     <!-- Sign-in status messages -->
     <string name="signed_in_fmt">Signed in as: %s</string>
@@ -27,11 +27,6 @@
     <string name="signing_in">Signing in…</string>
     <string name="signed_out">Signed out</string>
     <string name="signed_in_err">"Error: please check logs."</string>
-    <string name="error_null_person">
-        Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
-        enabled for your project, you have a properly configured google-services.json file
-        and that your device has an internet connection.
-    </string>
     <string name="loading">Loading…</string>
     <string name="auth_code_fmt">Auth Code: %s</string>
     <string name="id_token_fmt">ID Token: %s</string>
@@ -50,113 +45,59 @@
     <!-- Rationale for asking for Contacts -->
     <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
 
-    <!-- Activity Names and Descriptions -->
-    <string name="name_sign_in_activity">SignInActivity</string>
-    <string name="desc_sign_in_activity">Signing in, signing out, and revoking access.</string>
-    <string name="desc_sign_in_activity_scopes">Signing in, signing out, and revoking access with Google Drive permissions.</string>
-    <string name="name_id_token_activity">IdTokenActivity</string>
-    <string name="desc_id_token_activity">Retrieving an ID Token for the user.</string>
-    <string name="desc_auth_code_activity">Demonstrate retrieving an auth code for authorizing your server.</string>
-    <string name="name_auth_code_activity">ServerAuthCodeActivity</string>
-
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
          from https://console.developers.google.com/ -->
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Strings related to Settings -->
-
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
-
     <!-- SplashActivity -->
     <string name="website_url">www.betfriendapp.com</string>
 
+    <string name="reload">Reload</string>
+
     <!-- Settings fragment -->
-    <string name="remove_account">Remover conta</string>
+    <string name="remove_account">Remove account</string>
     <string name="disconnect_account">Logout</string>
+    <string name="logout">Logout</string>
 
     <string name="disconnect_dialog_title">Logout</string>
-    <string name="disconnect_dialog_description">Tem certeza que deseja fazer logout?</string>
+    <string name="disconnect_dialog_description">Are you sure you want to logout?</string>
 
-    <string name="remove_account_dialog_title">Remover conta</string>
-    <string name="remove_account_dialog_description">Tem certeza que deseja fazer remover sua conta? Esta operação não poderá ser desfeita.</string>
+    <string name="remove_account_dialog_title">Remove account</string>
+    <string name="remove_account_dialog_description">Are you sure you want to remove your account? This operation cannot be undone.</string>
+
+    <string name="privacy">Privacy</string>
+    <string name="visible_to_bets">Visible to bets</string>
+    <string name="visible_to_bets_desc">Other users may invite you to bet</string>
+    <string name="notifications">Notifications</string>
+    <string name="notification_sound">Notification sound</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="manage_account">Manage account</string>
 
     <!-- Home fragment -->
-    <string name="choose_result">Escolha o resultado:</string>
-    <string name="bet_value">Valor da aposta:</string>
-    <string name="bet_with_friend">Apostar com um amigo</string>
-    <string name="bet_with">Apostar com:</string>
-    <string name="make_bet">Fazer aposta</string>
-    <string name="no_matches_found">Não foram encontradas partidas disponíveis.</string>
+    <string name="choose_result">Choose some result:</string>
+    <string name="bet_value">Bet value:</string>
+    <string name="bet_with_friend">Bet with a friend</string>
+    <string name="bet_with">Bet with:</string>
+    <string name="make_bet">Make bet</string>
+    <string name="no_matches_found">No available matches</string>
+    <string name="draw">Draw</string>
 
     <!-- Search friend activity -->
-    <string name="select_friend">Selecione um amigo:</string>
-    <string name="search">Pesquisar...</string>
-    <string name="title_activity_search_friend">Convide um amigo</string>
-    <string name="no_result_found">Nenhum resultado encontrado</string>
-    <string name="continue_bet">Continuar</string>
+    <string name="select_friend">Select a friend:</string>
+    <string name="search">Search...</string>
+    <string name="title_activity_search_friend">Invite a friend</string>
+    <string name="no_result_found">No result found</string>
+    <string name="continue_bet">Continue</string>
 
     <!-- Confirm bet activity -->
-    <string name="confirm_bet">Confirmar aposta</string>
+    <string name="confirm_bet">Confirm bet</string>
 
     <!-- Invites fragment -->
-    <string name="no_invites_found">Você não possui convites pendentes.</string>
+    <string name="no_invites_found">You do not have pending invites.</string>
 
     <!-- History fragment -->
+<<<<<<< HEAD
     <string name="pending_tab">Pendentes</string>
     <string name="finished_tab">Finalizadas</string>
     <string name="all_tab">Todas</string>
@@ -169,37 +110,53 @@
 
     <string name="cancel_dialog_title">Cancelar aposta</string>
     <string name="cancel_dialog_description">Tem certeza que deseja cancelar esta aposta?</string>
+=======
+    <string name="pending_tab">Pending</string>
+    <string name="finished_tab">Finished</string>
+    <string name="all_tab">All</string>
+    <string name="no_finished_bets_found">You still do not have finished bets.</string>
+    <string name="no_pending_bets_found">You still do not have pending bets.</string>
+    <string name="no_bets_found">No bet was found.</string>
+    <string name="chosen_results">Chosen results:</string>
+    <string name="bet_finished">Finished: %s</string>
+    <string name="tab_pending">Pending</string>
+    <string name="tab_finished">Finished</string>
+>>>>>>> String internationalization
 
     <!-- BetInvitation Service -->
-    <string name="notification_content_title">Novo convite de aposta!</string>
-    <string name="notification_content_text">Toque para vê-lo.</string>
-    <string name="title_activity_bet_invitations">BetInvitationsActivity</string>
+    <string name="notification_content_title">New bet invite!</string>
+    <string name="notification_content_text">Touch to see it.</string>
 
     <!-- Bet invites activity  -->
-    <string name="bet_invites">Convites</string>
-    <string name="title_activity_bet_accepted">Aposta aceita</string>
-    <string name="title_activity_bet_refused">Aposta recusada</string>
+    <string name="bet_invites">Invites</string>
+    <string name="accept">Accept</string>
+    <string name="refuse">Refuse</string>
+    <string name="title_activity_bet_accepted">Bet accepted</string>
+    <string name="title_activity_bet_refused">Bet refused</string>
 
-    <string name="accept_dialog_title">Aceitar aposta</string>
-    <string name="accept_dialog_description">Tem certeza que deseja aceitar esta aposta?</string>
+    <string name="accept_dialog_title">Accept bet</string>
+    <string name="accept_dialog_description">Are you sure you want to accept this bet?</string>
 
-    <string name="refuse_dialog_title">Recusar aposta</string>
-    <string name="refuse_dialog_description">Tem certeza que deseja recusar esta aposta?</string>
+    <string name="refuse_dialog_title">Refuse bet</string>
+    <string name="refuse_dialog_description">Are you sure you want to refuse this bet?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- Accomplishments fragment -->
+    <!-- Achievements fragment -->
     <string name="medal_bounds" formatted="false">%s/%s</string>
 
     <!-- Rankings fragment -->
     <string name="rank_rate" formatted="false">%s/%s</string>
     <string name="rank_percentage" formatted="false">%s%</string>
-    <string name="no_ranking_found">Ranking ainda indisponível.</string>
+    <string name="no_ranking_found">Ranking still unavailable.</string>
 
     <!-- Coin request fragment -->
-    <string name="request_coins">Pedir moedas!</string>
-    <string name="countdown_finished">A contagem regressiva acabou!</string>
+    <string name="request_coins">Ask for coins!</string>
+    <string name="countdown_finished">The countdown is over!</string>
+
+    <!-- Toasts -->
+    <string name="value_not_allowed">Bet value not allowed.</string>
+    <string name="chose_some_result">Choose some result.</string>
+    <string name="unexpected_error">Unexpected error.</string>
 
 </resources>
 

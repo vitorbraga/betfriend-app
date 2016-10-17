@@ -1,12 +1,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="Privacidade">
+        android:title="@string/privacy">
 
         <CheckBoxPreference
             android:key="key_visible"
-            android:title="Visível para apostas"
-            android:summary="Outros usuários poderão te convidar para apostar"
+            android:title="@string/visible_to_bets"
+            android:summary="@string/visible_to_bets_desc"
             android:defaultValue="true"/>
 
         <!--<EditTextPreference-->
@@ -19,22 +19,22 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Notificações">
+        android:title="@string/notifications">
 
         <CheckBoxPreference
             android:key="key_notif_sound"
-            android:title="Som de notificação"
+            android:title="@string/notification_sound"
             android:defaultValue="true"/>
 
         <CheckBoxPreference
             android:key="key_notif_vibrate"
-            android:title="Vibração"
+            android:title="@string/vibrate"
             android:defaultValue="true"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Gerenciar conta">
+        android:title="@string/manage_account">
 
         <!--<ListPreference-->
             <!--android:key="list_preference"-->
@@ -44,14 +44,14 @@
             <!--android:entryValues="@array/entryvalues_list_preference" />-->
 
         <Preference
-            android:title="Logout"
+            android:title="@string/logout"
             android:key="disconnect_account">
             <!--<intent android:action="android.intent.action.VIEW"-->
                 <!--android:data="http://codepath.com/" />-->
         </Preference>
 
         <Preference
-            android:title="Remover conta"
+            android:title="@string/remove_account"
             android:key="remove_account">
             <!--<intent android:action="android.intent.action.VIEW"-->
                 <!--android:data="http://codepath.com/" />-->

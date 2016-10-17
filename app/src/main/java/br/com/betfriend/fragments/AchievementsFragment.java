@@ -19,7 +19,7 @@ import br.com.betfriend.R;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.GamificationUtils;
 
-public class AccomplishmentsFragment extends SampleFragment {
+public class AchievementsFragment extends SampleFragment {
 
     private DecoView mBetWon, mInvitesMade, mInvitesAccepted,
             mGoldenMedal, mPodium;
@@ -33,7 +33,7 @@ public class AccomplishmentsFragment extends SampleFragment {
 
     private float LINE_WIDTH = 6f;
 
-    public AccomplishmentsFragment() {
+    public AchievementsFragment() {
         // Required empty public constructor
     }
 
@@ -46,7 +46,7 @@ public class AccomplishmentsFragment extends SampleFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_accomplishments, container, false);
+        View view = inflater.inflate(R.layout.fragment_achievements, container, false);
 
         userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
 

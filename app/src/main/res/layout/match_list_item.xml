@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:maxLength="12"
                 android:padding="10dp"
-                android:text="Empate"
+                android:text="@string/draw"
                 android:textColor="@drawable/rbtn_textcolor_selector" />
 
             <RadioButton

@@ -1,0 +1,147 @@
+<resources>
+    <string name="app_name">BetFriend</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_text">BetFriend</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="close">Fechar</string>
+
+    <!-- Drawer menu titles -->
+    <string name="drawer_history">Histórico</string>
+    <string name="drawer_invites">Convites</string>
+    <string name="drawer_store">Loja</string>
+    <string name="drawer_prizes">Conquistas</string>
+    <string name="drawer_home">Próximos jogos</string>
+    <string name="drawer_rankings">Ranking semanal</string>
+    <string name="drawer_settings">Configurações</string>
+    <string name="drawer_request_coins">Pedir moedas</string>
+
+    <string name="user_points">%s moedas</string>
+
+    <!-- Sign-in status messages -->
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="signed_in">Signed in</string>
+    <string name="signing_in">Signing in…</string>
+    <string name="signed_out">Signed out</string>
+    <string name="signed_in_err">"Error: please check logs."</string>
+    <string name="loading">Carregando…</string>
+    <string name="auth_code_fmt">Auth Code: %s</string>
+    <string name="id_token_fmt">ID Token: %s</string>
+
+    <!-- Google Play Services error for Toast -->
+    <string name="play_services_error_fmt">Google Play Services Error: %i</string>
+
+    <!-- Button labels -->
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="refresh_token">Get Fresh Token</string>
+
+    <!-- Content Description for images -->
+    <string name="desc_google_icon">Google Logo</string>
+
+    <!-- Rationale for asking for Contacts -->
+    <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
+
+    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
+         from https://console.developers.google.com/ -->
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- SplashActivity -->
+    <string name="website_url">www.betfriendapp.com</string>
+
+    <string name="reload">Recarregar</string>
+
+    <!-- Settings fragment -->
+    <string name="remove_account">Remover conta</string>
+    <string name="disconnect_account">Logout</string>
+    <string name="logout">Logout</string>
+
+    <string name="disconnect_dialog_title">Logout</string>
+    <string name="disconnect_dialog_description">Tem certeza que deseja fazer logout?</string>
+
+    <string name="remove_account_dialog_title">Remover conta</string>
+    <string name="remove_account_dialog_description">Tem certeza que deseja remover sua conta? Esta operação não poderá ser desfeita.</string>
+
+    <string name="privacy">Privacidade</string>
+    <string name="visible_to_bets">Visível para apostas</string>
+    <string name="visible_to_bets_desc">Outros usuários poderão te convidar para apostar</string>
+    <string name="notifications">Notificações</string>
+    <string name="notification_sound">Som de notificação</string>
+    <string name="vibrate">Vibração</string>
+    <string name="manage_account">Gerenciar conta</string>
+
+    <!-- Home fragment -->
+    <string name="choose_result">Escolha o resultado:</string>
+    <string name="bet_value">Valor da aposta:</string>
+    <string name="bet_with_friend">Apostar com um amigo</string>
+    <string name="bet_with">Apostar com:</string>
+    <string name="make_bet">Fazer aposta</string>
+    <string name="no_matches_found">Não foram encontradas partidas disponíveis.</string>
+    <string name="draw">Empate</string>
+
+    <!-- Search friend activity -->
+    <string name="select_friend">Selecione um amigo:</string>
+    <string name="search">Pesquisar...</string>
+    <string name="title_activity_search_friend">Convide um amigo</string>
+    <string name="no_result_found">Nenhum resultado encontrado</string>
+    <string name="continue_bet">Continuar</string>
+
+    <!-- Confirm bet activity -->
+    <string name="confirm_bet">Confirmar aposta</string>
+
+    <!-- Invites fragment -->
+    <string name="no_invites_found">Você não possui convites pendentes.</string>
+
+    <!-- History fragment -->
+    <string name="pending_tab">Pendentes</string>
+    <string name="finished_tab">Finalizadas</string>
+    <string name="all_tab">Todas</string>
+    <string name="no_finished_bets_found">Você ainda não possui apostas finalizadas.</string>
+    <string name="no_pending_bets_found">Você ainda não possui apostas pendentes.</string>
+    <string name="no_bets_found">Nenhuma aposta encontrada.</string>
+    <string name="chosen_results">Resultados escolhidos:</string>
+    <string name="bet_finished">Finalizada: %s</string>
+    <string name="tab_pending">Em aberto</string>
+    <string name="tab_finished">Finalizadas</string>
+
+    <!-- BetInvitation Service -->
+    <string name="notification_content_title">Novo convite de aposta!</string>
+    <string name="notification_content_text">Toque para vê-lo.</string>
+    <string name="title_activity_bet_invitations">BetInvitationsActivity</string>
+
+    <!-- Bet invites activity  -->
+    <string name="bet_invites">Convites</string>
+    <string name="accept">Aceitar</string>
+    <string name="refuse">Recusar</string>
+    <string name="title_activity_bet_accepted">Aposta aceita</string>
+    <string name="title_activity_bet_refused">Aposta recusada</string>
+
+    <string name="accept_dialog_title">Aceitar aposta</string>
+    <string name="accept_dialog_description">Tem certeza que deseja aceitar esta aposta?</string>
+
+    <string name="refuse_dialog_title">Recusar aposta</string>
+    <string name="refuse_dialog_description">Tem certeza que deseja recusar esta aposta?</string>
+
+    <!-- Accomplishments fragment -->
+    <string name="medal_bounds" formatted="false">%s/%s</string>
+
+    <!-- Rankings fragment -->
+    <string name="rank_rate" formatted="false">%s/%s</string>
+    <string name="rank_percentage" formatted="false">%s%</string>
+    <string name="no_ranking_found">Ranking ainda indisponível.</string>
+
+    <!-- Coin request fragment -->
+    <string name="request_coins">Pedir moedas!</string>
+    <string name="countdown_finished">A contagem regressiva acabou!</string>
+
+    <!-- Toasts -->
+    <string name="value_not_allowed">Valor não permitido para aposta.</string>
+    <string name="chose_some_result">Escolha um resultado.</string>
+    <string name="unexpected_error">Erro inesperado.</string>
+
+</resources>
+

@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Recarregar"
+            android:text="@string/reload"
             android:drawablePadding="8dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_refresh_black_24dp"
