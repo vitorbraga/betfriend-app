@@ -1,6 +1,7 @@
 package br.com.betfriend.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,11 +36,15 @@ import retrofit.converter.GsonConverter;
 
 public class RequestCoinsFragment extends Fragment {
 
-    private TextView countDownTimer, countDownFinished;
+    private TextView countDownTimer;
 
     private Button requestButton;
 
+    private LinearLayout countdownContainer, requestContainer;
+
     private ProgressBar mProgressBar;
+
+    private Fragment mFragment;
 
     private static final long REQUEST_MINIMUN_INTERVAL = 24 * 60 * 60 * 1000;
 
@@ -59,9 +65,13 @@ public class RequestCoinsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_request_coins, container, false);
 
+        mFragment = this;
+
         countDownTimer = (TextView) view.findViewById(R.id.countdown_timer);
 
-        countDownFinished = (TextView) view.findViewById(R.id.countdown_finished);
+        countdownContainer = (LinearLayout) view.findViewById(R.id.countdown_container);
+
+        requestContainer = (LinearLayout) view.findViewById(R.id.request_container);
 
         requestButton = (Button) view.findViewById(R.id.request_button);
 
@@ -69,6 +79,8 @@ public class RequestCoinsFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+
+                mProgressBar.setVisibility(View.VISIBLE);
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 String personId = sharedPref.getString("PERSON_ID", "");
@@ -83,16 +95,23 @@ public class RequestCoinsFragment extends Fragment {
                     @Override
                     public void success(JsonResponse json, Response response) {
 
+                        mProgressBar.setVisibility(View.GONE);
                         if(json.getCode() == 0) {
-                            Toast.makeText(getActivity(), "DEU CERTO", Toast.LENGTH_SHORT).show();
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.detach(mFragment);
+                            ft.attach(mFragment);
+                            ft.commit();
                         } else {
-                            Toast.makeText(getActivity(), "DEU CERTO Mas errado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getActivity().getString(R.string.coin_request_not_available),
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Toast.makeText(getActivity(), "DEU ERRADO", Toast.LENGTH_SHORT).show();
+                        mProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), getActivity().getString(R.string.unexpected_error),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -144,7 +163,7 @@ public class RequestCoinsFragment extends Fragment {
 
                 if(countDownTime < REQUEST_MINIMUN_INTERVAL) {
 
-                    countDownTimer.setVisibility(View.VISIBLE);
+                    countdownContainer.setVisibility(View.VISIBLE);
 
                     new CountDownTimer(REQUEST_MINIMUN_INTERVAL - countDownTime, 1000) { // adjust the milli seconds here
 
@@ -160,15 +179,13 @@ public class RequestCoinsFragment extends Fragment {
 
                         public void onFinish() {
 
-                            countDownTimer.setVisibility(View.GONE);
-                            countDownFinished.setVisibility(View.VISIBLE);
-                            requestButton.setVisibility(View.VISIBLE);
+                            countdownContainer.setVisibility(View.GONE);
+                            requestContainer.setVisibility(View.VISIBLE);
                         }
                     }.start();
 
                 } else {
-                    countDownFinished.setVisibility(View.VISIBLE);
-                    requestButton.setVisibility(View.VISIBLE);
+                    requestContainer.setVisibility(View.VISIBLE);
                 }
 
             }

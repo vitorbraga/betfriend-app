@@ -12,34 +12,66 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
-    <TextView
-        android:id="@+id/countdown_finished"
+    <LinearLayout
+        android:id="@+id/countdown_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center_horizontal"
-        android:visibility="gone"
-        android:text="@string/countdown_finished"
-        android:textSize="24sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/countdown_timer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center_horizontal"
-        android:textSize="34sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/countdown_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/app_green"
+            android:textSize="42sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/request_button"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="@string/coin_already_requested"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/request_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/countdown_timer"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_radius_green"
-        android:text="@string/request_coins"
-        android:textColor="@color/white"
-        android:visibility="gone" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/countdown_finished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:text="@string/request_allowed"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/request_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_radius_green"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/request_coins"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class StartBetActivity extends AppCompatActivity {
     private TextView matchTime, homeTeamLabel, awayTeamLabel, friendName, friendWinRate;
     private RadioButton mHomeButton, mAwayButton, mDrawButton;
     private SeekBar mSeekBar;
+    private ProgressBar mProgressBar;
     private EditText mBetValue;
     private ImageView homeLogo, awayLogo, friendPhoto;
     private Button makeBet;
@@ -67,6 +69,8 @@ public class StartBetActivity extends AppCompatActivity {
         mMatch = (Match) intent.getSerializableExtra("MATCH_EXTRA");
         mUserData = (UserDataDTO) intent.getSerializableExtra("USER_DATA_EXTRA");
         mFriend = (UserDataDTO) intent.getSerializableExtra("FRIEND_EXTRA");
+
+        mProgressBar = (ProgressBar) findViewById(R.id.start_progressbar);
 
         String homeTeam = mMatch.getHomeTeam().trim();
         String awayTeam = mMatch.getAwayTeam().trim();
@@ -188,6 +192,8 @@ public class StartBetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                mProgressBar.setVisibility(View.VISIBLE);
+
                 RestAdapter restAdapter = new RestAdapter.Builder()
                         .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 
@@ -200,6 +206,7 @@ public class StartBetActivity extends AppCompatActivity {
                     @Override
                     public void success(JsonResponse json, Response response) {
 
+                        mProgressBar.setVisibility(View.GONE);
                         if (json.getCode() == 0) {
                             // New user registered
                             // success
@@ -212,7 +219,8 @@ public class StartBetActivity extends AppCompatActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Toast.makeText(getApplication(), "Fail", Toast.LENGTH_SHORT).show();
+                        mProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplication(), getString(R.string.unexpected_error), Toast.LENGTH_SHORT).show();
                     }
                 });
 

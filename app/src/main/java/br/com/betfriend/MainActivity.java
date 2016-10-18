@@ -1,6 +1,7 @@
 package br.com.betfriend;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -283,9 +284,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        android.app.FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
 
-        android.app.Fragment fragment = null;
+        Fragment fragment = null;
         String title = "";
         Bundle bundle = null;
         int id = item.getItemId();

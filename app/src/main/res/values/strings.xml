@@ -141,11 +141,14 @@
     <!-- Coin request fragment -->
     <string name="request_coins">Ask for coins!</string>
     <string name="countdown_finished">The countdown is over!</string>
+    <string name="request_allowed">You can request more coins. \nGet it now!</string>
+    <string name="coin_already_requested">You have already received your coins in the last 24 hours. Wait for the countdown to ask for more!</string>
 
     <!-- Toasts -->
     <string name="value_not_allowed">Bet value not allowed.</string>
     <string name="chose_some_result">Choose some result.</string>
     <string name="unexpected_error">Unexpected error.</string>
+    <string name="coin_request_not_available">Coin request not available.</string>
 
 </resources>
 

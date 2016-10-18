@@ -11,13 +11,13 @@ import br.com.betfriend.R;
  */
 public enum BetResultEnum {
 
-    UNDEFINED(1, "-", R.drawable.rounded_corner_yellow),
+    UNDEFINED(1, "-", R.drawable.rounded_corner_grey),
 
     WIN(2, "Win", R.drawable.rounded_corner_green),
 
     LOSS(3, "Loss", R.drawable.rounded_corner_red),
 
-    DRAW(4, "Draw", R.drawable.rounded_corner_yellow);
+    DRAW(4, "Draw", R.drawable.rounded_corner_grey);
 
     private Integer id;
 

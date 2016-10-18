@@ -140,11 +140,14 @@
     <!-- Coin request fragment -->
     <string name="request_coins">Pedir moedas!</string>
     <string name="countdown_finished">A contagem regressiva acabou!</string>
+    <string name="request_allowed">Você já pode pedir mais moedas. \nPeça agora!</string>
+    <string name="coin_already_requested">Você já recebeu suas moedas nas últimas 24 horas. Aguarde a contagem regressiva para pedir mais!</string>
 
     <!-- Toasts -->
     <string name="value_not_allowed">Valor não permitido para aposta.</string>
     <string name="chose_some_result">Escolha um resultado.</string>
     <string name="unexpected_error">Erro inesperado.</string>
+    <string name="coin_request_not_available">Novo pedido de moedas indisponível.</string>
 
 </resources>
 

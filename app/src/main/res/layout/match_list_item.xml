@@ -111,9 +111,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_radius"
+            android:background="@drawable/button_radius_green"
             android:text="@string/bet_with_friend"
-            android:textColor="@color/black_grey" />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </layout>

@@ -7,7 +7,7 @@
         <!--android:color="@color/black_grey" />-->
 
     <!-- Background color -->
-    <solid android:color="@color/app_yellow_light" />
+    <solid android:color="@color/radio_checked" />
 
     <corners android:radius="5dp" />
 </shape>
