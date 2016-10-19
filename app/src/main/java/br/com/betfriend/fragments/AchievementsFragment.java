@@ -1,6 +1,9 @@
 package br.com.betfriend.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +18,17 @@ import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
+import br.com.betfriend.BetInvitationsActivity;
 import br.com.betfriend.R;
+import br.com.betfriend.api.ServerApi;
+import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.Constants;
 import br.com.betfriend.utils.GamificationUtils;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class AchievementsFragment extends SampleFragment {
 
@@ -28,6 +39,8 @@ public class AchievementsFragment extends SampleFragment {
             mGoldenMedalBounds, mPodiumBounds;
 
     private int mSeries1Index;
+
+    private Context context;
 
     private UserDataDTO userData;
 
@@ -49,6 +62,8 @@ public class AchievementsFragment extends SampleFragment {
         View view = inflater.inflate(R.layout.fragment_achievements, container, false);
 
         userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
+
+        context = getActivity();
 
         mBetWon = (DecoView) view.findViewById(R.id.bets_won);
         mBetWon.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +106,8 @@ public class AchievementsFragment extends SampleFragment {
         });
 
         mBetWonBounds = (TextView) view.findViewById(R.id.bets_won_bounds);
-        mInvitesMadeBounds = (TextView) view.findViewById(R.id.invites_accepted_bounds);
-        mInvitesAcceptedBounds = (TextView) view.findViewById(R.id.invites_made_bounds);
+        mInvitesMadeBounds = (TextView) view.findViewById(R.id.invites_made_bounds);
+        mInvitesAcceptedBounds = (TextView) view.findViewById(R.id.invites_accepted_bounds);
         mGoldenMedalBounds = (TextView) view.findViewById(R.id.golden_medal_bounds);
         mPodiumBounds = (TextView) view.findViewById(R.id.podium_bounds);
 
@@ -116,8 +131,39 @@ public class AchievementsFragment extends SampleFragment {
 
     private void showMedalDetailsDialog(int arcId) {
 
+        String title = "";
+        String message = "";
+        switch (arcId) {
+            case R.id.bets_won:
+                title = context.getString(R.string.victorious);
+                message = context.getString(R.string.victorious_description);
+                break;
+            case R.id.invites_made:
+                title = context.getString(R.string.audacious);
+                message = context.getString(R.string.audacious_description);
+                break;
+            case R.id.invites_accepted:
+                title = context.getString(R.string.brother);
+                message = context.getString(R.string.brother_description);
+                break;
+            case R.id.golden_medal:
+                title = context.getString(R.string.legendary);
+                message = context.getString(R.string.legendary_description);
+                break;
+            case R.id.podium:
+                title = context.getString(R.string.glorious);
+                message = context.getString(R.string.glorious_description);
+                break;
+        }
 
-        Toast.makeText(getActivity(), "arcId: " + arcId, Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(context.getString(R.string.close), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+
     }
 
     private void createTracks(int arcViewId, Interpolator interpolator, int color) {

@@ -129,8 +129,19 @@
     <string name="refuse_dialog_title">Recusar aposta</string>
     <string name="refuse_dialog_description">Tem certeza que deseja recusar esta aposta?</string>
 
-    <!-- Accomplishments fragment -->
+    <!-- Achievements fragment -->
     <string name="medal_bounds" formatted="false">%s/%s</string>
+    <string name="victorious">Victorious</string>
+    <string name="legendary">Legendary</string>
+    <string name="glorious">Glorious</string>
+    <string name="brother">Bro</string>
+    <string name="audacious">Audacious</string>
+
+    <string name="victorious_description">Esta medalha é aprimorada vencendo as apostas.</string>
+    <string name="legendary_description">Esta medalha é aprimorada sempre que você fica na primeira posição do ranking semanal.</string>
+    <string name="glorious_description">Esta medalha é aprimorada sempre que você fica entre os três primeiros do ranking semanal.</string>
+    <string name="brother_description">Esta medalha é aprimorada sempre que você aceita uma aposta.</string>
+    <string name="audacious_description">Esta medalha é aprimorada sempre que você realiza uma aposta.</string>
 
     <!-- Rankings fragment -->
     <string name="rank_rate" formatted="false">%s/%s</string>

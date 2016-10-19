@@ -129,9 +129,19 @@
     <string name="refuse_dialog_title">Refuse bet</string>
     <string name="refuse_dialog_description">Are you sure you want to refuse this bet?</string>
 
-
     <!-- Achievements fragment -->
     <string name="medal_bounds" formatted="false">%s/%s</string>
+    <string name="victorious">Victorious</string>
+    <string name="legendary">Legendary</string>
+    <string name="glorious">Glorious</string>
+    <string name="brother">Bro</string>
+    <string name="audacious">Audacious</string>
+
+    <string name="victorious_description">This medal is enhanced winning bets.</string>
+    <string name="legendary_description">This medal is enhanced when you are in the first position in the weekly ranking.</string>
+    <string name="glorious_description">This medal is enhanced when you are in the top three of the weekly ranking.</string>
+    <string name="brother_description">This medal is enhanced whenever you accept a bet.</string>
+    <string name="audacious_description">This medal is enhanced whenever you make a bet.</string>
 
     <!-- Rankings fragment -->
     <string name="rank_rate" formatted="false">%s/%s</string>
@@ -149,6 +159,7 @@
     <string name="chose_some_result">Choose some result.</string>
     <string name="unexpected_error">Unexpected error.</string>
     <string name="coin_request_not_available">Coin request not available.</string>
+
 
 </resources>
 

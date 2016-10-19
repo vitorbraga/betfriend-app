@@ -20,12 +20,80 @@
                 android:padding="20dp">
 
                 <TextView
+                    android:id="@+id/golden_medal_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:text="@string/legendary"
+                    android:textSize="14sp" />
+
+                <com.hookedonplay.decoviewlib.DecoView
+                    android:id="@+id/golden_medal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/golden_medal_text" />
+
+                <TextView
+                    android:id="@+id/golden_medal_bounds"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/golden_medal_text"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/podium_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:text="@string/glorious"
+                    android:textSize="14sp" />
+
+                <com.hookedonplay.decoviewlib.DecoView
+                    android:id="@+id/podium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/podium_text" />
+
+                <TextView
+                    android:id="@+id/podium_bounds"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/podium_text"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="20dp">
+
+                <TextView
                     android:id="@+id/bets_won_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="center"
-                    android:text="Winner"
+                    android:text="@string/victorious"
                     android:textSize="14sp" />
 
                 <com.hookedonplay.decoviewlib.DecoView
@@ -51,49 +119,12 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/invites_made_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center"
-                    android:text="Ousado"
-                    android:textSize="14sp" />
-
-                <com.hookedonplay.decoviewlib.DecoView
-                    android:id="@+id/invites_made"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/invites_made_text" />
-
-                <TextView
-                    android:id="@+id/invites_made_bounds"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/invites_made_text"
-                    android:gravity="center"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="20dp">
-
-                <TextView
                     android:id="@+id/invites_accepted_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="center"
-                    android:text="Parceiro"
+                    android:text="@string/brother"
                     android:textSize="14sp" />
 
                 <com.hookedonplay.decoviewlib.DecoView
@@ -112,36 +143,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/golden_medal_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center"
-                    android:text="Lendário"
-                    android:textSize="14sp" />
-
-                <com.hookedonplay.decoviewlib.DecoView
-                    android:id="@+id/golden_medal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/golden_medal_text" />
-
-                <TextView
-                    android:id="@+id/golden_medal_bounds"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/golden_medal_text"
-                    android:gravity="center"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -157,59 +158,28 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/podium_text"
+                    android:id="@+id/invites_made_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="center"
-                    android:text="Monstro"
+                    android:text="@string/audacious"
                     android:textSize="14sp" />
 
                 <com.hookedonplay.decoviewlib.DecoView
-                    android:id="@+id/podium"
+                    android:id="@+id/invites_made"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/podium_text" />
+                    android:layout_below="@id/invites_made_text" />
 
                 <TextView
-                    android:id="@+id/podium_bounds"
+                    android:id="@+id/invites_made_bounds"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/podium_text"
+                    android:layout_below="@id/invites_made_text"
                     android:gravity="center"
                     android:textSize="14sp" />
             </RelativeLayout>
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:padding="20dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/another_text"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="5dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="Monstro"-->
-                    <!--android:textSize="14sp" />-->
-
-                <!--<com.hookedonplay.decoviewlib.DecoView-->
-                    <!--android:id="@+id/another"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_below="@id/another_text" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/another_bounds"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_below="@id/another_text"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="20/145"-->
-                    <!--android:textSize="14sp" />-->
-            <!--</RelativeLayout>-->
 
         </LinearLayout>
 

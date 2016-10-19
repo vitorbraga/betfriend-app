@@ -9,14 +9,10 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,7 +24,6 @@ import java.util.TimerTask;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.JsonResponse;
-import br.com.betfriend.model.Match;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -39,6 +34,8 @@ import retrofit.converter.GsonConverter;
 public class BetInvitationService extends Service {
 
     private Timer timer = new Timer();
+
+    private static final long INTERVAL = 1 * 40 * 1000;
 
     public BetInvitationService() {
     }
@@ -59,7 +56,7 @@ public class BetInvitationService extends Service {
             public void run() {
                 sendRequestToServer();   //Your code here
             }
-        }, 0, 1 * 40 * 1000);//5 Minutes (20 SEGUNDOS)
+        }, 0, INTERVAL);//5 Minutes (20 SEGUNDOS)
     }
 
     @Override
@@ -91,7 +88,7 @@ public class BetInvitationService extends Service {
 
                     NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(getApplicationContext())
-                                    .setSmallIcon(R.mipmap.ic_launcher)
+                                    .setSmallIcon(R.drawable.ic_launcher_white)
                                     .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher))
                                     .setContentTitle(getString(R.string.notification_content_title))
                                     .setContentText(getString(R.string.notification_content_text));
