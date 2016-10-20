@@ -114,7 +114,6 @@
     <!-- BetInvitation Service -->
     <string name="notification_content_title">Novo convite de aposta!</string>
     <string name="notification_content_text">Toque para vê-lo.</string>
-    <string name="title_activity_bet_invitations">BetInvitationsActivity</string>
 
     <!-- Bet invites activity  -->
     <string name="bet_invites">Convites</string>

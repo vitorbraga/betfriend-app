@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 android.app.Fragment fragment = new HomeFragment();
                 fragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
                 if(getSupportActionBar() != null){
                     getSupportActionBar().setTitle(getString(R.string.drawer_home));
                 }
@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
         toolbar.setTitle(title);
 
