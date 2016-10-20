@@ -95,6 +95,8 @@
 
     <!-- Invites fragment -->
     <string name="no_invites_found">Você não possui convites pendentes.</string>
+    <string name="no_coins">Você não possui moedas suficientes para aceitar esta aposta.</string>
+    <string name="result_already_chosen">Resultado já escolhido. Escolha outro.</string>
 
     <!-- History fragment -->
     <string name="pending_tab">Pendentes</string>
@@ -155,7 +157,7 @@
 
     <!-- Toasts -->
     <string name="value_not_allowed">Valor não permitido para aposta.</string>
-    <string name="chose_some_result">Escolha um resultado.</string>
+    <string name="choose_some_result">Escolha um resultado.</string>
     <string name="unexpected_error">Erro inesperado.</string>
     <string name="coin_request_not_available">Novo pedido de moedas indisponível.</string>
 

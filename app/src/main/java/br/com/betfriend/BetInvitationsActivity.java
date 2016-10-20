@@ -91,6 +91,7 @@ public class BetInvitationsActivity extends AppCompatActivity {
         userData.setPersonId(sharedPref.getString("PERSON_ID", ""));
         userData.setPersonPhoto(sharedPref.getString("PERSON_PHOTO", ""));
         userData.setPersonName(sharedPref.getString("PERSON_NAME", ""));
+        userData.setPoints(sharedPref.getInt("POINTS", 0));
 
         mInvitesListView = (AnimatedExpandableListView) findViewById(R.id.invites_list);
 

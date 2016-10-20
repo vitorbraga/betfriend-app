@@ -95,6 +95,8 @@
 
     <!-- Invites fragment -->
     <string name="no_invites_found">You do not have pending invites.</string>
+    <string name="no_coins">You do not have enough coins to accept this bet.</string>
+    <string name="result_already_chosen">This result was already chosen. Choose another.</string>
 
     <!-- History fragment -->
 
@@ -156,7 +158,7 @@
 
     <!-- Toasts -->
     <string name="value_not_allowed">Bet value not allowed.</string>
-    <string name="chose_some_result">Choose some result.</string>
+    <string name="choose_some_result">Choose some result.</string>
     <string name="unexpected_error">Unexpected error.</string>
     <string name="coin_request_not_available">Coin request not available.</string>
 

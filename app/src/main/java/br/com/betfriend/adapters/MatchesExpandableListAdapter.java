@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -201,7 +200,7 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
                     betOption = "2";
                     break;
                 default:
-                    Toast.makeText(context, context.getString(R.string.chose_some_result), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.choose_some_result), Toast.LENGTH_SHORT).show();
                     return;
             }
 

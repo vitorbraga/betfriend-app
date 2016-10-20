@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,6 @@ import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.JsonResponse;
-import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
 import br.com.betfriend.utils.Constants;
@@ -224,12 +225,18 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                 // Validating radio buttons
                 if (checked == -1) {
-                    Toast.makeText(context, "Escolha um resultado.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.choose_some_result), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (checked == friendOption) {
-                    Toast.makeText(context, "Resultado já escolhido. Escolha outro.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.result_already_chosen), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Validating if user has enough coins
+                if(amount > userData.getPoints()) {
+                    Toast.makeText(context, context.getString(R.string.no_coins), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -266,6 +273,12 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                                     public void success(JsonResponse json, Response response) {
 
                                         mProgressBar.setVisibility(View.GONE);
+
+                                        // Update userPoints at SharedPreferences
+                                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putInt("POINTS", userData.getPoints() - amount);
+                                        editor.commit();
 
                                         Intent intent = new Intent(context, BetInvitationsActivity.class);
                                         intent.putExtra("BET_ACCEPTED", true);
