@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Ranking;
 import br.com.betfriend.utils.CircleTransformation;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -33,7 +36,11 @@ public class RankingFragment extends Fragment {
 
     private ListView mRankingListView;
 
-    private ProgressBar mSpinner;
+    private ProgressBar mProgressBar;
+
+    private LinearLayout mNoRankingContainer;
+
+    private Button mRetryButton;;
 
     static class ViewHolder {
         public TextView personName;
@@ -41,8 +48,6 @@ public class RankingFragment extends Fragment {
         public TextView percentage;
         public TextView rate;
     }
-
-    private TextView mNoRankingFound;
 
     public RankingFragment() {
         // Required empty public constructor
@@ -61,36 +66,19 @@ public class RankingFragment extends Fragment {
 
         mRankingListView = (ListView) view.findViewById(R.id.ranking_list);
 
-        mSpinner = (ProgressBar) view.findViewById(R.id.main_progressbar);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.ranking_progressbar);
 
-        mNoRankingFound = (TextView) view.findViewById(R.id.no_ranking_found);
+        mNoRankingContainer = (LinearLayout) view.findViewById(R.id.no_ranking_container);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+        mRetryButton = (Button) view.findViewById(R.id.retry_button);
 
-        ServerApi api = restAdapter.create(ServerApi.class);
-
-        api.getLastWeekRanking(Constants.SERVER_KEY, "application/json", new Callback<ArrayList<Ranking>>() {
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void success(ArrayList<Ranking> rankings, Response response) {
+            public void onClick(View v) {
 
-                mSpinner.setVisibility(View.GONE);
-
-                if (rankings.size() > 0) {
-                    mRankingListView.setVisibility(View.VISIBLE);
-
-                    RankingsArrayAdapter betAdapter = new RankingsArrayAdapter(getActivity(), rankings);
-                    mRankingListView.setAdapter(betAdapter);
-
-                } else {
-                    mNoRankingFound.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "reetrofit error all bets", Toast.LENGTH_SHORT).show();
+                mProgressBar.setVisibility(View.VISIBLE);
+                getRanking();
             }
         });
 
@@ -104,7 +92,52 @@ public class RankingFragment extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
+
+        getRanking();
+    }
+
+    private void getRanking() {
+
+        if(!ConnectionUtils.isOnline(getActivity())) {
+            mProgressBar.setVisibility(View.GONE);
+            mNoRankingContainer.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+
+        ServerApi api = restAdapter.create(ServerApi.class);
+
+        api.getLastWeekRanking(Constants.SERVER_KEY, "application/json", new Callback<ArrayList<Ranking>>() {
+
+            @Override
+            public void success(ArrayList<Ranking> rankings, Response response) {
+
+                mProgressBar.setVisibility(View.GONE);
+                mNoRankingContainer.setVisibility(View.GONE);
+
+                if (rankings.size() > 0) {
+                    mRankingListView.setVisibility(View.VISIBLE);
+
+                    RankingsArrayAdapter betAdapter = new RankingsArrayAdapter(getActivity(), rankings);
+                    mRankingListView.setAdapter(betAdapter);
+
+                } else {
+                    mNoRankingContainer.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mProgressBar.setVisibility(View.GONE);
+                mNoRankingContainer.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), getActivity().getString(R.string.unexpected_error), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -37,6 +37,7 @@ import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.BetStatusEnum;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -93,13 +94,14 @@ public class PendingTabFragment extends Fragment {
 
         mRetryButton = (Button) view.findViewById(R.id.retry_button);
 
-        return view;
-    }
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
 
-    @Override
-    public void onResume() {
-
-        super.onResume();
+            @Override
+            public void onClick(View v) {
+                mProgressBar.setVisibility(View.VISIBLE);
+                getPendingBets();
+            }
+        });
 
         mBetsListView.setOnGroupClickListener(new AnimatedExpandableListView.OnGroupClickListener() {
 
@@ -148,6 +150,14 @@ public class PendingTabFragment extends Fragment {
             }
         });
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
         getPendingBets();
     }
 
@@ -165,6 +175,14 @@ public class PendingTabFragment extends Fragment {
     }
 
     public void getPendingBets() {
+
+        if(!ConnectionUtils.isOnline(getActivity())) {
+            mProgressBar.setVisibility(View.GONE);
+            mBetsListView.setVisibility(View.GONE);
+            mNoBetsFound.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String personId = sharedPref.getString("PERSON_ID", "");
@@ -184,6 +202,7 @@ public class PendingTabFragment extends Fragment {
             @Override
             public void success(ArrayList<Bet> bets, Response response) {
 
+                mBetsListView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
 
                 if (bets.size() > 0) {
@@ -197,14 +216,6 @@ public class PendingTabFragment extends Fragment {
                     mBetsListView.setVisibility(View.GONE);
                     mNoBetsFound.setVisibility(View.VISIBLE);
 
-                    mRetryButton.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            mProgressBar.setVisibility(View.VISIBLE);
-                            getPendingBets();
-                        }
-                    });
                 }
             }
 
@@ -212,15 +223,6 @@ public class PendingTabFragment extends Fragment {
             public void failure(RetrofitError error) {
                 mBetsListView.setVisibility(View.GONE);
                 mNoBetsFound.setVisibility(View.VISIBLE);
-
-                mRetryButton.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        mProgressBar.setVisibility(View.VISIBLE);
-                        getPendingBets();
-                    }
-                });
             }
         });
     }
@@ -255,7 +257,8 @@ public class PendingTabFragment extends Fragment {
         // Called when the user selects a contextual menu item
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            Context context = getActivity();
+
+            final Context context = getActivity();
 
             switch (item.getItemId()) {
                 case R.id.action_delete:
@@ -267,6 +270,12 @@ public class PendingTabFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     mProgressBar.setVisibility(View.VISIBLE);
+
+                                    if(!ConnectionUtils.isOnline(mContext)) {
+                                        mProgressBar.setVisibility(View.GONE);
+                                        Toast.makeText(mContext, getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
 
                                     RestAdapter restAdapter = new RestAdapter.Builder()
                                             .setEndpoint(Constants.SERVER_API_BASE_URI).build();
@@ -282,8 +291,8 @@ public class PendingTabFragment extends Fragment {
                                             getPendingBets();
 
                                             View parentLayout = getActivity().findViewById(android.R.id.content);
-                                            Snackbar snack = Snackbar.make(parentLayout, "Aposta cancelada.", Snackbar.LENGTH_INDEFINITE)
-                                                    .setAction("Fechar", new View.OnClickListener() {
+                                            Snackbar snack = Snackbar.make(parentLayout, context.getString(R.string.cancelled_bet), Snackbar.LENGTH_INDEFINITE)
+                                                    .setAction(context.getString(R.string.close), new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
                                                         }
@@ -299,7 +308,7 @@ public class PendingTabFragment extends Fragment {
                                         @Override
                                         public void failure(RetrofitError error) {
                                             mProgressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getActivity(), "Erro inesperado.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), context.getString(R.string.unexpected_error), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }

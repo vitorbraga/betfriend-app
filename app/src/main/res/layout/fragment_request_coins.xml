@@ -5,7 +5,7 @@
     android:padding="10dp">
 
     <ProgressBar
-        android:id="@+id/fragment_progressbar"
+        android:id="@+id/request_progressbar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,6 +70,37 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/request_coins"
             android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_connection_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:id="@+id/no_matches_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_connectivity"
+            android:layout_marginTop="25dp"/>
+
+        <Button
+            android:id="@+id/retry_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/reload"
+            android:drawablePadding="8dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_refresh_black_24dp"
+            android:drawableTint="@color/app_green"
+            android:textColor="@color/app_green_start"
+            android:textAllCaps="false"
+            android:layout_marginTop="30dp"/>
 
     </LinearLayout>
 

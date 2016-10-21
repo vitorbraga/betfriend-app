@@ -30,6 +30,7 @@ import br.com.betfriend.adapters.BetsExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -73,15 +74,7 @@ public class FinishedTabFragment extends Fragment {
 
         mContext = getActivity();
 
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-
-        super.onResume();
-
-        mBetsListView = (AnimatedExpandableListView) getView().findViewById(R.id.bet_list);
+        mBetsListView = (AnimatedExpandableListView) view.findViewById(R.id.bet_list);
 
         mBetsListView.setOnGroupClickListener(new AnimatedExpandableListView.OnGroupClickListener() {
 
@@ -99,11 +92,28 @@ public class FinishedTabFragment extends Fragment {
 
         });
 
-        mProgressBar = (ProgressBar) getView().findViewById(R.id.bets_progressbar);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.bets_progressbar);
 
-        mNoBetsFound = (LinearLayout) getView().findViewById(R.id.no_bets_container);
+        mNoBetsFound = (LinearLayout) view.findViewById(R.id.no_bets_container);
 
-        mRetryButton = (Button) getView().findViewById(R.id.retry_button);
+        mRetryButton = (Button) view.findViewById(R.id.retry_button);
+
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mProgressBar.setVisibility(View.VISIBLE);
+                getFinishedBets();
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
 
         getFinishedBets();
     }
@@ -119,6 +129,14 @@ public class FinishedTabFragment extends Fragment {
     }
 
     public void getFinishedBets() {
+
+        if(!ConnectionUtils.isOnline(getActivity())) {
+            mProgressBar.setVisibility(View.GONE);
+            mBetsListView.setVisibility(View.GONE);
+            mNoBetsFound.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String personId = sharedPref.getString("PERSON_ID", "");
@@ -150,22 +168,14 @@ public class FinishedTabFragment extends Fragment {
                 } else {
                     mBetsListView.setVisibility(View.GONE);
                     mNoBetsFound.setVisibility(View.VISIBLE);
-
-                    mRetryButton.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            mProgressBar.setVisibility(View.VISIBLE);
-                            getFinishedBets();
-                        }
-                    });
                 }
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "reetrofit error all bets", Toast.LENGTH_SHORT).show();
+                mProgressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), getActivity().getString(R.string.unexpected_error), Toast.LENGTH_SHORT).show();
             }
         });
 

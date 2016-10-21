@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +22,7 @@ import br.com.betfriend.adapters.MatchesExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -64,20 +66,9 @@ public class HomeFragment extends android.app.Fragment {
 
         userData = (UserDataDTO) getArguments().getSerializable("USER_DATA_EXTRA");
 
-        return view;
-    }
+        mProgressBar = (ProgressBar) view.findViewById(R.id.main_progressbar);
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onResume() {
-
-        super.onResume();
-
-        matchesListView = (AnimatedExpandableListView) getView().findViewById(R.id.matches_list);
+        matchesListView = (AnimatedExpandableListView) view.findViewById(R.id.matches_list);
 
         matchesListView.setOnGroupClickListener(new AnimatedExpandableListView.OnGroupClickListener() {
 
@@ -95,10 +86,10 @@ public class HomeFragment extends android.app.Fragment {
 
         });
 
-        mProgressBar = (ProgressBar) getView().findViewById(R.id.main_progressbar);
+        mNoMatchesContainer = (LinearLayout) view.findViewById(R.id.no_matches_container);
 
-        mNoMatchesContainer = (LinearLayout) getView().findViewById(R.id.no_matches_container);
-        mRetryButton = (Button) getView().findViewById(R.id.retry_button);
+        mRetryButton = (Button) view.findViewById(R.id.retry_button);
+
         mRetryButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -108,6 +99,19 @@ public class HomeFragment extends android.app.Fragment {
                 getMatches();
             }
         });
+
+        return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
 
         // Get matches from server
         getMatches();
@@ -129,6 +133,13 @@ public class HomeFragment extends android.app.Fragment {
                 .setConverter(new GsonConverter(gson)).build();
 
         ServerApi api = restAdapter.create(ServerApi.class);
+
+        if(!ConnectionUtils.isOnline(mContext)) {
+            mProgressBar.setVisibility(View.GONE);
+            mNoMatchesContainer.setVisibility(View.VISIBLE);
+            Toast.makeText(mContext, getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         api.getMatches(Constants.SERVER_KEY, "application/json", new Callback<ArrayList<Match>>() {
 

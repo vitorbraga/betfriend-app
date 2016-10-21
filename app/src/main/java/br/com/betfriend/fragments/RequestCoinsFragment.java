@@ -26,6 +26,7 @@ import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.CoinRequest;
 import br.com.betfriend.model.JsonResponse;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -38,9 +39,9 @@ public class RequestCoinsFragment extends Fragment {
 
     private TextView countDownTimer;
 
-    private Button requestButton;
+    private Button requestButton, mRetryButton;
 
-    private LinearLayout countdownContainer, requestContainer;
+    private LinearLayout countdownContainer, requestContainer, noConnectionContainer;
 
     private ProgressBar mProgressBar;
 
@@ -67,11 +68,28 @@ public class RequestCoinsFragment extends Fragment {
 
         mFragment = this;
 
+        mProgressBar = (ProgressBar) view.findViewById(R.id.request_progressbar);
+
         countDownTimer = (TextView) view.findViewById(R.id.countdown_timer);
+
+        noConnectionContainer = (LinearLayout) view.findViewById(R.id.no_connection_container);
+        noConnectionContainer.setVisibility(View.GONE);
 
         countdownContainer = (LinearLayout) view.findViewById(R.id.countdown_container);
 
         requestContainer = (LinearLayout) view.findViewById(R.id.request_container);
+
+        mRetryButton = (Button) view.findViewById(R.id.retry_button);
+
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                mProgressBar.setVisibility(View.VISIBLE);
+                checkRequestCountdown();
+            }
+        });
 
         requestButton = (Button) view.findViewById(R.id.request_button);
 
@@ -81,6 +99,12 @@ public class RequestCoinsFragment extends Fragment {
             public void onClick(View v) {
 
                 mProgressBar.setVisibility(View.VISIBLE);
+
+                if(!ConnectionUtils.isOnline(getActivity())) {
+                    mProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 String personId = sharedPref.getString("PERSON_ID", "");
@@ -118,8 +142,6 @@ public class RequestCoinsFragment extends Fragment {
             }
         });
 
-        mProgressBar = (ProgressBar) view.findViewById(R.id.fragment_progressbar);
-
         return view;
     }
 
@@ -132,6 +154,25 @@ public class RequestCoinsFragment extends Fragment {
     public void onResume() {
 
         super.onResume();
+
+        checkRequestCountdown();
+    }
+
+    private void checkRequestCountdown() {
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        if(!ConnectionUtils.isOnline(getActivity())) {
+
+            mProgressBar.setVisibility(View.GONE);
+
+            hideContents();
+
+            noConnectionContainer.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String personId = sharedPref.getString("PERSON_ID", "");
@@ -146,12 +187,12 @@ public class RequestCoinsFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
-
         api.checkRequestCountdown(Constants.SERVER_KEY, "application/json", personId, new Callback<CoinRequest>() {
 
             @Override
             public void success(CoinRequest coinRequest, Response response) {
 
+                noConnectionContainer.setVisibility(View.GONE);
                 mProgressBar.setVisibility(View.GONE);
 
                 Date updatedDate = new Date(coinRequest.getUpdated().getTime()
@@ -161,7 +202,7 @@ public class RequestCoinsFragment extends Fragment {
 
                 long countDownTime = now - lastTime;
 
-                if(countDownTime < REQUEST_MINIMUN_INTERVAL) {
+                if (countDownTime < REQUEST_MINIMUN_INTERVAL) {
 
                     countdownContainer.setVisibility(View.VISIBLE);
 
@@ -193,11 +234,20 @@ public class RequestCoinsFragment extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 mProgressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), getActivity().getString(R.string.unexpected_error), Toast.LENGTH_SHORT).show();
             }
 
         });
+    }
 
+    private void hideContents() {
+        countdownContainer.setVisibility(View.GONE);
+        requestContainer.setVisibility(View.GONE);
+    }
 
+    private void showContents() {
+        countdownContainer.setVisibility(View.VISIBLE);
+        requestContainer.setVisibility(View.VISIBLE);
     }
 
     @Override

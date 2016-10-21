@@ -62,12 +62,12 @@ public class BetInvitationsActivity extends AppCompatActivity {
 
         boolean betAccepted = getIntent().getBooleanExtra("BET_ACCEPTED", false);
         if (betAccepted) {
-            showSnackbar("Aposta aceita. Boa sorte!");
+            showSnackbar(getString(R.string.accepted_bet));
         }
 
         boolean betRefused = getIntent().getBooleanExtra("BET_REFUSED", false);
         if (betRefused) {
-            showSnackbar("Aposta recusada.");
+            showSnackbar(getString(R.string.refused_bet));
         }
     }
 
@@ -124,7 +124,7 @@ public class BetInvitationsActivity extends AppCompatActivity {
 
         View parentLayout = findViewById(android.R.id.content);
         Snackbar snack = Snackbar.make(parentLayout, message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Fechar", new View.OnClickListener() {
+                .setAction(getString(R.string.close), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                     }

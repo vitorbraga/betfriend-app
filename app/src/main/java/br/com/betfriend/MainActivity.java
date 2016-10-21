@@ -18,10 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,6 +40,7 @@ import br.com.betfriend.fragments.RequestCoinsFragment;
 import br.com.betfriend.fragments.SettingsFragment;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.CircleTransformation;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -56,6 +60,10 @@ public class MainActivity extends AppCompatActivity
     private NavigationView mNavigationView;
 
     private ProgressBar mProgressBar;
+
+    private LinearLayout noConnectionContainer;
+
+    private Button mRetryButton;
 
     private FrameLayout mFrameLayout;
 
@@ -151,7 +159,7 @@ public class MainActivity extends AppCompatActivity
         View parentLayout = findViewById(android.R.id.content);
         boolean betFinished = getIntent().getBooleanExtra("BET_COMPLETED", false);
         if (betFinished) {
-            Snackbar snack = Snackbar.make(parentLayout, "Aposta realizada com sucesso!", Snackbar.LENGTH_INDEFINITE)
+            Snackbar snack = Snackbar.make(parentLayout, getString(R.string.bet_made), Snackbar.LENGTH_INDEFINITE)
                     .setAction(getString(R.string.close), new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -167,9 +175,24 @@ public class MainActivity extends AppCompatActivity
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        noConnectionContainer = (LinearLayout) findViewById(R.id.no_connection_container);
+        noConnectionContainer.setVisibility(View.GONE);
+
         mProgressBar = (ProgressBar) findViewById(R.id.main_progressbar);
 
         mFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+
+        mRetryButton = (Button) findViewById(R.id.retry_button);
+
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                mProgressBar.setVisibility(View.VISIBLE);
+                getUserData();
+            }
+        });
 
         // Start bet invitation checker service
         Intent i = new Intent(this, BetInvitationService.class);
@@ -184,8 +207,19 @@ public class MainActivity extends AppCompatActivity
 
         super.onResume();
 
+        getUserData();
+
+    }
+
+    private void getUserData() {
+
+        if(!ConnectionUtils.isOnline(this)) {
+            Toast.makeText(this, getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        noConnectionContainer.setVisibility(View.GONE);
         mFrameLayout.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -239,7 +273,6 @@ public class MainActivity extends AppCompatActivity
             public void failure(RetrofitError error) {
             }
         });
-
     }
 
     @Override

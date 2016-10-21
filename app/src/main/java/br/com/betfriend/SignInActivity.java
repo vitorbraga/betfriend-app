@@ -32,6 +32,7 @@ import com.google.gson.GsonBuilder;
 
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -187,7 +188,7 @@ public class SignInActivity extends AppCompatActivity implements
     private void callSignUp() {
 
         showProgressDialog();
-
+        
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
@@ -198,6 +199,12 @@ public class SignInActivity extends AppCompatActivity implements
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
+        if(!ConnectionUtils.isOnline(this)) {
+            Toast.makeText(SignInActivity.this, getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            hideProgressDialog();
+            return;
+        }
+        
         api.signup(Constants.SERVER_KEY, personId, email, personName, personPhoto, idToken, new Callback<UserDataDTO>() {
 
             @Override

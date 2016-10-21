@@ -160,6 +160,12 @@
     <string name="choose_some_result">Escolha um resultado.</string>
     <string name="unexpected_error">Erro inesperado.</string>
     <string name="coin_request_not_available">Novo pedido de moedas indisponível.</string>
+    <string name="no_connectivity">Sem conexão com a Internet. Por favor tente novamente.</string>
 
+    <!-- Snackbar -->
+    <string name="accepted_bet">Aposta aceita. Boa sorte!</string>
+    <string name="refused_bet">Aposta recusada.</string>
+    <string name="bet_made">Aposta realizada com sucesso!</string>
+    <string name="cancelled_bet">Aposta cancelada.</string>
 </resources>
 

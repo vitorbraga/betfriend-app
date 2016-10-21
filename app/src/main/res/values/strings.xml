@@ -161,7 +161,13 @@
     <string name="choose_some_result">Choose some result.</string>
     <string name="unexpected_error">Unexpected error.</string>
     <string name="coin_request_not_available">Coin request not available.</string>
+    <string name="no_connectivity">No connectivity. Please try again.</string>
 
+    <!-- Snackbar -->
+    <string name="accepted_bet">Bet accepted. Good luck!</string>
+    <string name="refused_bet">Bet refused.</string>
+    <string name="bet_made">Bet made successfully!</string>
+    <string name="cancelled_bet">Bet cancelled.</string>
 
 </resources>
 

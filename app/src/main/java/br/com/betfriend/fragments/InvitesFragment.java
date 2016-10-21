@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +25,7 @@ import br.com.betfriend.adapters.InvitesExpandableListAdapter;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
 import br.com.betfriend.model.UserDataDTO;
+import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -67,6 +69,39 @@ public class InvitesFragment extends Fragment {
 
         mContext = getActivity();
 
+        mInvitesListView = (AnimatedExpandableListView) view.findViewById(R.id.invites_list);
+
+        mInvitesListView.setOnGroupClickListener(new AnimatedExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (mInvitesListView.isGroupExpanded(groupPosition)) {
+                    mInvitesListView.collapseGroupWithAnimation(groupPosition);
+                } else {
+                    mInvitesListView.expandGroupWithAnimation(groupPosition);
+                }
+
+                return true;
+            }
+
+        });
+
+        mProgressBar = (ProgressBar) view.findViewById(R.id.invites_progressbar);
+
+        mNoInvitesFound = (LinearLayout) view.findViewById(R.id.no_invites_container);
+
+        mRetryButton = (Button) view.findViewById(R.id.retry_button);
+
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mProgressBar.setVisibility(View.VISIBLE);
+                getBetInvites();
+            }
+        });
+
         return view;
     }
 
@@ -80,34 +115,17 @@ public class InvitesFragment extends Fragment {
 
         super.onResume();
 
-        mInvitesListView = (AnimatedExpandableListView) getView().findViewById(R.id.invites_list);
-
-        mInvitesListView.setOnGroupClickListener(new AnimatedExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-
-                if (mInvitesListView.isGroupExpanded(groupPosition)) {
-                    mInvitesListView.collapseGroupWithAnimation(groupPosition);
-                } else {
-                    mInvitesListView.expandGroupWithAnimation(groupPosition);
-                }
-                
-                return true;
-            }
-
-        });
-
-        mProgressBar = (ProgressBar) getView().findViewById(R.id.invites_progressbar);
-
-        mNoInvitesFound = (LinearLayout) getView().findViewById(R.id.no_invites_container);
-
-        mRetryButton = (Button) getView().findViewById(R.id.retry_button);
-
         getBetInvites();
     }
 
     private void getBetInvites() {
+
+        if(!ConnectionUtils.isOnline(getActivity())) {
+            mProgressBar.setVisibility(View.GONE);
+            mNoInvitesFound.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String personId = sharedPref.getString("PERSON_ID", "");
@@ -138,20 +156,14 @@ public class InvitesFragment extends Fragment {
 
                 } else {
                     mNoInvitesFound.setVisibility(View.VISIBLE);
-
-                    mRetryButton.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            mProgressBar.setVisibility(View.VISIBLE);
-                            getBetInvites();
-                        }
-                    });
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
+                mProgressBar.setVisibility(View.GONE);
+                mNoInvitesFound.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), getActivity().getString(R.string.unexpected_error), Toast.LENGTH_SHORT).show();
             }
         });
     }
