@@ -162,6 +162,7 @@
     <string name="unexpected_error">Unexpected error.</string>
     <string name="coin_request_not_available">Coin request not available.</string>
     <string name="no_connectivity">No connectivity. Please try again.</string>
+    <string name="select_a_friend">Select a friend</string>
 
     <!-- Snackbar -->
     <string name="accepted_bet">Bet accepted. Good luck!</string>

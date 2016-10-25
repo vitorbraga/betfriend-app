@@ -161,6 +161,7 @@
     <string name="unexpected_error">Erro inesperado.</string>
     <string name="coin_request_not_available">Novo pedido de moedas indisponível.</string>
     <string name="no_connectivity">Sem conexão com a Internet. Por favor tente novamente.</string>
+    <string name="select_a_friend">Selecione um amigo</string>
 
     <!-- Snackbar -->
     <string name="accepted_bet">Aposta aceita. Boa sorte!</string>

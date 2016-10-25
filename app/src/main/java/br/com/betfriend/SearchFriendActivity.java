@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,8 @@ public class SearchFriendActivity extends AppCompatActivity {
     private int mAmount;
 
     private UserDataDTO mFriend;
+
+    private ProgressBar mProgressBar;
 
     private EditText mSearchField;
 
@@ -87,6 +90,8 @@ public class SearchFriendActivity extends AppCompatActivity {
 
         mContext = this;
 
+        mProgressBar = (ProgressBar) findViewById(R.id.search_progressbar);
+
         mSearchListView = (ListView) findViewById(R.id.history_list);
 
         mNoResultFound = (TextView) findViewById(R.id.no_results);
@@ -116,11 +121,14 @@ public class SearchFriendActivity extends AppCompatActivity {
 
                 if (s.toString().length() >= 3) {
 
+                    mProgressBar.setVisibility(View.VISIBLE);
+
                     api.searchFriend(Constants.SERVER_KEY, "application/json", s.toString(), mUserData.getPersonId(), new Callback<ArrayList<UserDataDTO>>() {
 
                         @Override
                         public void success(ArrayList<UserDataDTO> users, Response response) {
 
+                            mProgressBar.setVisibility(View.GONE);
                             if (users.size() > 0) {
                                 mNoResultFound.setVisibility(View.GONE);
                                 mSearchListView.setVisibility(View.VISIBLE);
@@ -135,6 +143,9 @@ public class SearchFriendActivity extends AppCompatActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
+                            mProgressBar.setVisibility(View.GONE);
+                            mNoResultFound.setVisibility(View.VISIBLE);
+                            mSearchListView.setVisibility(View.GONE);
                         }
                     });
                 }
@@ -175,7 +186,7 @@ public class SearchFriendActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else {
-                    Toast.makeText(SearchFriendActivity.this, "Selecione um amigo", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SearchFriendActivity.this, getString(R.string.select_a_friend), Toast.LENGTH_LONG).show();
                 }
 
             }
