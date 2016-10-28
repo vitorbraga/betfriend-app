@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
             view.setLayoutParams(params);
             view.setBackground(getDrawable(R.color.app_green_start));
+            getIntent().removeExtra("BET_COMPLETED");
             snack.show();
         }
 

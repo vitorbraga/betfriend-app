@@ -7,12 +7,26 @@ android {
     }
     signingConfigs {
         configdebug {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('/home/vitorbr/.android/debug.keystore')
+            storePassword 'android'
         }
         configrelease {
             keyAlias 'betfriend'
             keyPassword 'betfriend'
             storeFile file('/home/vitorbr/Desktop/bet/betfriend_key.jks')
             storePassword 'betfriend'
+        }
+        config {
+            keyAlias 'android'
+            keyPassword 'android'
+        }
+        configDebug2 {
+            keyAlias 'androiddebugkey2'
+            keyPassword 'android'
+            storeFile file('/home/vitorbr/.android/debug2.keystore')
+            storePassword 'android'
         }
     }
     compileSdkVersion 24
@@ -21,8 +35,8 @@ android {
         applicationId "br.com.betfriend"
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 4
-        versionName "0.0.3"
+        versionCode 6
+        versionName "0.0.5"
     }
     buildTypes {
         release {
@@ -31,7 +45,7 @@ android {
             signingConfig signingConfigs.configrelease
         }
         debug {
-            signingConfig signingConfigs.configdebug
+            signingConfig signingConfigs.configDebug2
         }
     }
 }

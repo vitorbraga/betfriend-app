@@ -101,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:background="@drawable/edit_text_borders"
-                android:inputType="number"
+                android:inputType="phone"
+                android:digits="1234567890"
                 android:text="0"
                 android:textAlignment="center" />
         </LinearLayout>

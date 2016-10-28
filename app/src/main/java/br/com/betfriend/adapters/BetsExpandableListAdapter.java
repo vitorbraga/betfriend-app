@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -26,7 +24,6 @@ import java.util.Date;
 
 import br.com.betfriend.R;
 import br.com.betfriend.model.Bet;
-import br.com.betfriend.model.Match;
 import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.BetResultEnum;
 import br.com.betfriend.utils.CircleTransformation;
@@ -159,7 +156,6 @@ public class BetsExpandableListAdapter extends AnimatedExpandableListView.Animat
         this.userData = userData;
     }
 
-
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
@@ -259,13 +255,14 @@ public class BetsExpandableListAdapter extends AnimatedExpandableListView.Animat
         return convertView;
     }
 
-    public static Drawable getDrawableFromURL(String url) {
+    private Drawable getDrawableFromURL(String url) {
 
         Bitmap x;
 
         try {
 
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setConnectTimeout(2500);
             connection.connect();
 
             InputStream input = connection.getInputStream();
@@ -273,11 +270,13 @@ public class BetsExpandableListAdapter extends AnimatedExpandableListView.Animat
 
             return new BitmapDrawable((new CircleTransformation()).transform(x));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {
 
-        return null;
+            e.printStackTrace();
+            Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.ic_no_image);
+            return new BitmapDrawable((new CircleTransformation()).transform(icon));
+        }
     }
 
     public void setUserData(UserDataDTO user) {

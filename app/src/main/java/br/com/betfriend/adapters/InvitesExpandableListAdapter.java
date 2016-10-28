@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -137,21 +136,21 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             holder.homeRadioButton.setEnabled(false);
             img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
             holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-            holder.friendOption.setText(holder.homeRadioButton.getId() + "");
+            holder.friendOption.setText(String.valueOf(holder.homeRadioButton.getId()));
 
         } else if (option.equals("X")) {
 
             holder.drawRadioButton.setEnabled(false);
             img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
             holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-            holder.friendOption.setText(holder.drawRadioButton.getId() + "");
+            holder.friendOption.setText(String.valueOf(holder.drawRadioButton.getId()));
 
         } else {
 
             holder.awayRadioButton.setEnabled(false);
             img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
             holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-            holder.friendOption.setText(holder.awayRadioButton.getId() + "");
+            holder.friendOption.setText(String.valueOf(holder.awayRadioButton.getId()));
         }
 
         holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -450,13 +449,14 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
         return convertView;
     }
 
-    public static Drawable getDrawableFromURL(String url) {
+    private Drawable getDrawableFromURL(String url) {
 
         Bitmap x;
 
         try {
 
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setConnectTimeout(2500);
             connection.connect();
 
             InputStream input = connection.getInputStream();
@@ -464,11 +464,13 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
             return new BitmapDrawable((new CircleTransformation()).transform(x));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {
 
-        return null;
+            e.printStackTrace();
+            Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.ic_no_image);
+            return new BitmapDrawable((new CircleTransformation()).transform(icon));
+        }
     }
 
     public void setUserData(UserDataDTO user) {
