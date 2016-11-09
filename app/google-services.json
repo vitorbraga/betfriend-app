@@ -1,64 +1,47 @@
 {
   "project_info": {
-    "project_number": "911145640767",
-    "project_id": "firebase-betfriend"
+    "project_number": "39772268281",
+    "firebase_url": "https://betfriend-146921.firebaseio.com",
+    "project_id": "betfriend-146921",
+    "storage_bucket": "betfriend-146921.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:911145640767:android:49ea3a60cc6c8b68",
-        "android_client_info": {
-          "package_name": "com.betfriend"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "911145640767-f87ggecn77ulnfh3n9piioseal46eh5p.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAT6HCaY_lQmyF_rTcar2A8I2zuI6xkHh0"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 1
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:911145640767:android:d995956d8c40f8d6",
+        "mobilesdk_app_id": "1:39772268281:android:d995956d8c40f8d6",
         "android_client_info": {
           "package_name": "br.com.betfriend"
         }
       },
       "oauth_client": [
         {
-          "client_id": "911145640767-nbc24g99u8lk6uvgn75l02h0uhes2c0d.apps.googleusercontent.com",
+          "client_id": "39772268281-8rh45ipjmra95quiuml9mugeji6k702m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.betfriend",
-            "certificate_hash": "6C1F223C42D1695ADE46DDAC43739E21F7552F3D"
+            "certificate_hash": "D68F2D73C19188A3FE909967D3CDA0A74F2F016F"
           }
         },
         {
-          "client_id": "911145640767-f87ggecn77ulnfh3n9piioseal46eh5p.apps.googleusercontent.com",
+          "client_id": "39772268281-g92ghb0npb3pfbktpbhbs184bkhpqj0i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.betfriend",
+            "certificate_hash": "37822BF722A223F048010C1D1234B6CA6AD0F448"
+          }
+        },
+        {
+          "client_id": "39772268281-7m9c6qsch4vp78o6uvjecvvgchivmg89.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "39772268281-925egmii27sa9k5io7b98s2hi1eqt19s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAT6HCaY_lQmyF_rTcar2A8I2zuI6xkHh0"
+          "current_key": "AIzaSyAEvMJPKxMED6RpTNF3Cvy6YvRtctrnErc"
         }
       ],
       "services": {
@@ -66,11 +49,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39772268281-7m9c6qsch4vp78o6uvjecvvgchivmg89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

@@ -168,5 +168,8 @@
     <string name="refused_bet">Aposta recusada.</string>
     <string name="bet_made">Aposta realizada com sucesso!</string>
     <string name="cancelled_bet">Aposta cancelada.</string>
+
+    <!-- FCM notifications -->
+    <string name="fcm_new_matches">Novas partidas disponíveis. Aposte agora!</string>
 </resources>
 

@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -204,8 +205,11 @@ public class SignInActivity extends AppCompatActivity implements
             hideProgressDialog();
             return;
         }
-        
-        api.signup(Constants.SERVER_KEY, personId, email, personName, personPhoto, idToken, new Callback<UserDataDTO>() {
+
+        String fcmToken = "";
+        fcmToken = FirebaseInstanceId.getInstance().getToken();
+
+        api.signup(Constants.SERVER_KEY, personId, email, personName, personPhoto, idToken, fcmToken, new Callback<UserDataDTO>() {
 
             @Override
             public void success(UserDataDTO userDataDTO, Response response) {

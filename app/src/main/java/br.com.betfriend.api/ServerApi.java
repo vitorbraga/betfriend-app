@@ -23,7 +23,7 @@ public interface ServerApi {
     @POST("/users/signup/")
     @FormUrlEncoded
     void signup(@Header("Server-Key") String serverKey, @Field("personId") String personId, @Field("email") String email, @Field("personName") String personName,
-                @Field("personPhoto") String personPhoto, @Field("idToken") String idToken,
+                @Field("personPhoto") String personPhoto, @Field("fcmToken") String fcmToken, @Field("idToken") String idToken,
                 Callback<UserDataDTO> response);
 
     @GET("/users/searchFriend/{personName}/{userId}")
@@ -100,4 +100,9 @@ public interface ServerApi {
     @POST("/coinRequests/newRequest/")
     @FormUrlEncoded
     void newRequest(@Header("Server-Key") String serverKey, @Field("personId") String personId, Callback<JsonResponse> response);
+
+    @POST("/users/updateFcmToken/")
+    @FormUrlEncoded
+    void updateFcmToken(@Header("Server-Key") String serverKey, @Field("personId") String personId,
+                        @Field("fcmToken") String fcmToken, Callback<JsonResponse> response);
 }

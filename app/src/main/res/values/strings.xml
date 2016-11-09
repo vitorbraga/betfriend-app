@@ -170,5 +170,8 @@
     <string name="bet_made">Bet made successfully!</string>
     <string name="cancelled_bet">Bet cancelled.</string>
 
+    <!-- FCM notifications -->
+    <string name="fcm_new_matches">New matches available. Bet now!</string>
+
 </resources>
 

@@ -112,19 +112,27 @@ public class RankingFragment extends Fragment {
 
         ServerApi api = restAdapter.create(ServerApi.class);
 
+
         api.getLastWeekRanking(Constants.SERVER_KEY, "application/json", new Callback<ArrayList<Ranking>>() {
 
             @Override
             public void success(ArrayList<Ranking> rankings, Response response) {
 
                 mProgressBar.setVisibility(View.GONE);
-                mNoRankingContainer.setVisibility(View.GONE);
 
                 if (rankings.size() > 0) {
-                    mRankingListView.setVisibility(View.VISIBLE);
 
-                    RankingsArrayAdapter betAdapter = new RankingsArrayAdapter(getActivity(), rankings);
-                    mRankingListView.setAdapter(betAdapter);
+                    if(getActivity() != null) {
+
+                        mNoRankingContainer.setVisibility(View.GONE);
+                        mRankingListView.setVisibility(View.VISIBLE);
+
+                        RankingsArrayAdapter betAdapter = new RankingsArrayAdapter(getActivity(), rankings);
+                        mRankingListView.setAdapter(betAdapter);
+
+                    } else{
+                        mNoRankingContainer.setVisibility(View.VISIBLE);
+                    }
 
                 } else {
                     mNoRankingContainer.setVisibility(View.VISIBLE);
