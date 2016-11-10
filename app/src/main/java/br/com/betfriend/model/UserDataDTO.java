@@ -37,6 +37,8 @@ public class UserDataDTO extends JsonResponse implements Serializable {
 
     private Date lastCoinRequest;
 
+    private String fcmToken;
+
     public String getPersonId() {
         return personId;
     }
@@ -149,5 +151,13 @@ public class UserDataDTO extends JsonResponse implements Serializable {
 
     public void setLastCoinRequest(Date lastCoinRequest) {
         this.lastCoinRequest = lastCoinRequest;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

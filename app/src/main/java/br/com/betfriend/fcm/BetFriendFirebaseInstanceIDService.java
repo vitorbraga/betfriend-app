@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.JsonResponse;
@@ -15,24 +16,19 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class BetFriendFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
-    private static final String TAG = "MyFirebaseIIDService";
+    private static final String TAG = "FCMInstanceID";
 
-    /**
-     * Called if InstanceID token is updated. This may occur if the security of
-     * the previous token had been compromised. Note that this is called when the InstanceID token
-     * is initially generated so this is where you would retrieve the token.
-     */
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
+        Log.d(TAG, "New refreshed token: " + refreshedToken);
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
+        // Registering to ALL topic
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
+
         sendRegistrationToServer(refreshedToken);
     }
 
@@ -43,11 +39,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String personId = sharedPref.getString("PERSON_ID", null);
 
+        if (personId != null) {
 
-        if(personId != null) {
-
-            // user is registered and logged
-
+            // User is registered and logged
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(Constants.SERVER_API_BASE_URI).build();
 

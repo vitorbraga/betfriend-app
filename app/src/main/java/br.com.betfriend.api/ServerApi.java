@@ -23,7 +23,7 @@ public interface ServerApi {
     @POST("/users/signup/")
     @FormUrlEncoded
     void signup(@Header("Server-Key") String serverKey, @Field("personId") String personId, @Field("email") String email, @Field("personName") String personName,
-                @Field("personPhoto") String personPhoto, @Field("fcmToken") String fcmToken, @Field("idToken") String idToken,
+                @Field("personPhoto") String personPhoto, @Field("idToken") String idToken, @Field("fcmToken") String fcmToken,
                 Callback<UserDataDTO> response);
 
     @GET("/users/searchFriend/{personName}/{userId}")

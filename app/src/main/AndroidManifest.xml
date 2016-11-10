@@ -69,14 +69,14 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name=".fcm.MyFirebaseMessagingService">
+            android:name=".fcm.BetFriendFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".fcm.MyFirebaseInstanceIDService">
+            android:name=".fcm.BetFriendFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
