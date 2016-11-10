@@ -1,5 +1,5 @@
 <resources>
-    <string name="server_client_id">911145640767-ju298knvsbdhp1viaui327npt5f9d86m.apps.googleusercontent.com</string>
+    <string name="server_client_id">39772268281-u9pkr4ni5abv1ujgrkcd5ah9g54kifbv.apps.googleusercontent.com</string>
     <string name="server_uri">http://10.10.198.136:3000/</string>
     <!--<string name="server_uri">http://www.betfriendapp.com/</string>-->
 </resources>
