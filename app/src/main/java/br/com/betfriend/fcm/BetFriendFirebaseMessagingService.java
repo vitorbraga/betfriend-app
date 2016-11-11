@@ -13,8 +13,10 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import br.com.betfriend.BetInvitationsActivity;
 import br.com.betfriend.MainActivity;
 import br.com.betfriend.R;
+import br.com.betfriend.utils.FcmMessagesEnum;
 
 public class BetFriendFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -34,14 +36,21 @@ public class BetFriendFirebaseMessagingService extends FirebaseMessagingService 
 
     private void sendNotification(String code) {
 
-        String messageBody = "";
-        if (code.equals("100")) {
-            messageBody = getString(R.string.fcm_new_matches);
-        } else {
-            messageBody = getString(R.string.app_name);
+        String title = getString(R.string.app_name), messageBody = getString(R.string.app_name);
+
+        Integer codeInt = Integer.parseInt(code);
+        FcmMessagesEnum fme = FcmMessagesEnum.get(codeInt);
+
+        if(fme != null) {
+            title = getString(fme.title());
+            messageBody = getString(fme.messageBody());
         }
 
         Intent intent = new Intent(this, MainActivity.class);
+        if (code.equals("101")) {
+            intent = new Intent(this, BetInvitationsActivity.class);
+        }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -50,7 +59,8 @@ public class BetFriendFirebaseMessagingService extends FirebaseMessagingService 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher_white)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-                .setContentTitle(getString(R.string.app_name))
+                .setContentTitle(title)
+                .setAutoCancel(true)
                 .setContentText(messageBody)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

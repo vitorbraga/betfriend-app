@@ -195,10 +195,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // Start bet invitation checker service
-        Intent i = new Intent(this, BetInvitationService.class);
-        startService(i);
-
         // Start timer interval to check user data
         mHandler.postDelayed(mUserDataRunnable, INTERVAL);
     }

@@ -171,7 +171,11 @@
     <string name="cancelled_bet">Bet cancelled.</string>
 
     <!-- FCM notifications -->
+    <string name="fcm_default">Let\'s play!</string>
     <string name="fcm_new_matches">New matches available. Bet now!</string>
+    <string name="fcm_bet_accepted">A friend accepted your bet invite!</string>
+    <string name="fcm_new_bet_invite">New bet invite!</string>
+    <string name="fcm_touch_to_see">Touch to see it.</string>
 
 </resources>
 

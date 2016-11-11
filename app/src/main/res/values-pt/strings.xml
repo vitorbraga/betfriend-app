@@ -170,6 +170,11 @@
     <string name="cancelled_bet">Aposta cancelada.</string>
 
     <!-- FCM notifications -->
+    <string name="fcm_default">Vamos jogar!</string>
     <string name="fcm_new_matches">Novas partidas disponíveis. Aposte agora!</string>
+    <string name="fcm_bet_accepted">Um amigo aceitou seu convite de aposta!</string>
+    <string name="fcm_new_bet_invite">Novo convite de aposta!</string>
+    <string name="fcm_touch_to_see">Toque para vê-lo.</string>
+
 </resources>
 
