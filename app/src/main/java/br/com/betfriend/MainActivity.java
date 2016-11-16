@@ -26,6 +26,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -197,6 +201,13 @@ public class MainActivity extends AppCompatActivity
 
         // Start timer interval to check user data
         mHandler.postDelayed(mUserDataRunnable, INTERVAL);
+
+        // Sets advertisement
+
+        MobileAds.initialize(getApplicationContext(), Constants.MAIN_BANNER_ID);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("86251132A94F86C41EE08F12E283CA71").build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

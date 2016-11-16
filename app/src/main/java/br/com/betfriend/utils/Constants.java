@@ -13,4 +13,6 @@ public class Constants {
 //    public static final String SERVER_API_BASE_URI = "http://10.10.198.136:3000/";
 
     public static final String SERVER_KEY = "KEY-178268-SERVER-cxXRWlBhws9p1aT8zjjsn";
+
+    public static final String MAIN_BANNER_ID = "ca-app-pub-7819771115170016~7475655681";
 }
