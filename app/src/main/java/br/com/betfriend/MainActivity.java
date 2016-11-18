@@ -2,7 +2,6 @@ package br.com.betfriend;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
@@ -266,15 +264,7 @@ public class MainActivity extends AppCompatActivity
                 mProgressBar.setVisibility(View.GONE);
                 mFrameLayout.setVisibility(View.VISIBLE);
 
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                android.app.Fragment fragment = new HomeFragment();
-                fragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
-                if(getSupportActionBar() != null){
-                    getSupportActionBar().setTitle(getString(R.string.drawer_home));
-                }
-                mNavigationView.getMenu().getItem(0).setChecked(true);
-
+                displaySelectedScreen(R.id.nav_home);
             }
 
             @Override
@@ -308,12 +298,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -321,18 +308,16 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    private void displaySelectedScreen(int itemId) {
+
         // Handle navigation view item clicks here.
         FragmentManager fragmentManager = getFragmentManager();
 
         Fragment fragment = null;
         String title = "";
         Bundle bundle = null;
-        int id = item.getItemId();
 
-        switch (id) {
+        switch (itemId) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 bundle = new Bundle();
@@ -379,8 +364,15 @@ public class MainActivity extends AppCompatActivity
 
         toolbar.setTitle(title);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        displaySelectedScreen(item.getItemId());
+
         return true;
     }
 }
