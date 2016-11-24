@@ -6,9 +6,6 @@ import java.util.Map;
 
 import br.com.betfriend.R;
 
-/**
- * Created by vitorbr on 14/09/16.
- */
 public enum TeamsDataEnum {
 
     CRUZEIRO("Cruzeiro", "CRU", R.drawable.cruzeiro_60x60, "Cruzeiro"),
@@ -51,17 +48,45 @@ public enum TeamsDataEnum {
 
     VITORIA("Vitoria", "VIT", R.drawable.vitoria_60x60, "Vitória"),
 
-    PAS_GIANINA("PAS Giannina", "PAS", R.drawable.vitoria_60x60, "PAS Giannina"),
+    ARSENAL("Vitoria", "ARS", R.drawable.arsenal, "Arsenal"),
 
-    PLATANINAS("Platanias", "PLA", R.drawable.vitoria_60x60, "Platanias"),
+    BOURNEMOUTH("Vitoria", "BOU", R.drawable.bournemouth, "Bournemouth"),
 
-    PANIONOS("Panionios NFC", "PNN", R.drawable.vitoria_60x60, "Panionios"),
+    BURNLEY("Burnley", "BUR", R.drawable.burnley, "Burnley"),
 
-    VEROIA("Veroia", "VER", R.drawable.vitoria_60x60, "Veroia"),
+    CHELSEA("Vitoria", "CHE", R.drawable.chelsea, "Chelsea"),
 
-    PANAITOLIKOS("Panaitolikos", "PNK", R.drawable.vitoria_60x60, "Panaitolikos"),
+    CRYSTAL_PALACE("Crystal Palace", "CRY", R.drawable.crystal_palace, "Crystal Palace"),
 
-    PANATHINAIKOS("Panathinaikos", "PTK", R.drawable.vitoria_60x60, "Panathinaikos");
+    EVERTON("Vitoria", "EVE", R.drawable.everton, "Everton"),
+
+    HULL_CITY("Vitoria", "HUL", R.drawable.hull_city, "Hull City"),
+
+    LEICESTER("Leicester City", "LEI", R.drawable.leicester, "Leicester"),
+
+    LIVERPOOL("Vitoria", "LIV", R.drawable.liverpool, "Liverpool"),
+
+    MAN_CITY("Manchester City", "MCI", R.drawable.manchester_city, "Man. City"),
+
+    MAN_UTD("Manchester United", "MUN", R.drawable.manchester_united, "Man United"),
+
+    MIDDLESBROUGH("Middlesbrough FC", "MID", R.drawable.middlesbrough, "Middlesbrough"),
+
+    SOUTHAMPTON("Vitoria", "SOU", R.drawable.southampton, "Southampton"),
+
+    STOKE_CITY("Vitoria", "STK", R.drawable.stoke_city, "Stoke City"),
+
+    SUNDERLAND("Vitoria", "SUN", R.drawable.sunderland, "Sunderland"),
+
+    SWANSEA("Swansea City", "SWA", R.drawable.swansea, "Swansea"),
+
+    TOTTENHAM("Vitoria", "TOT", R.drawable.tottenham, "Tottenham"),
+
+    WATFORD("Vitoria", "WAT", R.drawable.watford, "Watford"),
+
+    WEST_BROMWICH("West Bromwich Albion", "WBA", R.drawable.west_brom, "West Bromwich"),
+
+    WEST_HAM("Vitoria", "WHU", R.drawable.west_ham, "West Ham");
 
     private String description;
 
@@ -105,6 +130,5 @@ public enum TeamsDataEnum {
     public static TeamsDataEnum get(final String description) {
         return lookup.get(description);
     }
-
 
 }
