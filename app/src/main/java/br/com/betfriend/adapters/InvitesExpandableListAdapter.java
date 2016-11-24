@@ -30,7 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import br.com.betfriend.BetInvitationsActivity;
+import br.com.betfriend.MainActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.Bet;
@@ -279,7 +279,8 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                                         editor.putInt("POINTS", userData.getPoints() - amount);
                                         editor.commit();
 
-                                        Intent intent = new Intent(context, BetInvitationsActivity.class);
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        intent.putExtra("MENU_FRAGMENT", R.id.nav_invites);
                                         intent.putExtra("BET_ACCEPTED", true);
                                         context.startActivity(intent);
                                     }
@@ -324,7 +325,8 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                                     @Override
                                     public void success(JsonResponse json, Response response) {
                                         mProgressBar.setVisibility(View.GONE);
-                                        Intent intent = new Intent(context, BetInvitationsActivity.class);
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        intent.putExtra("MENU_FRAGMENT", R.id.nav_invites);
                                         intent.putExtra("BET_REFUSED", true);
                                         context.startActivity(intent);
                                     }

@@ -2,6 +2,7 @@ package br.com.betfriend.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,5 +46,11 @@ public class HistoryFragment extends Fragment {
                 FinishedTabFragment.class, bundle);
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle(getString(R.string.drawer_history));
     }
 }

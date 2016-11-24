@@ -158,21 +158,22 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        View parentLayout = findViewById(android.R.id.content);
         boolean betFinished = getIntent().getBooleanExtra("BET_COMPLETED", false);
         if (betFinished) {
-            Snackbar snack = Snackbar.make(parentLayout, getString(R.string.bet_made), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.close), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
-                    }).setActionTextColor(ContextCompat.getColor(getApplication(), R.color.app_yellow));
-            View view = snack.getView();
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
-            view.setLayoutParams(params);
-            view.setBackground(getDrawable(R.color.app_green_start));
+            showSnackbar(getString(R.string.bet_made));
             getIntent().removeExtra("BET_COMPLETED");
-            snack.show();
+        }
+
+        boolean betAccepted = getIntent().getBooleanExtra("BET_ACCEPTED", false);
+        if (betAccepted) {
+            showSnackbar(getString(R.string.accepted_bet));
+            getIntent().removeExtra("BET_ACCEPTED");
+        }
+
+        boolean betRefused = getIntent().getBooleanExtra("BET_REFUSED", false);
+        if (betRefused) {
+            showSnackbar(getString(R.string.refused_bet));
+            getIntent().removeExtra("BET_REFUSED");
         }
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity
 
     private void getUserData() {
 
-        if(!ConnectionUtils.isOnline(this)) {
+        if (!ConnectionUtils.isOnline(this)) {
             Toast.makeText(this, getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -264,7 +265,8 @@ public class MainActivity extends AppCompatActivity
                 mProgressBar.setVisibility(View.GONE);
                 mFrameLayout.setVisibility(View.VISIBLE);
 
-                displaySelectedScreen(R.id.nav_home);
+                int menuFragment = getIntent().getIntExtra("MENU_FRAGMENT", R.id.nav_home);
+                displaySelectedScreen(menuFragment);
             }
 
             @Override
@@ -277,13 +279,13 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         // Close application when pressing back
 
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
 
-            if(!mNavigationView.getMenu().getItem(0).isChecked()) {
-                onNavigationItemSelected(mNavigationView.getMenu().getItem(0));
-                mNavigationView.getMenu().getItem(0).setChecked(true);
+            displaySelectedScreen(R.id.nav_home);
+            if (!mNavigationView.getMenu().findItem(R.id.nav_home).isChecked()) {
+                mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
             } else {
                 moveTaskToBack(true);
             }
@@ -314,7 +316,6 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
 
         Fragment fragment = null;
-        String title = "";
         Bundle bundle = null;
 
         switch (itemId) {
@@ -323,48 +324,59 @@ public class MainActivity extends AppCompatActivity
                 bundle = new Bundle();
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);
-                title = getString(R.string.drawer_home);
                 break;
             case R.id.nav_invites:
                 fragment = new InvitesFragment();
                 bundle = new Bundle();
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);
-                title = getString(R.string.drawer_invites);
                 break;
             case R.id.nav_history:
                 fragment = new HistoryFragment();
                 bundle = new Bundle();
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);
-                title = getString(R.string.drawer_history);
                 break;
             case R.id.nav_rankings:
                 fragment = new RankingFragment();
-                title = getString(R.string.drawer_rankings);
                 break;
             case R.id.nav_prizes:
                 fragment = new AchievementsFragment();
                 bundle = new Bundle();
                 bundle.putSerializable("USER_DATA_EXTRA", mUserData);
                 fragment.setArguments(bundle);
-                title = getString(R.string.drawer_prizes);
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
-                title = getString(R.string.drawer_settings);
                 break;
             case R.id.request_coins:
                 fragment = new RequestCoinsFragment();
-                title = getString(R.string.drawer_request_coins);
                 break;
         }
 
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+        if (fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
-        toolbar.setTitle(title);
+            mNavigationView.getMenu().findItem(itemId).setChecked(true);
+        }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void showSnackbar(String message) {
+
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar snack = Snackbar.make(parentLayout, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction(getString(R.string.close), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                }).setActionTextColor(ContextCompat.getColor(getApplication(), R.color.app_yellow));
+        View view = snack.getView();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+        view.setLayoutParams(params);
+        view.setBackground(getDrawable(R.color.app_green_start));
+        snack.show();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

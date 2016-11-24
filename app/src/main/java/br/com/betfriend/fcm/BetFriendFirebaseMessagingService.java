@@ -13,7 +13,6 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import br.com.betfriend.BetInvitationsActivity;
 import br.com.betfriend.MainActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.utils.FcmMessagesEnum;
@@ -48,7 +47,11 @@ public class BetFriendFirebaseMessagingService extends FirebaseMessagingService 
 
         Intent intent = new Intent(this, MainActivity.class);
         if (code.equals("101")) {
-            intent = new Intent(this, BetInvitationsActivity.class);
+            // New Bet invite
+            intent.putExtra("MENU_FRAGMENT", R.id.nav_invites);
+        } else if(code.equals("102")) {
+            // Bet accepted
+            intent.putExtra("MENU_FRAGMENT", R.id.nav_history);
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

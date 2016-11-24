@@ -3,32 +3,23 @@ package br.com.betfriend.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
-import br.com.betfriend.BetInvitationsActivity;
 import br.com.betfriend.R;
-import br.com.betfriend.api.ServerApi;
-import br.com.betfriend.model.JsonResponse;
 import br.com.betfriend.model.UserDataDTO;
-import br.com.betfriend.utils.Constants;
 import br.com.betfriend.utils.GamificationUtils;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class AchievementsFragment extends SampleFragment {
 
@@ -112,6 +103,12 @@ public class AchievementsFragment extends SampleFragment {
         mPodiumBounds = (TextView) view.findViewById(R.id.podium_bounds);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle(getString(R.string.drawer_prizes));
     }
 
     @Override

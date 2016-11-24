@@ -48,19 +48,19 @@ public enum TeamsDataEnum {
 
     VITORIA("Vitoria", "VIT", R.drawable.vitoria_60x60, "Vitória"),
 
-    ARSENAL("Vitoria", "ARS", R.drawable.arsenal, "Arsenal"),
+    ARSENAL("Arsenal", "ARS", R.drawable.arsenal, "Arsenal"),
 
-    BOURNEMOUTH("Vitoria", "BOU", R.drawable.bournemouth, "Bournemouth"),
+    BOURNEMOUTH("Bournemouth", "BOU", R.drawable.bournemouth, "Bournemouth"),
 
     BURNLEY("Burnley", "BUR", R.drawable.burnley, "Burnley"),
 
-    CHELSEA("Vitoria", "CHE", R.drawable.chelsea, "Chelsea"),
+    CHELSEA("Chelsea", "CHE", R.drawable.chelsea, "Chelsea"),
 
     CRYSTAL_PALACE("Crystal Palace", "CRY", R.drawable.crystal_palace, "Crystal Palace"),
 
     EVERTON("Vitoria", "EVE", R.drawable.everton, "Everton"),
 
-    HULL_CITY("Vitoria", "HUL", R.drawable.hull_city, "Hull City"),
+    HULL_CITY("Hull City", "HUL", R.drawable.hull_city, "Hull City"),
 
     LEICESTER("Leicester City", "LEI", R.drawable.leicester, "Leicester"),
 

@@ -9,10 +9,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -20,7 +18,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import br.com.betfriend.BetInvitationsActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.SignInActivity;
 import br.com.betfriend.api.ServerApi;
@@ -163,6 +160,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         });
 
         getActivity().setTheme(R.style.PreferencesTheme);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle(getString(R.string.drawer_settings));
     }
 
     @Override
