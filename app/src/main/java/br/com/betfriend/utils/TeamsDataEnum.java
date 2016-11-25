@@ -48,6 +48,8 @@ public enum TeamsDataEnum {
 
     VITORIA("Vitoria", "VIT", R.drawable.vitoria_60x60, "Vitória"),
 
+    // Premier League
+
     ARSENAL("Arsenal", "ARS", R.drawable.arsenal, "Arsenal"),
 
     BOURNEMOUTH("Bournemouth", "BOU", R.drawable.bournemouth, "Bournemouth"),
@@ -86,7 +88,49 @@ public enum TeamsDataEnum {
 
     WEST_BROMWICH("West Bromwich Albion", "WBA", R.drawable.west_brom, "West Bromwich"),
 
-    WEST_HAM("Vitoria", "WHU", R.drawable.west_ham, "West Ham");
+    WEST_HAM("Vitoria", "WHU", R.drawable.west_ham, "West Ham"),
+
+    // Italy Serie A
+
+    TORINO("Torino FC", "TOR", R.drawable.torino, "Torino"),
+
+    CHIEVO("Chievo Verona", "CHI", R.drawable.chievo, "Chievo"),
+
+    EMPOLI("Empoli", "EMP", R.drawable.empoli, "Empoli"),
+
+    MILAN("AC Milan", "MIL", R.drawable.milan, "Milan"),
+
+    PALERMO("Palermo", "PAL", R.drawable.palermo, "Palermo"),
+
+    LAZIO("SS Lazio", "LAZ", R.drawable.lazio, "Lazio"),
+
+    CAGLIARI("Cagliari", "CLG", R.drawable.cagliari, "Cagliari"),
+
+    UDINESE("Udinese Calcio", "UDI", R.drawable.udinese, "Udinese"),
+
+    BOLOGNA("Bologna F.C.", "BOL", R.drawable.bologna, "Bologna"),
+
+    ATALANTA("Atalanta Bergamo", "ATA", R.drawable.atalanta, "Atalanta"),
+
+    CROTONE("Crotone", "CRO", R.drawable.crotone, "Crotone"),
+
+    SAMPDORIA("Sampdoria", "SAM", R.drawable.sampdoria, "Sampdoria"),
+
+    GENOA("Genoa", "GEN", R.drawable.genoa, "Genoa"),
+
+    JUVENTUS("Juventus FC", "JUV", R.drawable.juventus, "Juventus"),
+
+    FIORENTINA("Genoa", "GEN", R.drawable.fiorentina, "Fiorentina"),
+
+    INTER("Inter", "INT", R.drawable.intermilan, "Inter"),
+
+    SASSUOLO("Sassuolo", "SAS", R.drawable.sassuolo, "Sassuolo"),
+
+    ROMA("AS Roma", "ROM", R.drawable.roma, "Roma"),
+
+    NAPOLI("Napoli", "NAP", R.drawable.napoli, "Napoli"),
+
+    PESCARA("Pescara", "PES", R.drawable.pescara, "Pescara");
 
     private String description;
 

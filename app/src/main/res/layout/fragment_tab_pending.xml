@@ -43,7 +43,7 @@
             android:text="@string/reload"
             android:drawablePadding="8dp"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/ic_refresh_black_24dp"
+            android:drawableLeft="@drawable/ic_refresh_black"
             android:drawableTint="@color/app_green"
             android:textColor="@color/app_green_start"
             android:textAllCaps="false"

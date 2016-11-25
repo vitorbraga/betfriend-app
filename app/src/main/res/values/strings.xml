@@ -5,6 +5,8 @@
     <string name="title_text">BetFriend</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="close">Close</string>
@@ -82,6 +84,10 @@
     <string name="make_bet">Make bet</string>
     <string name="no_matches_found">No available matches</string>
     <string name="draw">Draw</string>
+    <string name="filter">Filter</string>
+
+    <!-- Dialog filter -->
+    <string name="matches_filter_dialog_title">Filter by league</string>
 
     <!-- Search friend activity -->
     <string name="select_friend">Select a friend:</string>

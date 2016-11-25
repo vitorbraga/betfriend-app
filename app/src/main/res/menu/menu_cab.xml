@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/ic_cancel_white_24dp"
+        android:icon="@drawable/ic_cancel_white"
         android:title="@string/cancel_bet"
         app:showAsAction="ifRoom" />
 </menu>

@@ -20,7 +20,7 @@
             android:title="@string/drawer_rankings" />
         <item
             android:id="@+id/nav_history"
-            android:icon="@drawable/ic_schedule_black_24dp"
+            android:icon="@drawable/ic_schedule_black"
             android:title="@string/drawer_history" />
         <item
             android:id="@+id/request_coins"
@@ -28,7 +28,7 @@
             android:title="@string/drawer_request_coins" />
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_black_24dp"
+            android:icon="@drawable/ic_settings_black"
             android:title="@string/drawer_settings" />
 
     </group>

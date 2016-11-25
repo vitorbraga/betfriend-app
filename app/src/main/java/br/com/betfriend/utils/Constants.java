@@ -1,8 +1,5 @@
 package br.com.betfriend.utils;
 
-/**
- * Created by vitorbr on 08/09/16.
- */
 public class Constants {
 
     public static final Integer SOCCER_API_TIMEZONE_OFFSET = 1;

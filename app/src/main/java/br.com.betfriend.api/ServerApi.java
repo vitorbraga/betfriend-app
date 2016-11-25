@@ -16,6 +16,7 @@ import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 public interface ServerApi {
 
@@ -63,7 +64,8 @@ public interface ServerApi {
                          Callback<ArrayList<Bet>> response);
 
     @GET("/matches/getMatches/")
-    void getMatches(@Header("Server-Key") String serverKey, @Header("Content-Type") String contentType, Callback<ArrayList<Match>> response);
+    void getMatches(@Header("Server-Key") String serverKey, @Header("Content-Type") String contentType, @Query("leagues") String leagues,
+                    Callback<ArrayList<Match>> response);
 
     @GET("/bets/getNewBetInvites/{personId}")
     void getNewBetInvites(@Header("Server-Key") String serverKey, @Header("Content-Type") String contentType, @Path("personId") String personId,

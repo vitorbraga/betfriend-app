@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="leagues">
+        <item>Brazilian Serie A</item>
+        <item>Premier League</item>
+        <item>Italy Serie A</item>
+    </string-array>
+
+    <string-array name="group_by">
+        <item>Category</item>
+        <item>Component</item>
+        <item>Similarity</item>
+        <item>Tag</item>
+    </string-array>
+
+    <string-array name="sort_by">
+        <item>Name (A-Z)</item>
+        <item>Name (Z-A)</item>
+        <item>Time (fastest first)</item>
+        <item>Time (slowest first)</item>
+    </string-array>
+</resources>

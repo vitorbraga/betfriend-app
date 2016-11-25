@@ -5,6 +5,8 @@
     <string name="title_text">BetFriend</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancelar</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="close">Fechar</string>
@@ -82,6 +84,10 @@
     <string name="make_bet">Fazer aposta</string>
     <string name="no_matches_found">Não foram encontradas partidas disponíveis.</string>
     <string name="draw">Empate</string>
+    <string name="filter">Filtrar</string>
+
+    <!-- Dialog filter -->
+    <string name="matches_filter_dialog_title">Filtrar por liga</string>
 
     <!-- Search friend activity -->
     <string name="select_friend">Selecione um amigo:</string>

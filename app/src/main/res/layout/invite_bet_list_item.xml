@@ -105,7 +105,7 @@
             android:layout_marginTop="20dp"
             android:layout_weight="0.5"
             android:background="#ffdad8"
-            android:drawableLeft="@drawable/ic_clear_black_24dp"
+            android:drawableLeft="@drawable/ic_clear_black"
             android:paddingLeft="10dp"
             android:text="@string/refuse"
             android:textColor="@color/black_grey" />
@@ -118,7 +118,7 @@
             android:layout_marginTop="20dp"
             android:layout_weight="0.5"
             android:background="#cbe8ba"
-            android:drawableLeft="@drawable/ic_check_black_24dp"
+            android:drawableLeft="@drawable/ic_check_black"
             android:paddingLeft="10dp"
             android:text="@string/accept"
             android:textColor="@color/black_grey" />
