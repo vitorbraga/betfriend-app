@@ -3,6 +3,7 @@ package br.com.betfriend.fragments;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,12 +18,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import br.com.betfriend.MainActivity;
 import br.com.betfriend.R;
 import br.com.betfriend.api.ServerApi;
 import br.com.betfriend.model.CoinRequest;
@@ -51,6 +56,8 @@ public class RequestCoinsFragment extends Fragment {
     private static final long REQUEST_MINIMUN_INTERVAL = 24 * 60 * 60 * 1000;
 
     private static final String FORMAT = "%02d:%02d:%02d";
+
+    private InterstitialAd mInterstitialAd;
 
     public RequestCoinsFragment() {
         // Required empty public constructor
@@ -99,51 +106,71 @@ public class RequestCoinsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                mProgressBar.setVisibility(View.VISIBLE);
-
-                if(!ConnectionUtils.isOnline(getActivity())) {
-                    mProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
-                    return;
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    requestCoins();
                 }
-
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                String personId = sharedPref.getString("PERSON_ID", "");
-
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(Constants.SERVER_API_BASE_URI).build();
-
-                ServerApi api = restAdapter.create(ServerApi.class);
-
-                api.newRequest(Constants.SERVER_KEY, personId, new Callback<JsonResponse>() {
-
-                    @Override
-                    public void success(JsonResponse json, Response response) {
-
-                        mProgressBar.setVisibility(View.GONE);
-                        if(json.getCode() == 0) {
-                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            ft.detach(mFragment);
-                            ft.attach(mFragment);
-                            ft.commit();
-                        } else {
-                            Toast.makeText(getActivity(), getActivity().getString(R.string.coin_request_not_available),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        mProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), getActivity().getString(R.string.unexpected_error),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
             }
         });
 
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId("ca-app-pub-7819771115170016/1429122081");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestCoins();
+            }
+        });
+
+        requestNewInterstitial();
+
         return view;
+    }
+
+    private void requestCoins() {
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        if (!ConnectionUtils.isOnline(getActivity())) {
+            mProgressBar.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), getString(R.string.no_connectivity), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String personId = sharedPref.getString("PERSON_ID", "");
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.SERVER_API_BASE_URI).build();
+
+        ServerApi api = restAdapter.create(ServerApi.class);
+
+        api.newRequest(Constants.SERVER_KEY, personId, new Callback<JsonResponse>() {
+
+            @Override
+            public void success(JsonResponse json, Response response) {
+
+                mProgressBar.setVisibility(View.GONE);
+
+                if (json.getCode() == 0) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("MENU_FRAGMENT", R.id.request_coins);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.coin_request_not_available),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mProgressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), getActivity().getString(R.string.unexpected_error),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -163,6 +190,14 @@ public class RequestCoinsFragment extends Fragment {
         super.onResume();
 
         checkRequestCountdown();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("86251132A94F86C41EE08F12E283CA71")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 
     private void checkRequestCountdown() {

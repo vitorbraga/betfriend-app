@@ -284,8 +284,8 @@ public class MainActivity extends AppCompatActivity
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
 
-            displaySelectedScreen(R.id.nav_home);
             if (!mNavigationView.getMenu().findItem(R.id.nav_home).isChecked()) {
+                displaySelectedScreen(R.id.nav_home);
                 mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
             } else {
                 moveTaskToBack(true);
