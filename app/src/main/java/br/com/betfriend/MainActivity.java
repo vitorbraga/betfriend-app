@@ -266,6 +266,7 @@ public class MainActivity extends AppCompatActivity
                 mFrameLayout.setVisibility(View.VISIBLE);
 
                 int menuFragment = getIntent().getIntExtra("MENU_FRAGMENT", R.id.nav_home);
+                getIntent().removeExtra("MENU_FRAGMENT");
                 displaySelectedScreen(menuFragment);
             }
 

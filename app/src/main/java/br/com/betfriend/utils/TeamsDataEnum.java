@@ -78,7 +78,7 @@ public enum TeamsDataEnum {
 
     STOKE_CITY("Vitoria", "STK", R.drawable.stoke_city, "Stoke City"),
 
-    SUNDERLAND("Vitoria", "SUN", R.drawable.sunderland, "Sunderland"),
+    SUNDERLAND("Sunderland", "SUN", R.drawable.sunderland, "Sunderland"),
 
     SWANSEA("Swansea City", "SWA", R.drawable.swansea, "Swansea"),
 
@@ -122,7 +122,7 @@ public enum TeamsDataEnum {
 
     FIORENTINA("Genoa", "GEN", R.drawable.fiorentina, "Fiorentina"),
 
-    INTER("Inter", "INT", R.drawable.intermilan, "Inter"),
+    INTER("Internazionale Milano", "INT", R.drawable.intermilan, "Inter"),
 
     SASSUOLO("Sassuolo", "SAS", R.drawable.sassuolo, "Sassuolo"),
 
@@ -130,7 +130,7 @@ public enum TeamsDataEnum {
 
     NAPOLI("Napoli", "NAP", R.drawable.napoli, "Napoli"),
 
-    PESCARA("Pescara", "PES", R.drawable.pescara, "Pescara");
+    PESCARA("US Pescara", "PES", R.drawable.pescara, "Pescara");
 
     private String description;
 
