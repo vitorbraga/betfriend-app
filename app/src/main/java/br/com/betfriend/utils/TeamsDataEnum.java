@@ -54,19 +54,21 @@ public enum TeamsDataEnum {
 
     BOURNEMOUTH("Bournemouth", "BOU", R.drawable.bournemouth, "Bournemouth"),
 
+    BOURNEMOUTH2("BOURNEMOUTH", "BOU", R.drawable.bournemouth, "Bournemouth"),
+
     BURNLEY("Burnley", "BUR", R.drawable.burnley, "Burnley"),
 
     CHELSEA("Chelsea", "CHE", R.drawable.chelsea, "Chelsea"),
 
     CRYSTAL_PALACE("Crystal Palace", "CRY", R.drawable.crystal_palace, "Crystal Palace"),
 
-    EVERTON("Vitoria", "EVE", R.drawable.everton, "Everton"),
+    EVERTON("Everton", "EVE", R.drawable.everton, "Everton"),
 
     HULL_CITY("Hull City", "HUL", R.drawable.hull_city, "Hull City"),
 
     LEICESTER("Leicester City", "LEI", R.drawable.leicester, "Leicester"),
 
-    LIVERPOOL("Vitoria", "LIV", R.drawable.liverpool, "Liverpool"),
+    LIVERPOOL("Liverpool", "LIV", R.drawable.liverpool, "Liverpool"),
 
     MAN_CITY("Manchester City", "MCI", R.drawable.manchester_city, "Man. City"),
 
@@ -74,21 +76,21 @@ public enum TeamsDataEnum {
 
     MIDDLESBROUGH("Middlesbrough FC", "MID", R.drawable.middlesbrough, "Middlesbrough"),
 
-    SOUTHAMPTON("Vitoria", "SOU", R.drawable.southampton, "Southampton"),
+    SOUTHAMPTON("Southampton", "SOU", R.drawable.southampton, "Southampton"),
 
-    STOKE_CITY("Vitoria", "STK", R.drawable.stoke_city, "Stoke City"),
+    STOKE_CITY("Stoke City", "STK", R.drawable.stoke_city, "Stoke City"),
 
     SUNDERLAND("Sunderland", "SUN", R.drawable.sunderland, "Sunderland"),
 
     SWANSEA("Swansea City", "SWA", R.drawable.swansea, "Swansea"),
 
-    TOTTENHAM("Vitoria", "TOT", R.drawable.tottenham, "Tottenham"),
+    TOTTENHAM("Tottenham Hotspur", "TOT", R.drawable.tottenham, "Tottenham"),
 
-    WATFORD("Vitoria", "WAT", R.drawable.watford, "Watford"),
+    WATFORD("Watford", "WAT", R.drawable.watford, "Watford"),
 
     WEST_BROMWICH("West Bromwich Albion", "WBA", R.drawable.west_brom, "West Bromwich"),
 
-    WEST_HAM("Vitoria", "WHU", R.drawable.west_ham, "West Ham"),
+    WEST_HAM("West Ham United", "WHU", R.drawable.west_ham, "West Ham"),
 
     // Italy Serie A
 
