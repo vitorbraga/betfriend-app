@@ -122,7 +122,7 @@ public enum TeamsDataEnum {
 
     JUVENTUS("Juventus FC", "JUV", R.drawable.juventus, "Juventus"),
 
-    FIORENTINA("Genoa", "GEN", R.drawable.fiorentina, "Fiorentina"),
+    FIORENTINA("AC Fiorentina", "GEN", R.drawable.fiorentina, "Fiorentina"),
 
     INTER("Internazionale Milano", "INT", R.drawable.intermilan, "Inter"),
 
