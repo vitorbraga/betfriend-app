@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import br.com.betfriend.R;
 import br.com.betfriend.adapters.AnimatedExpandableListView;
@@ -33,6 +34,7 @@ import br.com.betfriend.model.UserDataDTO;
 import br.com.betfriend.utils.ConnectionUtils;
 import br.com.betfriend.utils.Constants;
 import br.com.betfriend.utils.LeaguesEnum;
+import br.com.betfriend.utils.TeamsDataEnum;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -252,6 +254,9 @@ public class HomeFragment extends Fragment {
                     mNoMatchesContainer.setVisibility(View.GONE);
                     mMatchesListView.setVisibility(View.VISIBLE);
 
+                    // Cleaning teams not mapped
+                    cleanUnmappedTeams(matches);
+
                     mAdapter = new MatchesExpandableListAdapter(getActivity(), matches, userData);
                     mMatchesListView.setAdapter(mAdapter);
 
@@ -268,6 +273,21 @@ public class HomeFragment extends Fragment {
                 mNoMatchesContainer.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void cleanUnmappedTeams(ArrayList<Match> matches) {
+
+        Iterator<Match> iterator = matches.iterator();
+        while(iterator.hasNext()) {
+
+            Match match = iterator.next();
+            TeamsDataEnum homeTeam = TeamsDataEnum.get(match.getHomeTeam());
+            TeamsDataEnum awayTeam = TeamsDataEnum.get(match.getAwayTeam());
+
+            if(homeTeam == null || awayTeam == null) {
+                iterator.remove();
+            }
+        }
     }
 
     public void setUserData(UserDataDTO user) {

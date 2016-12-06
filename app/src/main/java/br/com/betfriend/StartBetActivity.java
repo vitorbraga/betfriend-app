@@ -129,7 +129,7 @@ public class StartBetActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
-                mBetValue.setText(progress + "");
+                mBetValue.setText(getString(R.string.progress, progress));
                 mAmount = progress;
             }
 

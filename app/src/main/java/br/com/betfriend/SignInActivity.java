@@ -225,7 +225,7 @@ public class SignInActivity extends AppCompatActivity implements
                 editor.putString("PERSON_NAME", userData.getPersonName());
                 editor.putInt("POINTS", userData.getPoints());
                 editor.putBoolean("key_visible", userData.isVisible());
-                editor.commit();
+                editor.apply();
 
                 updateUI(true);
             }

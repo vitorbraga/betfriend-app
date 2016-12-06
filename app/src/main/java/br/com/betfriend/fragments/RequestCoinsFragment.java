@@ -1,7 +1,6 @@
 package br.com.betfriend.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,8 +50,6 @@ public class RequestCoinsFragment extends Fragment {
 
     private ProgressBar mProgressBar;
 
-    private Fragment mFragment;
-
     private static final long REQUEST_MINIMUN_INTERVAL = 24 * 60 * 60 * 1000;
 
     private static final String FORMAT = "%02d:%02d:%02d";
@@ -73,8 +70,6 @@ public class RequestCoinsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_request_coins, container, false);
-
-        mFragment = this;
 
         mProgressBar = (ProgressBar) view.findViewById(R.id.request_progressbar);
 

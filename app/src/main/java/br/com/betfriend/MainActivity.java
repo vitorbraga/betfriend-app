@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity
                             editor.putString("PERSON_NAME", user.getPersonName());
                             editor.putInt("POINTS", user.getPoints());
                             editor.putBoolean("key_visible", user.isVisible());
-                            editor.commit();
+                            editor.apply();
 
                             mUserData = user;
                             android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -317,7 +318,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
 
         Fragment fragment = null;
-        Bundle bundle = null;
+        Bundle bundle;
 
         switch (itemId) {
             case R.id.nav_home:
@@ -382,7 +383,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         displaySelectedScreen(item.getItemId());
 

@@ -122,7 +122,7 @@ public enum TeamsDataEnum {
 
     JUVENTUS("Juventus FC", "JUV", R.drawable.juventus, "Juventus"),
 
-    FIORENTINA("AC Fiorentina", "GEN", R.drawable.fiorentina, "Fiorentina"),
+    FIORENTINA("AC Fiorentina", "FIO", R.drawable.fiorentina, "Fiorentina"),
 
     INTER("Internazionale Milano", "INT", R.drawable.intermilan, "Inter"),
 
@@ -150,7 +150,7 @@ public enum TeamsDataEnum {
         }
     }
 
-    private TeamsDataEnum(String description, String label, int logo, String correctName) {
+    TeamsDataEnum(String description, String label, int logo, String correctName) {
         this.description = description;
         this.label = label;
         this.logo = logo;

@@ -42,32 +42,31 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
     private MatchListItemBinding mBinding;
 
-    static class ViewHolderGroup {
-        public TextView homeTeam;
-        public TextView awayTeam;
-        public TextView matchTime;
-        public TextView matchId;
-        public ImageView homeLogo;
-        public ImageView awayLogo;
+    private static class ViewHolderGroup {
+        TextView homeTeam;
+        TextView awayTeam;
+        TextView matchTime;
+        TextView matchId;
+        ImageView homeLogo;
+        ImageView awayLogo;
     }
 
-    static class ViewHolderChild {
-        public TextView homeTeam;
-        public TextView awayTeam;
-        public Button sendButton;
-        public TextView matchId;
-        public SeekBar seekBar;
-        public EditText betValue;
-        public RadioButton homeButton;
-        public RadioButton drawButton;
-        public RadioButton awayButton;
+    private static class ViewHolderChild {
+        Button sendButton;
+        TextView matchId;
+        SeekBar seekBar;
+        EditText betValue;
+        RadioButton homeButton;
+        RadioButton drawButton;
+        RadioButton awayButton;
     }
 
     @Override
     public View getRealChildView(int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
+                                 boolean isLastChild, View convertView, ViewGroup parent) {
 
         View rowView = convertView;
+        ViewHolderChild holder;
 
         // reuse views
         if (rowView == null) {
@@ -79,28 +78,34 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
             rowView = mBinding.getRoot();
             mBinding.setUser(userData);
 
-            ViewHolderChild viewHolderChild = new ViewHolderChild();
-            viewHolderChild.homeTeam = (TextView) rowView.findViewById(R.id.radio_team_1);
-            viewHolderChild.awayTeam = (TextView) rowView.findViewById(R.id.radio_team_2);
-            viewHolderChild.sendButton = (Button) rowView.findViewById(R.id.bet_button);
-            viewHolderChild.matchId = (TextView) rowView.findViewById(R.id.match_id);
-            viewHolderChild.seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
-            viewHolderChild.betValue = (EditText) rowView.findViewById(R.id.bet_value);
-            viewHolderChild.homeButton = (RadioButton) rowView.findViewById(R.id.radio_team_1);
-            viewHolderChild.drawButton = (RadioButton) rowView.findViewById(R.id.radio_draw);
-            viewHolderChild.awayButton = (RadioButton) rowView.findViewById(R.id.radio_team_2);
+            holder = new ViewHolderChild();
+            holder.sendButton = (Button) rowView.findViewById(R.id.bet_button);
+            holder.matchId = (TextView) rowView.findViewById(R.id.match_id);
+            holder.seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
+            holder.betValue = (EditText) rowView.findViewById(R.id.bet_value);
+            holder.homeButton = (RadioButton) rowView.findViewById(R.id.radio_team_1);
+            holder.drawButton = (RadioButton) rowView.findViewById(R.id.radio_draw);
+            holder.awayButton = (RadioButton) rowView.findViewById(R.id.radio_team_2);
 
-            rowView.setTag(viewHolderChild);
+            rowView.setTag(holder);
+
+        } else {
+            holder = (ViewHolderChild) rowView.getTag();
         }
 
-        final ViewHolderChild holder = (ViewHolderChild) rowView.getTag();
-
         String homeTeam = matches.get(groupPosition).getHomeTeam().trim();
+
         String awayTeam = matches.get(groupPosition).getAwayTeam().trim();
         String matchId = matches.get(groupPosition).getMatchId().toString();
 
-        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).correctName());
-        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).correctName());
+        TeamsDataEnum homeTeamEnum = TeamsDataEnum.get(homeTeam);
+        TeamsDataEnum awayTeamEnum = TeamsDataEnum.get(awayTeam);
+
+        final EditText betValue = holder.betValue;
+        final SeekBar seekBar = holder.seekBar;
+
+        holder.homeButton.setText(homeTeamEnum.correctName());
+        holder.awayButton.setText(awayTeamEnum.correctName());
         holder.matchId.setText(matchId);
 
         holder.homeButton.setChecked(false);
@@ -115,7 +120,7 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
-                holder.betValue.setText(progress + "");
+                betValue.setText(context.getString(R.string.progress, progress));
             }
 
             @Override
@@ -140,10 +145,10 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(s.toString().equals("")) {
-                    holder.seekBar.setProgress(0);
+                if (s.toString().equals("")) {
+                    seekBar.setProgress(0);
                 } else {
-                    holder.seekBar.setProgress(Integer.parseInt(s.toString()));
+                    seekBar.setProgress(Integer.parseInt(s.toString()));
                 }
             }
 
@@ -156,8 +161,8 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
     private static Match getMatchById(Integer matchId, ArrayList<Match> matches) {
 
-        for(Match sm : matches) {
-            if(sm.getMatchId().equals(matchId)) {
+        for (Match sm : matches) {
+            if (sm.getMatchId().equals(matchId)) {
                 return sm;
             }
         }
@@ -178,7 +183,7 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
             int amount = seekBar.getProgress();
 
             // Validation amount
-            if(amount == 0 || amount > userData.getPoints()) {
+            if (amount == 0 || amount > userData.getPoints()) {
                 Toast.makeText(context, context.getString(R.string.value_not_allowed), Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -189,7 +194,7 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
             Match match = getMatchById(Integer.parseInt(matchId), matches);
 
             // Validation result choice
-            switch(checked) {
+            switch (checked) {
                 case R.id.radio_team_1:
                     betOption = "1";
                     break;
@@ -253,21 +258,27 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
 
+        ViewHolderGroup holder;
+
         if (convertView == null) {
+
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.match_list_group, null);
 
             // configure view holder
-            ViewHolderGroup viewHolderGroup = new ViewHolderGroup();
-            viewHolderGroup.homeTeam = (TextView) convertView.findViewById(R.id.home_team);
-            viewHolderGroup.awayTeam = (TextView) convertView.findViewById(R.id.away_team);
-            viewHolderGroup.matchTime = (TextView) convertView.findViewById(R.id.match_time);
-            viewHolderGroup.matchId = (TextView) convertView.findViewById(R.id.match_id);
-            viewHolderGroup.homeLogo = (ImageView) convertView.findViewById(R.id.home_logo);
-            viewHolderGroup.awayLogo = (ImageView) convertView.findViewById(R.id.away_logo);
+            holder = new ViewHolderGroup();
+            holder.homeTeam = (TextView) convertView.findViewById(R.id.home_team);
+            holder.awayTeam = (TextView) convertView.findViewById(R.id.away_team);
+            holder.matchTime = (TextView) convertView.findViewById(R.id.match_time);
+            holder.matchId = (TextView) convertView.findViewById(R.id.match_id);
+            holder.homeLogo = (ImageView) convertView.findViewById(R.id.home_logo);
+            holder.awayLogo = (ImageView) convertView.findViewById(R.id.away_logo);
 
-            convertView.setTag(viewHolderGroup);
+            convertView.setTag(holder);
+
+        } else {
+            holder = (ViewHolderGroup) convertView.getTag();
         }
 
         if (isExpanded) {
@@ -276,16 +287,17 @@ public class MatchesExpandableListAdapter extends AnimatedExpandableListView.Ani
             convertView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         }
 
-        // fill data
-        ViewHolderGroup holder = (ViewHolderGroup) convertView.getTag();
-
+        // Fill data
         String homeTeam = matches.get(groupPosition).getHomeTeam().trim();
         String awayTeam = matches.get(groupPosition).getAwayTeam().trim();
-        String matchId =  matches.get(groupPosition).getMatchId().toString();
+        String matchId = matches.get(groupPosition).getMatchId().toString();
         Date date = matches.get(groupPosition).getTstamp();
 
-        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).label());
-        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).label());
+        TeamsDataEnum homeTeamEnum = TeamsDataEnum.get(homeTeam);
+        TeamsDataEnum awayTeamEnum = TeamsDataEnum.get(awayTeam);
+
+        holder.homeTeam.setText(homeTeamEnum.label());
+        holder.awayTeam.setText(awayTeamEnum.label());
         holder.matchId.setText(matchId);
         holder.matchTime.setText(ConvertHelper.dateToView(date));
 

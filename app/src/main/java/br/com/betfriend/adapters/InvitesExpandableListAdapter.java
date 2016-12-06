@@ -55,30 +55,30 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
     private UserDataDTO userData;
 
-    static class ViewHolderGroup {
-        public TextView homeTeam;
-        public TextView awayTeam;
-        public TextView matchId;
-        public TextView matchDate;
-        public ImageView homeLogo;
-        public ImageView awayLogo;
-        public TextView amount;
-        public ImageView personPhoto;
-        public TextView personName;
+    private static class ViewHolderGroup {
+        TextView homeTeam;
+        TextView awayTeam;
+        TextView matchId;
+        TextView matchDate;
+        ImageView homeLogo;
+        ImageView awayLogo;
+        TextView amount;
+        ImageView personPhoto;
+        TextView personName;
     }
 
-    static class ViewHolderChild {
-        public Button acceptButton;
-        public Button refuseButton;
-        public TextView betId;
-        public TextView matchId;
-        public TextView amount;
-        public TextView friendOption;
-        public TextView friendId;
-        public RadioGroup radioGroup;
-        public RadioButton homeRadioButton;
-        public RadioButton drawRadioButton;
-        public RadioButton awayRadioButton;
+    private static class ViewHolderChild {
+        Button acceptButton;
+        Button refuseButton;
+        TextView betId;
+        TextView matchId;
+        TextView amount;
+        TextView friendOption;
+        TextView friendId;
+        RadioGroup radioGroup;
+        RadioButton homeRadioButton;
+        RadioButton drawRadioButton;
+        RadioButton awayRadioButton;
     }
 
     @Override
@@ -86,6 +86,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                                  boolean isLastChild, View convertView, ViewGroup parent) {
 
         View rowView = convertView;
+        ViewHolderChild viewHolderChild;
 
         // reuse views
         if (rowView == null) {
@@ -95,7 +96,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
             rowView = inflater.inflate(R.layout.invite_bet_list_item, parent, false);
 
-            ViewHolderChild viewHolderChild = new ViewHolderChild();
+            viewHolderChild = new ViewHolderChild();
             viewHolderChild.acceptButton = (Button) rowView.findViewById(R.id.accept_button);
             viewHolderChild.refuseButton = (Button) rowView.findViewById(R.id.refuse_button);
             viewHolderChild.betId = (TextView) rowView.findViewById(R.id.bet_id);
@@ -109,9 +110,10 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             viewHolderChild.awayRadioButton = (RadioButton) rowView.findViewById(R.id.radio_team_2);
 
             rowView.setTag(viewHolderChild);
-        }
 
-        final ViewHolderChild holder = (ViewHolderChild) rowView.getTag();
+        } else {
+            viewHolderChild = (ViewHolderChild) rowView.getTag();
+        }
 
         String homeTeam = bets.get(groupPosition).getMatch().getHomeTeam().trim();
         String awayTeam = bets.get(groupPosition).getMatch().getAwayTeam().trim();
@@ -122,38 +124,50 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
         String option = bets.get(groupPosition).getOption();
 
-        holder.homeRadioButton.setText(TeamsDataEnum.get(homeTeam).label());
-        holder.awayRadioButton.setText(TeamsDataEnum.get(awayTeam).label());
-        holder.matchId.setText(matchId);
-        holder.amount.setText(amount.toString());
-        holder.betId.setText(betId);
-        holder.friendId.setText(friendId);
+        viewHolderChild.homeRadioButton.setText(TeamsDataEnum.get(homeTeam).label());
+        viewHolderChild.awayRadioButton.setText(TeamsDataEnum.get(awayTeam).label());
+        viewHolderChild.matchId.setText(matchId);
+        viewHolderChild.amount.setText(context.getString(R.string.amount, amount));
+        viewHolderChild.betId.setText(betId);
+        viewHolderChild.friendId.setText(friendId);
 
-        Drawable img = null;
-        // Set ragio buttons
-        if (option.equals("1")) {
+        Drawable img;
 
-            holder.homeRadioButton.setEnabled(false);
-            img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
-            holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-            holder.friendOption.setText(String.valueOf(holder.homeRadioButton.getId()));
+        // Set radio buttons
+        switch (option) {
 
-        } else if (option.equals("X")) {
+            case "1":
 
-            holder.drawRadioButton.setEnabled(false);
-            img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
-            holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-            holder.friendOption.setText(String.valueOf(holder.drawRadioButton.getId()));
+                viewHolderChild.homeRadioButton.setEnabled(false);
+                img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
+                viewHolderChild.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                viewHolderChild.friendOption.setText(String.valueOf(viewHolderChild.homeRadioButton.getId()));
 
-        } else {
+                break;
 
-            holder.awayRadioButton.setEnabled(false);
-            img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
-            holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-            holder.friendOption.setText(String.valueOf(holder.awayRadioButton.getId()));
+            case "X":
+
+                viewHolderChild.drawRadioButton.setEnabled(false);
+                img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
+                viewHolderChild.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                viewHolderChild.friendOption.setText(String.valueOf(viewHolderChild.drawRadioButton.getId()));
+
+                break;
+
+            default:
+
+                viewHolderChild.awayRadioButton.setEnabled(false);
+                img = getDrawableFromURL(bets.get(groupPosition).getSrcPerson().getPersonPhoto());
+                viewHolderChild.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                viewHolderChild.friendOption.setText(String.valueOf(viewHolderChild.awayRadioButton.getId()));
+                break;
         }
 
-        holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        final RadioButton homeRadioButton = viewHolderChild.homeRadioButton;
+        final RadioButton drawRadioButton = viewHolderChild.drawRadioButton;
+        final RadioButton awayRadioButton = viewHolderChild.awayRadioButton;
+
+        viewHolderChild.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int checked = group.getCheckedRadioButtonId();
@@ -163,49 +177,49 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
 
                     case R.id.radio_team_1:
 
-                        holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                        homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 
-                        if(holder.drawRadioButton.isEnabled()) {
-                            holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        if (drawRadioButton.isEnabled()) {
+                            drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                         }
 
-                        if(holder.awayRadioButton.isEnabled()) {
-                            holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        if (awayRadioButton.isEnabled()) {
+                            awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                         }
 
                         break;
 
                     case R.id.radio_draw:
 
-                        holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                        drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 
-                        if(holder.homeRadioButton.isEnabled()) {
-                            holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        if (homeRadioButton.isEnabled()) {
+                            homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                         }
 
-                        if(holder.awayRadioButton.isEnabled()) {
-                            holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        if (awayRadioButton.isEnabled()) {
+                            awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                         }
 
                         break;
 
                     case R.id.radio_team_2:
 
-                        holder.awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                        awayRadioButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 
-                        if(holder.homeRadioButton.isEnabled()) {
-                            holder.homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        if (homeRadioButton.isEnabled()) {
+                            homeRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                         }
 
-                        if(holder.drawRadioButton.isEnabled()) {
-                            holder.drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                        if (drawRadioButton.isEnabled()) {
+                            drawRadioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                         }
                         break;
                 }
             }
         });
 
-        holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+        viewHolderChild.acceptButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -234,7 +248,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                 }
 
                 // Validating if user has enough coins
-                if(amount > userData.getPoints()) {
+                if (amount > userData.getPoints()) {
                     Toast.makeText(context, context.getString(R.string.no_coins), Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -277,7 +291,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
                                         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putInt("POINTS", userData.getPoints() - amount);
-                                        editor.commit();
+                                        editor.apply();
 
                                         Intent intent = new Intent(context, MainActivity.class);
                                         intent.putExtra("MENU_FRAGMENT", R.id.nav_invites);
@@ -300,7 +314,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             }
         });
 
-        holder.refuseButton.setOnClickListener(new View.OnClickListener() {
+        viewHolderChild.refuseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -390,13 +404,17 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
 
+        ViewHolderGroup viewHolderGroup;
+
         if (convertView == null) {
+
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             convertView = infalInflater.inflate(R.layout.invite_bet_list_group, null);
 
             // configure view holder
-            ViewHolderGroup viewHolderGroup = new ViewHolderGroup();
+            viewHolderGroup = new ViewHolderGroup();
             viewHolderGroup.homeTeam = (TextView) convertView.findViewById(R.id.home_team);
             viewHolderGroup.awayTeam = (TextView) convertView.findViewById(R.id.away_team);
             viewHolderGroup.matchId = (TextView) convertView.findViewById(R.id.match_id);
@@ -408,6 +426,9 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             viewHolderGroup.personPhoto = (ImageView) convertView.findViewById(R.id.person_photo);
 
             convertView.setTag(viewHolderGroup);
+
+        } else {
+            viewHolderGroup = (ViewHolderGroup) convertView.getTag();
         }
 
         if (isExpanded) {
@@ -416,9 +437,7 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
             convertView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         }
 
-        // fill data
-        ViewHolderGroup holder = (ViewHolderGroup) convertView.getTag();
-
+        // Fill data
         String homeTeam = bets.get(groupPosition).getMatch().getHomeTeam().trim();
         String awayTeam = bets.get(groupPosition).getMatch().getAwayTeam().trim();
         String matchId = bets.get(groupPosition).getMatch().getMatchId().toString();
@@ -426,27 +445,27 @@ public class InvitesExpandableListAdapter extends AnimatedExpandableListView.Ani
         String personPhoto = bets.get(groupPosition).getSrcPerson().getPersonPhoto();
         Integer amount = bets.get(groupPosition).getAmount();
 
-        holder.homeTeam.setText(TeamsDataEnum.get(homeTeam).label());
-        holder.awayTeam.setText(TeamsDataEnum.get(awayTeam).label());
-        holder.matchId.setText(matchId);
-        holder.personName.setText(personName);
-        holder.amount.setText(amount.toString());
-        holder.matchDate.setText(ConvertHelper.dateToViewShort(bets.get(groupPosition).getMatch().getTstamp()));
+        viewHolderGroup.homeTeam.setText(TeamsDataEnum.get(homeTeam).label());
+        viewHolderGroup.awayTeam.setText(TeamsDataEnum.get(awayTeam).label());
+        viewHolderGroup.matchId.setText(matchId);
+        viewHolderGroup.personName.setText(personName);
+        viewHolderGroup.amount.setText(context.getString(R.string.amount, amount));
+        viewHolderGroup.matchDate.setText(ConvertHelper.dateToViewShort(bets.get(groupPosition).getMatch().getTstamp()));
 
         Picasso.with(context)
                 .load(TeamsDataEnum.get(homeTeam).logo())
                 .fit()
-                .into(holder.homeLogo);
+                .into(viewHolderGroup.homeLogo);
 
         Picasso.with(context)
                 .load(TeamsDataEnum.get(awayTeam).logo())
                 .fit()
-                .into(holder.awayLogo);
+                .into(viewHolderGroup.awayLogo);
 
         Picasso.with(context)
                 .load(personPhoto)
                 .transform(new CircleTransformation())
-                .into(holder.personPhoto);
+                .into(viewHolderGroup.personPhoto);
 
         return convertView;
     }

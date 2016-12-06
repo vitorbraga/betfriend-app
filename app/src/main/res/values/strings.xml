@@ -85,6 +85,7 @@
     <string name="no_matches_found">No available matches</string>
     <string name="draw">Draw</string>
     <string name="filter">Filter</string>
+    <string name="progress">%1$d</string>
 
     <!-- Dialog filter -->
     <string name="matches_filter_dialog_title">Filter by league</string>
@@ -103,6 +104,7 @@
     <string name="no_invites_found">You do not have pending invites.</string>
     <string name="no_coins">You do not have enough coins to accept this bet.</string>
     <string name="result_already_chosen">This result was already chosen. Choose another.</string>
+    <string name="amount">%1$d</string>
 
     <!-- History fragment -->
 

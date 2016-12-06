@@ -85,6 +85,7 @@
     <string name="no_matches_found">Não foram encontradas partidas disponíveis.</string>
     <string name="draw">Empate</string>
     <string name="filter">Filtrar</string>
+    <string name="progress">%1$d</string>
 
     <!-- Dialog filter -->
     <string name="matches_filter_dialog_title">Filtrar por liga</string>
@@ -103,6 +104,7 @@
     <string name="no_invites_found">Você não possui convites pendentes.</string>
     <string name="no_coins">Você não possui moedas suficientes para aceitar esta aposta.</string>
     <string name="result_already_chosen">Resultado já escolhido. Escolha outro.</string>
+    <string name="amount">%1$d</string>
 
     <!-- History fragment -->
     <string name="pending_tab">Pendentes</string>
